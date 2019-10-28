@@ -6,7 +6,7 @@ namespace FroggerStarter.Model
     /// Generic vehicle class handles basic functionality for all vehicles
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.GameObject" />
-    public class Vehicle : GameObject
+    public abstract class Vehicle : GameObject
     {
 
         /// <summary>
@@ -18,11 +18,12 @@ namespace FroggerStarter.Model
         public VehicleDirection Direction { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Vehicle"/> class.
+        /// Initializes a new instance of the <see cref="Vehicle" /> class.
         /// </summary>
         /// <param name="direction">The direction of the vehicle's movement.</param>
         /// <param name="speed">The speed of the vehicle.</param>
-        public Vehicle(VehicleDirection direction, int speed)
+        /// <exception cref="ArgumentOutOfRangeException">speed</exception>
+        protected Vehicle(VehicleDirection direction, int speed)
         {
             if (speed <= 0)
             {

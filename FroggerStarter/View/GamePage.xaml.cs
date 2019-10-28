@@ -23,6 +23,13 @@ namespace FroggerStarter.View
         private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
         private readonly GameManager gameManager;
 
+        public static TextBlock LivesTextBlock { get; set; } //TODO oof
+
+        public static TextBlock ScoreTextBlock { get; set; }
+
+        public static TextBlock GameOverTextBlock { get; set; }
+
+
         #endregion
 
         #region Constructors
@@ -40,6 +47,10 @@ namespace FroggerStarter.View
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView()
                            .SetPreferredMinSize(new Size(this.applicationWidth, this.applicationHeight));
+
+            LivesTextBlock = this.livesTextBlock;
+            ScoreTextBlock = this.scoreTextBlock;
+            GameOverTextBlock = this.gameOverTextBlock;
 
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
             this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
@@ -67,25 +78,6 @@ namespace FroggerStarter.View
                     this.gameManager.MovePlayerDown();
                     break;
             }
-        }
-
-        /// <summary>
-        /// Sets the game over screen.
-        /// </summary>
-        public void SetGameOverScreen()
-        {
-            this.gameOverTextBlock.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        /// Updats the score and lives display.
-        /// </summary>
-        /// <param name="lives">The lives.</param>
-        /// <param name="score">The score.</param>
-        public void UpdateLivesAndScoreDisplay(int lives, int score)
-        {
-            this.livesTextBlock.Text = $"Lives: " + lives;
-            this.scoreTextBlock.Text = $"Score: " + score;
         }
 
         #endregion

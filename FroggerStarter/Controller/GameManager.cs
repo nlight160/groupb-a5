@@ -19,11 +19,10 @@ namespace FroggerStarter.Controller
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
         private Canvas gameCanvas;
-        private readonly GamePage gamePage;
         private Frog player;
         private DispatcherTimer timer;
         private readonly RoadManager roadManager;
-        private readonly PlayerManager playerStats;
+        private readonly PlayerManager playerManager;
 
         #endregion
 
@@ -54,8 +53,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
             this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight, LaneHeight);
-            this.playerStats = new PlayerManager();
-            this.gamePage = new GamePage();
+            this.playerManager = new PlayerManager();
             this.setupGameTimer();
         }
 
@@ -71,22 +69,17 @@ namespace FroggerStarter.Controller
             this.timer.Start();
         }
 
-        private string updateLives()
-        {
-            return $"Lives: " + this.playerStats.RemainingLives;
-        }
-
         /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
         ///     and vehicle on game screen.
         ///     Precondition: background != null
         ///     Postcondition: Game is initialized and ready for play.
         /// </summary>
-        /// <param name="gamePageCanvas">The game page.</param>
+        /// <param name="gamePage"></param>
         /// <exception cref="ArgumentNullException">gameCanvas</exception>
-        public void InitializeGame(Canvas gamePageCanvas)
+        public void InitializeGame(Canvas gamePage)
         {
-            this.gameCanvas = gamePageCanvas ?? throw new ArgumentNullException(nameof(gamePage));
+            this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createAndPlacePlayer();
             this.createAndPlaceVehicles();
         }
@@ -118,13 +111,13 @@ namespace FroggerStarter.Controller
 
         private void timerOnTick(object sender, object e)
         {
-            if (!this.playerStats.IsGameOverConditionMet())
+            if (!this.playerManager.IsGameOverConditionMet())
             {
                 this.handleGameOperations();
             }
             else
             {
-                this.gamePage.SetGameOverScreen();
+                GamePage.GameOverTextBlock.Visibility = Visibility.Visible; //TODO oof
             }
         }
 
@@ -133,7 +126,8 @@ namespace FroggerStarter.Controller
             this.roadManager.MoveVehiclesInRoad();
             this.checkForCollision();
             this.handleWin();
-            this.gamePage.UpdateLivesAndScoreDisplay(this.playerStats.RemainingLives,this.playerStats.Score);
+            GamePage.ScoreTextBlock.Text = $"Score: " + this.playerManager.Score; //TODO oof
+            GamePage.LivesTextBlock.Text = $"Lives: " + this.playerManager.RemainingLives; 
             this.roadManager.WrapRoad();
         }
 
@@ -141,7 +135,7 @@ namespace FroggerStarter.Controller
         {
             if (this.isPlayerAdjacentToTopBoundary())
             {
-                this.playerStats.IncrementScore();
+                this.playerManager.IncrementScore();
                 this.setPlayerToCenterOfBottomLane();
             }
         }
@@ -153,7 +147,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerStats.IsGameOverConditionMet()
+            if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
             ) 
             {
                 this.player.MoveLeft();
@@ -172,7 +166,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            if (!this.isPlayerAdjacentToRightBoundary() && !this.playerStats.IsGameOverConditionMet())
+            if (!this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet())
             {
                 this.player.MoveRight();
             }
@@ -190,7 +184,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            if (!this.isPlayerAdjacentToTopBoundary() && !this.playerStats.IsGameOverConditionMet())
+            if (!this.isPlayerAdjacentToTopBoundary() && !this.playerManager.IsGameOverConditionMet())
             {
                 this.player.MoveUp();
             }
@@ -208,7 +202,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerStats.IsGameOverConditionMet())
+            if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet())
             {
                 this.player.MoveDown();
             }
@@ -235,7 +229,7 @@ namespace FroggerStarter.Controller
 
         private void handleCollision()
         {
-            this.playerStats.DecrementLives();
+            this.playerManager.DecrementLives();
             this.setPlayerToCenterOfBottomLane();
         }
 

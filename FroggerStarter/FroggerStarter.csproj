@@ -121,9 +121,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controller\CollisionDetection.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
     <Compile Include="Model\Car.cs" />
+    <Compile Include="Model\BasicObject.cs" />
+    <Compile Include="Model\FrogHome.cs" />
     <Compile Include="Model\Lane.cs" />
     <Compile Include="Model\Truck.cs" />
     <Compile Include="Model\VehicleDirection.cs" />
@@ -138,6 +141,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\FrogHomeSprite.xaml.cs">
+      <DependentUpon>FrogHomeSprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\TruckSprite.xaml.cs">
       <DependentUpon>TruckSprite.xaml</DependentUpon>
@@ -175,6 +181,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Sprites\BaseSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\FrogHomeSprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

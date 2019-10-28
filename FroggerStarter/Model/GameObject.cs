@@ -1,54 +1,14 @@
 ﻿using System;
-using System.Drawing;
-using FroggerStarter.View.Sprites;
-using Point = Windows.Foundation.Point;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
-    ///     Defines basic properties and behavior of every game object.
+    ///     Defines behavior of every game object.
     /// </summary>
-    public abstract class GameObject
+    public abstract class GameObject : BasicObject
     {
-        #region Data members
-
-        private Point location;
-
-        #endregion
 
         #region Properties
-
-        /// <summary>
-        ///     Gets or sets the x location of the game object.
-        /// </summary>
-        /// <value>
-        ///     The x.
-        /// </value>
-        public double X
-        {
-            get => this.location.X;
-            set
-            {
-                this.location.X = value;
-                this.render();
-            }
-        }
-
-        /// <summary>
-        ///     Gets or sets the y location of the game object.
-        /// </summary>
-        /// <value>
-        ///     The y.
-        /// </value>
-        public double Y
-        {
-            get => this.location.Y;
-            set
-            {
-                this.location.Y = value;
-                this.render();
-            }
-        }
 
         /// <summary>
         ///     Gets the x speed of the game object.
@@ -65,38 +25,6 @@ namespace FroggerStarter.Model
         ///     The speed y.
         /// </value>
         public int SpeedY { get; private set; }
-
-        /// <summary>
-        ///     Gets the width of the game object.
-        /// </summary>
-        /// <value>
-        ///     The width.
-        /// </value>
-        public double Width => this.Sprite.Width;
-
-        /// <summary>
-        ///     Gets the height of the game object.
-        /// </summary>
-        /// <value>
-        ///     The height.
-        /// </value>
-        public double Height => this.Sprite.Height;
-
-        /// <summary>
-        ///     Gets or sets the sprite associated with the game object.
-        /// </summary>
-        /// <value>
-        ///     The sprite.
-        /// </value>
-        public BaseSprite Sprite { get; protected set; }
-
-        /// <summary>
-        /// Gets the bounding box.
-        /// </summary>
-        /// <value>
-        /// The bounding box.
-        /// </value>
-        public Rectangle BoundingBox => new Rectangle((int) this.X, (int) this.Y, (int) this.Sprite.Width, (int) this.Sprite.Height);
 
         #endregion
 
@@ -150,11 +78,6 @@ namespace FroggerStarter.Model
         private void moveY(int y)
         {
             this.Y += y;
-        }
-
-        private void render()
-        {
-            this.Sprite.RenderAt(this.X, this.Y);
         }
 
         /// <summary>
