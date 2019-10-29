@@ -41,7 +41,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public PlayerManager()
         {
-            this.RemainingLives = 3;
+            this.RemainingLives = 4;
             this.Score = 0;
         }
 
