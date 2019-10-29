@@ -85,6 +85,11 @@ namespace FroggerStarter.Controller
             this.lifeTimer.Start();
         }
 
+        private void animationTimer()
+        {
+
+        }
+
         /// <summary>
         ///     Initializes the game working with appropriate classes to play frog
         ///     and vehicle on game screen.
@@ -290,6 +295,11 @@ namespace FroggerStarter.Controller
         {
             this.playerManager.DecrementLives();
             this.setPlayerToCenterOfBottomLane();
+        }
+
+        private void playDeathAnimation(Object sender, Object e)
+        {
+
         }
 
         private void handleReachingHouse()
