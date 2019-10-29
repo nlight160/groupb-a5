@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using FroggerStarter.View.Sprites;
+﻿using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
 {
@@ -20,6 +19,8 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="Frog" /> class.
+        ///     Precondition: none
+        ///     Postcondition: A frog object is created
         /// </summary>
         public Frog()
         {

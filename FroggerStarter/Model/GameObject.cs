@@ -5,9 +5,9 @@ namespace FroggerStarter.Model
     /// <summary>
     ///     Defines behavior of every game object.
     /// </summary>
-    public abstract class GameObject : BasicObject
+    /// <seealso cref="FroggerStarter.Model.StationaryObject" />
+    public abstract class GameObject : StationaryObject
     {
-
         #region Properties
 
         /// <summary>
@@ -72,12 +72,12 @@ namespace FroggerStarter.Model
 
         private void moveX(int x)
         {
-            this.X += x;
+            X += x;
         }
 
         private void moveY(int y)
         {
-            this.Y += y;
+            Y += y;
         }
 
         /// <summary>

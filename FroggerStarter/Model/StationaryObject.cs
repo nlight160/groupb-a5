@@ -1,21 +1,20 @@
-﻿using FroggerStarter.View.Sprites;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Drawing;
+using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Basic object that defines an objects size and location in the game
+    ///     Basic object that defines an objects size and location in the game
     /// </summary>
-    public abstract class BasicObject
+    public abstract class StationaryObject
     {
+        #region Data members
 
         private Point location;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         ///     Gets or sets the x location of the game object.
@@ -44,7 +43,7 @@ namespace FroggerStarter.Model
             get => this.location.Y;
             set
             {
-                this.location.Y = (int) value; //TODO dont know why this needed a cast
+                this.location.Y = (int) value;
                 this.render();
             }
         }
@@ -74,18 +73,23 @@ namespace FroggerStarter.Model
         public BaseSprite Sprite { get; protected set; }
 
         /// <summary>
-        /// Gets the bounding box.
+        ///     Gets the bounding box.
         /// </summary>
         /// <value>
-        /// The bounding box.
+        ///     The bounding box.
         /// </value>
-        public Rectangle BoundingBox => new Rectangle((int)this.X, (int)this.Y, (int)this.Sprite.Width, (int)this.Sprite.Height);
+        public Rectangle BoundingBox =>
+            new Rectangle((int) this.X, (int) this.Y, (int) this.Sprite.Width, (int) this.Sprite.Height);
 
+        #endregion
+
+        #region Methods
 
         private void render()
         {
             this.Sprite.RenderAt(this.X, this.Y);
         }
 
+        #endregion
     }
 }

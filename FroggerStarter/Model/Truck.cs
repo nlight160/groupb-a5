@@ -1,15 +1,19 @@
-﻿using FroggerStarter.View.Sprites;
+﻿using FroggerStarter.View.Sprites.Vehicles;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Handles Trucks and their functionality
+    ///     Handles Trucks and their functionality
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.Vehicle" />
     public class Truck : Vehicle
     {
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Truck"/> class.
+        ///     Initializes a new instance of the <see cref="Truck" /> class.
+        ///     Precondition: None
+        ///     Postcondition: A Truck object is created
         /// </summary>
         /// <param name="direction">The Direction.</param>
         /// <param name="speed">The speed.</param>
@@ -19,9 +23,15 @@ namespace FroggerStarter.Model
             this.initializeTruckSprite();
         }
 
+        #endregion
+
+        #region Methods
+
         private void initializeTruckSprite()
         {
             Sprite = new TruckSprite();
         }
+
+        #endregion
     }
 }

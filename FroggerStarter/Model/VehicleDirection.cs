@@ -1,16 +1,17 @@
 ﻿namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Values used to determine the Direction a vehicle travels
+    ///     Values used to determine the Direction a vehicle travels
     /// </summary>
     public enum VehicleDirection
     {
         /// <summary>
-        /// The left
+        ///     The left
         /// </summary>
         Left,
+
         /// <summary>
-        /// The right
+        ///     The right
         /// </summary>
         Right
     }

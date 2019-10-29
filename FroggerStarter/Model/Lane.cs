@@ -6,41 +6,70 @@ using System.Collections.ObjectModel;
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Stores and places vehicles them in the lane
+    ///     Stores and places vehicles in the lane
     /// </summary>
     /// <seealso cref="Vehicle" />
     public class Lane : IEnumerable
-   {
+    {
+        #region Data members
 
-       private readonly ICollection<Vehicle> vehicles;
-       private readonly int laneWidth;
+        private readonly ICollection<Vehicle> vehicles;
+        private readonly int laneWidth;
 
-       /// <summary>
-        /// Initializes a new instance of the <see cref="Lane"/> class.
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="Lane" /> class.
+        ///     Precondition: lane width > 0
+        ///     Postcondition: A lane object is created
         /// </summary>
+        /// <param name="laneWidth">Width of the lane.</param>
+        /// <exception cref="ArgumentOutOfRangeException">laneWidth</exception>
         public Lane(int laneWidth)
         {
+            if (laneWidth < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(laneWidth));
+            }
+
             this.vehicles = new Collection<Vehicle>();
             this.laneWidth = laneWidth;
         }
 
-       
+        #endregion
+
+        #region Methods
 
         /// <summary>
-        /// Adds the vehicle.
+        ///     Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator GetEnumerator()
+        {
+            foreach (var vehicle in this.vehicles)
+            {
+                yield return vehicle;
+            }
+        }
+
+        /// <summary>
+        ///     Adds the vehicle.
         /// </summary>
         /// <param name="vehicle">The vehicle.</param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">vehicle</exception>
         public void AddVehicle(Vehicle vehicle)
         {
             if (vehicle == null)
             {
                 throw new ArgumentNullException(nameof(vehicle));
             }
+
             this.vehicles.Add(vehicle);
         }
-
-       
 
         /// <summary>
         ///     Wraps the lane.
@@ -66,16 +95,23 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Sets the vehicles to lane.
+        ///     Sets the vehicles to lane.
+        ///     Precondition: laneY &gt; 0
+        ///     Postcondition: vehicles are spaced apart in a lane at the same Y location
         /// </summary>
         /// <param name="laneY">The lane y.</param>
+        /// <exception cref="ArgumentOutOfRangeException">laneY</exception>
         public void SetVehiclesToLane(int laneY)
         {
-            var vehicleGap = this.calculateDistanceBetweenVehicles();
+            if (laneY < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(laneY));
+            }
+
             var nextX = 0;
             foreach (var vehicle in this.vehicles)
             {
-                nextX += vehicleGap;
+                nextX += this.calculateDistanceBetweenVehicles();
                 vehicle.X = nextX;
                 vehicle.Y = laneY;
                 this.setSpriteDirectionToVehicleDirection(vehicle);
@@ -84,6 +120,11 @@ namespace FroggerStarter.Model
 
         private void setSpriteDirectionToVehicleDirection(Vehicle vehicle)
         {
+            if (vehicle == null)
+            {
+                throw new ArgumentNullException(nameof(vehicle));
+            }
+
             if (vehicle.Direction == VehicleDirection.Right)
             {
                 vehicle.Sprite.ReverseSprite();
@@ -96,21 +137,9 @@ namespace FroggerStarter.Model
         }
 
         /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
-        /// </returns>
-        public IEnumerator GetEnumerator()
-        {
-            foreach (var vehicle in this.vehicles)
-            {
-                yield return vehicle;
-            }
-        }
-
-        /// <summary>
-        /// Moves the vehicles in the lane.
+        ///     Moves the vehicles in the lane.
+        ///     Precondition: none
+        ///     Postcondition: All vehicles in the lane move together
         /// </summary>
         public void MoveVehiclesInLane()
         {
@@ -119,5 +148,7 @@ namespace FroggerStarter.Model
                 vehicle.MoveVehicle();
             }
         }
+
+        #endregion
     }
 }

@@ -3,22 +3,29 @@
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Generic vehicle class handles basic functionality for all vehicles
+    ///     Generic vehicle class handles basic functionality for all vehicles
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.GameObject" />
     public abstract class Vehicle : GameObject
     {
+        #region Properties
 
         /// <summary>
-        /// Gets the Direction.
+        ///     Gets the Direction.
         /// </summary>
         /// <value>
-        /// The Direction.
+        ///     The Direction.
         /// </value>
         public VehicleDirection Direction { get; }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="Vehicle" /> class.
+        ///     Initializes a new instance of the <see cref="Vehicle" /> class.
+        ///     Precondition: speed &gt; 0
+        ///     Postcondition: A vehicle objected is created
         /// </summary>
         /// <param name="direction">The direction of the vehicle's movement.</param>
         /// <param name="speed">The speed of the vehicle.</param>
@@ -29,23 +36,32 @@ namespace FroggerStarter.Model
             {
                 throw new ArgumentOutOfRangeException(nameof(speed));
             }
+
             this.Direction = direction;
-            this.SetSpeed(speed, 0);
+            SetSpeed(speed, 0);
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        /// Moves the vehicle based on its direction.
+        ///     Moves the vehicle based on its direction.
+        ///     Precondition: none
+        ///     Postcondition: vehicle moves right if its direction is right, left otherwise
         /// </summary>
         public void MoveVehicle()
         {
             if (this.Direction == VehicleDirection.Right)
             {
-                this.MoveRight();
+                MoveRight();
             }
             else
             {
-                this.MoveLeft();
+                MoveLeft();
             }
         }
+
+        #endregion
     }
 }

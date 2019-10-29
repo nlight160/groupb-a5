@@ -1,6 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.Foundation;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.Foundation;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -12,7 +12,6 @@ namespace FroggerStarter.View.Sprites
     /// <seealso cref="Windows.UI.Xaml.Controls.UserControl" />
     public abstract partial class BaseSprite : ISpriteRenderer
     {
-
         #region Constructors
 
         /// <summary>
@@ -28,8 +27,8 @@ namespace FroggerStarter.View.Sprites
         #region Methods
 
         /// <summary>
-        /// Renders user control at the specified (x,y) location in relation
-        /// to the top, left part of the canvas.
+        ///     Renders user control at the specified (x,y) location in relation
+        ///     to the top, left part of the canvas.
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
@@ -40,12 +39,14 @@ namespace FroggerStarter.View.Sprites
         }
 
         /// <summary>
-        /// Reverses the vehicle sprite.
+        ///     Reverses the sprite.
+        ///     Precondition: None
+        ///     PostCondition: Sprite is flipped
         /// </summary>
         public void ReverseSprite()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
-            RenderTransform = new ScaleTransform() { ScaleX = -1 };
+            RenderTransform = new ScaleTransform {ScaleX = -1};
         }
 
         #endregion

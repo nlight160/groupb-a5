@@ -1,60 +1,90 @@
-﻿namespace FroggerStarter.Model
-{
+﻿using System;
 
+namespace FroggerStarter.Model
+{
     /// <summary>
-    /// Handles construction of vehicles
+    ///     Handles construction of vehicles
     /// </summary>
     public class VehicleFactory
     {
+        #region Methods
 
         /// <summary>
-        /// Constructs the car that moves left.
+        ///     Constructs the car that moves left.
+        ///     Precondition: speed &gt; 0
         /// </summary>
-        /// <param name="speed">The speed.</param>
+        /// <param name="vehicleSpeed">The vehicle speed.</param>
         /// <returns>
-        /// A new car that moves left
+        ///     A new car that moves left
         /// </returns>
-        public Car ConstructCarThatMovesLeft(int speed)
+        /// <exception cref="ArgumentOutOfRangeException">vehicleSpeed</exception>
+        public Car ConstructCarThatMovesLeft(int vehicleSpeed)
         {
-            return new Car(VehicleDirection.Left, speed);
-        }
+            if (vehicleSpeed < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vehicleSpeed));
+            }
 
-
-        /// <summary>
-        /// Constructs the car that moves right.
-        /// </summary>
-        /// <param name="speed">The speed.</param>
-        /// <returns>
-        /// A new car that moves right
-        /// </returns>
-        public Car ConstructCarThatMovesRight(int speed)
-        {
-            return new Car(VehicleDirection.Right, speed);
-        }
-
-
-        /// <summary>
-        /// Constructs the truck that moves left.
-        /// </summary>
-        /// <param name="speed">The speed.</param>
-        /// <returns>
-        /// A new truck that moves left
-        /// </returns>
-        public Truck ConstructTruckThatMovesLeft(int speed)
-        {
-            return new Truck(VehicleDirection.Left, speed);
+            return new Car(VehicleDirection.Left, vehicleSpeed);
         }
 
         /// <summary>
-        /// Constructs the truck that moves right.
+        ///     Constructs the car that moves right.
+        ///     Precondition: speed &gt; 0
         /// </summary>
-        /// <param name="speed">The speed.</param>
+        /// <param name="vehicleSpeed">The vehicle speed.</param>
         /// <returns>
-        /// A new truck that moves right
+        ///     A new car that moves right
         /// </returns>
-        public Truck ConstructTruckThatMovesRight(int speed)
+        /// <exception cref="ArgumentOutOfRangeException">vehicleSpeed</exception>
+        public Car ConstructCarThatMovesRight(int vehicleSpeed)
         {
-            return new Truck(VehicleDirection.Right, speed);
+            if (vehicleSpeed < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vehicleSpeed));
+            }
+
+            return new Car(VehicleDirection.Right, vehicleSpeed);
         }
+
+        /// <summary>
+        ///     Constructs the truck that moves left.
+        ///     Precondition: speed &gt; 0
+        /// </summary>
+        /// <param name="vehicleSpeed">The vehicle speed.</param>
+        /// <returns>
+        ///     A new truck that moves left
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">vehicleSpeed</exception>
+        public Truck ConstructTruckThatMovesLeft(int vehicleSpeed)
+        {
+            if (vehicleSpeed < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vehicleSpeed));
+            }
+
+            return new Truck(VehicleDirection.Left, vehicleSpeed);
+        }
+
+        /// <summary>
+        ///     Constructs the truck that moves right.
+        ///     Precondition: speed &gt; 0
+        /// </summary>
+        /// <param name="vehicleSpeed">The vehicle speed.</param>
+        /// <returns>
+        ///     A new truck that moves right
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">vehicleSpeed</exception>
+        public Truck ConstructTruckThatMovesRight(int vehicleSpeed)
+        {
+            if (vehicleSpeed < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vehicleSpeed));
+            }
+
+            return new Truck(VehicleDirection.Right, vehicleSpeed);
+        }
+
+        #endregion
     }
 }

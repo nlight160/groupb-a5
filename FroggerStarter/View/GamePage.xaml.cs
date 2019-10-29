@@ -1,11 +1,8 @@
-﻿using System.Net.Mime;
-using Windows.Foundation;
+﻿using Windows.Foundation;
 using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Automation.Peers;
-using Windows.UI.Xaml.Controls;
 using FroggerStarter.Controller;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
@@ -23,42 +20,33 @@ namespace FroggerStarter.View
         private readonly double applicationWidth = (double) Application.Current.Resources["AppWidth"];
         private readonly GameManager gameManager;
 
-        public static TextBlock LivesTextBlock { get; set; } //TODO oof
-
-        public static TextBlock ScoreTextBlock { get; set; }
-
-        public static TextBlock GameOverTextBlock { get; set; }
-
-        public static TextBlock TimerTextBlock { get; set; }
-
-
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GamePage"/> class.
+        ///     Initializes a new instance of the <see cref="GamePage" /> class.
+        ///     Precondition: none
+        ///     PostCondition: Game page is set and initialized
         /// </summary>
         public GamePage()
         {
             this.InitializeComponent();
 
-            ApplicationView.GetForCurrentView().Title = "Frogger V2 by Nathaniel Lightholder"; 
+            ApplicationView.GetForCurrentView().Title = "Frogger V2 by Nathaniel Lightholder";
             ApplicationView.PreferredLaunchViewSize = new Size
                 {Width = this.applicationWidth, Height = this.applicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
             ApplicationView.GetForCurrentView()
                            .SetPreferredMinSize(new Size(this.applicationWidth, this.applicationHeight));
 
-            LivesTextBlock = this.livesTextBlock;
-            ScoreTextBlock = this.scoreTextBlock; //TODO nasty
-            GameOverTextBlock = this.gameOverTextBlock;
-            TimerTextBlock = this.timerTextBlock;
-            TimerTextBlock.Text = $"Timer: 20";
-
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
             this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
             this.gameManager.InitializeGame(this.canvas);
+            this.gameManager.GameOver += this.onGameOver;
+            this.gameManager.UpdateScore += this.onUpdateScore;
+            this.gameManager.UpdateTimer += this.onUpdateTimer;
+            this.gameManager.UpdateLives += this.onUpdateLives;
         }
 
         #endregion
@@ -82,6 +70,29 @@ namespace FroggerStarter.View
                     this.gameManager.MovePlayerDown();
                     break;
             }
+        }
+
+        private void onGameOver(object sender, GameOverEventArg e)
+        {
+            if (e.GameOver)
+            {
+                this.gameOverTextBlock.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void onUpdateScore(object sender, UpdateScoreEventArg e)
+        {
+            this.scoreTextBlock.Text = "Score: " + e.Score;
+        }
+
+        private void onUpdateTimer(object sender, UpdateTimerEventArg e)
+        {
+            this.timerTextBlock.Text = "Timer: " + e.LifeTimer;
+        }
+
+        private void onUpdateLives(object sender, UpdateLivesEventArgs e)
+        {
+            this.livesTextBlock.Text = "Lives: " + e.RemainingLives;
         }
 
         #endregion

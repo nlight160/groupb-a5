@@ -5,11 +5,13 @@ using FroggerStarter.Model;
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Manages all of the lanes
+    ///     Manages all of the lanes
     /// </summary>
     /// <seealso cref="System.Collections.IEnumerable" />
     public class RoadManager : IEnumerable
     {
+        #region Data members
+
         private const int LaneOffsetFromBottom = 55;
         private readonly IList<Lane> lanes;
         private readonly int backgroundWidth;
@@ -17,8 +19,12 @@ namespace FroggerStarter.Controller
         private readonly int laneHeight;
         private readonly VehicleFactory vehicleFactory;
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="RoadManager"/> class.
+        ///     Initializes a new instance of the <see cref="RoadManager" /> class.
         /// </summary>
         /// <param name="backgroundWidth">Width of the background.</param>
         /// <param name="backgroundHeight">Height of the background.</param>
@@ -30,19 +36,38 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.laneHeight = laneHeight;
             this.vehicleFactory = new VehicleFactory();
+        }
 
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator GetEnumerator()
+        {
+            foreach (var lane in this.lanes)
+            {
+                yield return lane;
+            }
         }
 
         /// <summary>
         ///     Constructs the road.
+        ///     Precondition: none
+        ///     Postcondition: All 5 lanes are placed and constructed
         /// </summary>
-        public void ConstructRoad() //TODO fix magic numbers for lane numbers and speed and DRY
+        public void ConstructRoad()
         {
-           this.constructLane1();
-           this.constructLane2();
-           this.constructLane3();
-           this.constructLane4();
-           this.constructLane5();
+            this.constructLane1();
+            this.constructLane2();
+            this.constructLane3();
+            this.constructLane4();
+            this.constructLane5();
         }
 
         private void constructLane5()
@@ -73,6 +98,7 @@ namespace FroggerStarter.Controller
             lane.SetVehiclesToLane(this.calculateLanePosition(3));
             this.lanes.Add(lane);
         }
+
         private void constructLane2()
         {
             var lane = new Lane(this.backgroundWidth);
@@ -93,11 +119,13 @@ namespace FroggerStarter.Controller
 
         private int calculateLanePosition(int laneNumber)
         {
-            return this.backgroundHeight - (this.laneHeight * laneNumber) - LaneOffsetFromBottom;
+            return this.backgroundHeight - this.laneHeight * laneNumber - LaneOffsetFromBottom;
         }
 
         /// <summary>
-        /// Moves the vehicles.
+        ///     Moves the vehicles.
+        ///     Precondition: none
+        ///     PostCondition: All vehicles in the road move in their specified direction
         /// </summary>
         public void MoveVehiclesInRoad()
         {
@@ -108,7 +136,7 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Wraps the  road.
+        ///     Wraps the  road.
         /// </summary>
         public void WrapRoad()
         {
@@ -118,19 +146,6 @@ namespace FroggerStarter.Controller
             }
         }
 
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
-        /// </summary>
-        /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
-        /// </returns>
-        public IEnumerator GetEnumerator()
-        {
-            foreach (var lane in this.lanes)
-            {
-                yield return lane;
-            }
-        }
-
+        #endregion
     }
 }

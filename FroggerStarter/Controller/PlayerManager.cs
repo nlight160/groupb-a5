@@ -1,43 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace FroggerStarter.Controller
+﻿namespace FroggerStarter.Controller
 {
     /// <summary>
-    /// Handles statistics related to the player
+    ///     Handles statistics related to the player
     /// </summary>
     public class PlayerManager
     {
+        #region Properties
 
         /// <summary>
-        /// Gets the remaining lives.
+        ///     Gets the remaining lives.
         /// </summary>
         /// <value>
-        /// The remaining lives.
+        ///     The remaining lives.
         /// </value>
         public int RemainingLives { get; private set; }
 
         /// <summary>
-        /// Gets the score.
+        ///     Gets the score.
         /// </summary>
         /// <value>
-        /// The score.
+        ///     The score.
         /// </value>
         public int Score { get; private set; }
 
         /// <summary>
-        /// Gets the homes occupied.
+        ///     Gets the homes occupied.
         /// </summary>
         /// <value>
-        /// The homes occupied.
+        ///     The homes occupied.
         /// </value>
         public int HomesOccupied { get; private set; }
 
+        #endregion
+
+        #region Constructors
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerManager"/> class.
+        ///     Initializes a new instance of the <see cref="PlayerManager" /> class.
+        ///     Precondition: none
+        ///     Postcondition: a player manager object is created
         /// </summary>
         public PlayerManager()
         {
@@ -45,8 +46,14 @@ namespace FroggerStarter.Controller
             this.Score = 0;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        /// Decrements the lives.
+        ///     Decrements the lives.
+        ///     Precondition: Lives > 0
+        ///     Postcondition: RemainingLived - 1
         /// </summary>
         public void DecrementLives()
         {
@@ -57,7 +64,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Increments the score.
+        ///     Increments the score.
+        ///     Precondition: none
+        ///     Postcondition: Score is increased by lives specified value
         /// </summary>
         public void IncrementScore(int scoreToAdd)
         {
@@ -65,10 +74,10 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Determines whether [is game over].
+        ///     Determines whether [is game over].
         /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is game over]; otherwise, <c>false</c>.
+        ///     <c>true</c> if [is game over]; otherwise, <c>false</c>.
         /// </returns>
         public bool IsGameOverConditionMet()
         {
@@ -76,11 +85,15 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Increments the houses occupied.
+        ///     Increments the houses occupied.
+        ///     Precondition: none
+        ///     Postcondition: HomesOccupied + 1
         /// </summary>
         public void IncrementHousesOccupied()
         {
             this.HomesOccupied++;
         }
+
+        #endregion
     }
 }
