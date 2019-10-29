@@ -10,7 +10,14 @@
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black" FocusVisualPrimaryBrush="#FFF7F4F4">
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
 
+        <Rectangle Canvas.Top="55" Canvas.Left="0" Fill="Black" Width="50" Height="50"/>
+        <Rectangle Canvas.Top="55" Canvas.Left="150" Fill="Black" Width="50" Height="50"/>
+        <Rectangle Canvas.Top="55" Canvas.Left="300" Fill="Black" Width="50" Height="50"/>
+        <Rectangle Canvas.Top="55" Canvas.Left="450" Fill="Black" Width="50" Height="50"/>
+        <Rectangle Canvas.Top="55" Canvas.Left="600" Fill="Black" Width="50" Height="50"/>
+
         <Rectangle Canvas.Top="355" Fill="Gray" Width="{StaticResource AppWidth}" Height="55" />
+
         <TextBlock Canvas.Left="248" Canvas.Top="10" Text="Frogger" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.459" Height="54" Width="162" Foreground="#FFF0E3E3" FontFamily="Bauhaus 93" FontSize="36" FontStyle="Normal" TextAlignment="Center"/>
         <TextBlock x:Name="gameOverTextBlock" Canvas.Left="147" Canvas.Top="140" Text="Game Over" TextWrapping="Wrap" FontFamily="Arial Black" FontSize="72" Height="128" Width="394" Foreground="#FFFBF009" Visibility="Collapsed" Canvas.ZIndex="10"/>
         <TextBlock x:Name="scoreTextBlock" Canvas.Left="556" Canvas.Top="19" Text="Score: 0" TextWrapping="Wrap" Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16"/>

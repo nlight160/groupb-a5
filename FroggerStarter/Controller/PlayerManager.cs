@@ -29,6 +29,14 @@ namespace FroggerStarter.Controller
         public int Score { get; private set; }
 
         /// <summary>
+        /// Gets the homes occupied.
+        /// </summary>
+        /// <value>
+        /// The homes occupied.
+        /// </value>
+        public int HomesOccupied { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PlayerManager"/> class.
         /// </summary>
         public PlayerManager()
@@ -64,7 +72,15 @@ namespace FroggerStarter.Controller
         /// </returns>
         public bool IsGameOverConditionMet()
         {
-            return this.RemainingLives == 0;
+            return this.RemainingLives == 0 || this.HomesOccupied == 5;
+        }
+
+        /// <summary>
+        /// Increments the houses occupied.
+        /// </summary>
+        public void IncrementHousesOccupied()
+        {
+            this.HomesOccupied++;
         }
     }
 }

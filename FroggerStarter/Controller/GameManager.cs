@@ -23,6 +23,8 @@ namespace FroggerStarter.Controller
         private DispatcherTimer timer;
         private readonly RoadManager roadManager;
         private readonly PlayerManager playerManager;
+        private readonly FrogHomeManager frogHomeManager;
+        private readonly CollisionDetection collisionDetection;
 
         #endregion
 
@@ -54,6 +56,8 @@ namespace FroggerStarter.Controller
             this.backgroundWidth = backgroundWidth;
             this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight, LaneHeight);
             this.playerManager = new PlayerManager();
+            this.frogHomeManager = new FrogHomeManager();
+            this.collisionDetection = new CollisionDetection();
             this.setupGameTimer();
         }
 
@@ -82,6 +86,23 @@ namespace FroggerStarter.Controller
             this.gameCanvas = gamePage ?? throw new ArgumentNullException(nameof(gamePage));
             this.createAndPlacePlayer();
             this.createAndPlaceVehicles();
+            this.createAndPlaceFrogHomes();
+        }
+
+        private void createAndPlaceFrogHomes()
+        {
+            this.addFrogHomesToManager(5);
+            this.frogHomeManager.SetFrogHomes();
+        }
+
+        private void addFrogHomesToManager(int numberOfHomes)
+        {
+            for (var i = 0; i < numberOfHomes; i++)
+            {
+                var home = new FrogHome();
+                this.frogHomeManager.AddFrogHome(home);
+                this.gameCanvas.Children.Add(home.Sprite);
+            }
         }
 
         private void createAndPlaceVehicles()
@@ -124,20 +145,11 @@ namespace FroggerStarter.Controller
         private void handleGameOperations()
         {
             this.roadManager.MoveVehiclesInRoad();
-            this.checkForCollision();
-            this.handleWin();
-            GamePage.ScoreTextBlock.Text = $"Score: " + this.playerManager.Score; //TODO oof
-            GamePage.LivesTextBlock.Text = $"Lives: " + this.playerManager.RemainingLives; 
+            this.handleCarCollision();
+            this.handleReachingHouse();
+            GamePage.ScoreTextBlock.Text = "Score: " + this.playerManager.Score; //TODO oof
+            GamePage.LivesTextBlock.Text = "Lives: " + this.playerManager.RemainingLives;
             this.roadManager.WrapRoad();
-        }
-
-        private void handleWin()
-        {
-            if (this.isPlayerAdjacentToTopBoundary())
-            {
-                this.playerManager.IncrementScore();
-                this.setPlayerToCenterOfBottomLane();
-            }
         }
 
         /// <summary>
@@ -148,7 +160,7 @@ namespace FroggerStarter.Controller
         public void MovePlayerLeft()
         {
             if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
-            ) 
+            )
             {
                 this.player.MoveLeft();
             }
@@ -184,15 +196,31 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            if (!this.isPlayerAdjacentToTopBoundary() && !this.playerManager.IsGameOverConditionMet())
+            if (!this.isPlayerOnTopBoundary() && !this.playerManager.IsGameOverConditionMet())
             {
                 this.player.MoveUp();
             }
         }
 
-        private bool isPlayerAdjacentToTopBoundary()
+        private bool isPlayerOnTopBoundary()
         {
-            return this.player.Y <= this.player.Height * 2;
+            if (this.player.Y < this.player.Height * 3 && !this.isPlayerUnderneathFrogHome()) //TODO agic number
+            {
+                this.handlePlayerLosingLife();
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool isPlayerUnderneathFrogHome()
+        {
+            if (this.player.X % 150 == 0 || this.player.X == 0)
+            {
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -213,24 +241,48 @@ namespace FroggerStarter.Controller
             return this.player.Y >= this.backgroundHeight - this.player.Height * 2;
         }
 
-        private void checkForCollision()
+        private void handleCarCollision()
         {
             foreach (Lane lane in this.roadManager)
             {
                 foreach (Vehicle vehicle in lane)
                 {
-                    if (this.player.BoundingBox.IntersectsWith(vehicle.BoundingBox))
+                    if (this.collisionDetection.CheckForVehicleOnPlayerCollision(this.player, vehicle))
                     {
-                        this.handleCollision();
+                        this.handlePlayerLosingLife();
                     }
                 }
             }
-        } //TODO could still be in wrong place
+        }
 
-        private void handleCollision()
+        private void handlePlayerLosingLife()
         {
             this.playerManager.DecrementLives();
             this.setPlayerToCenterOfBottomLane();
+        }
+
+        private void handleReachingHouse()
+        {
+            if (this.isPlayerOnAFrogHome())
+            {
+                this.playerManager.IncrementHousesOccupied();
+                this.playerManager.IncrementScore();
+                this.setPlayerToCenterOfBottomLane();
+            }
+        }
+
+        private bool isPlayerOnAFrogHome()
+        {
+            foreach (FrogHome home in this.frogHomeManager)
+            {
+                if (this.collisionDetection.CheckForPlayerOnFrogHomeCollision(this.player, home)) //TODO magic number
+                {
+                    home.MarkFrogHomeOccupied();
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #endregion

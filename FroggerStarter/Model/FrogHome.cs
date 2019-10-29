@@ -5,48 +5,49 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
 {
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="FroggerStarter.Model.BasicObject" />
     public class FrogHome : BasicObject
     {
-
-        private readonly ICollection<FrogHome> homes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrogHome" /> class.
         /// </summary>
         public FrogHome()
         {
-            this.homes = new Collection<FrogHome>();
             Sprite = new FrogHomeSprite();
+            Sprite.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
-        /// Sets the frog homes.
+        /// Marks the frog home occupied.
         /// </summary>
-        public void SetFrogHomes()
+        public void MarkFrogHomeOccupied()
         {
-            var homeGap = 150;
-            var nextX = 0;
-            foreach (var frogHome in this.homes)
+            Sprite.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        /// Determines whether [is frog home occupied].
+        /// </summary>
+        /// <returns>
+        ///   <c>true</c> if [is frog home occupied]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsFrogHomeOccupied()
+        {
+            if (Sprite.Visibility == Visibility.Visible)
             {
-                nextX += homeGap;
-                frogHome.X = nextX;
-                frogHome.Y = Sprite.Height;
+                return true;
             }
+
+            return false;
         }
-
-        /// <summary>
-        /// Adds the frog home.
-        /// </summary>
-        /// <param name="home">The home.</param>
-        public void AddFrogHome(FrogHome home)
-        {
-            this.homes.Add(home);
-        }
-
-
     }
 }
