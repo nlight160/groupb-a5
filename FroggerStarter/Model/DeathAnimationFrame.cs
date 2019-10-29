@@ -29,7 +29,7 @@ namespace FroggerStarter.Model
         /// </summary>
         /// <param name="x">The x.</param>
         /// <param name="y">The y.</param>
-        public void SetFrameLocation(int x, int y)
+        public void SetFrameLocation(double x, double y)
         {
             this.X = x;
             this.Y = y;

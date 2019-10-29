@@ -18,23 +18,33 @@ namespace FroggerStarter.Controller
     public class DeathAnimationManager
     {
 
-        public IList<DeathAnimationFrame> deathAnimation { get; }
+        public IList<DeathAnimationFrame> Frames { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeathAnimationManager"/> class.
         /// </summary>
         public DeathAnimationManager()
         {
-            this.deathAnimation = new List<DeathAnimationFrame>();
+            this.Frames = new List<DeathAnimationFrame>();
             this.initializeDeathSprites();
         }
 
         private void initializeDeathSprites()
         {
-            this.deathAnimation.Add(new DeathAnimationFrame(new DeathSprite1()));
-            this.deathAnimation.Add(new DeathAnimationFrame(new DeathSprite2()));
-            this.deathAnimation.Add(new DeathAnimationFrame(new DeathSprite3()));
-            this.deathAnimation.Add(new DeathAnimationFrame(new DeathSprite4()));
+            this.Frames.Add(new DeathAnimationFrame(new DeathSprite1()));
+            this.Frames.Add(new DeathAnimationFrame(new DeathSprite2()));
+            this.Frames.Add(new DeathAnimationFrame(new DeathSprite3()));
+            this.Frames.Add(new DeathAnimationFrame(new DeathSprite4()));
+        }
+
+        public void playNextFrame(int frameIndex)
+        {
+            this.Frames[frameIndex].SetFrameVisibility(Visibility.Visible);
+        }
+
+        public void hideCurrentFrame(int frameIndex)
+        {
+            this.Frames[frameIndex].SetFrameVisibility(Visibility.Collapsed);
         }
     }
 }

@@ -22,11 +22,14 @@ namespace FroggerStarter.Controller
         private Frog player;
         private DispatcherTimer timer;
         private DispatcherTimer lifeTimer;
+        private DispatcherTimer animationTimer;
         private int timeLeft;
+        private int animationIndex;
         private readonly RoadManager roadManager;
         private readonly PlayerManager playerManager;
         private readonly FrogHomeManager frogHomeManager;
         private readonly CollisionDetection collisionDetection;
+        private readonly DeathAnimationManager deathAnimation;
 
         #endregion
 
@@ -60,9 +63,12 @@ namespace FroggerStarter.Controller
             this.playerManager = new PlayerManager();
             this.frogHomeManager = new FrogHomeManager();
             this.collisionDetection = new CollisionDetection();
+            this.deathAnimation = new DeathAnimationManager();
             this.timeLeft = 20;
+            this.animationIndex = 0;
             this.setupGameTimer();
             this.setupLifeTimer();
+            this.setupAnimationTimer();
         }
 
         #endregion
@@ -85,9 +91,11 @@ namespace FroggerStarter.Controller
             this.lifeTimer.Start();
         }
 
-        private void animationTimer()
+        private void setupAnimationTimer()
         {
-
+            this.animationTimer = new DispatcherTimer();
+            this.animationTimer.Tick += this.animationTimerTick;
+            this.animationTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
         }
 
         /// <summary>
@@ -104,6 +112,7 @@ namespace FroggerStarter.Controller
             this.createAndPlacePlayer();
             this.createAndPlaceVehicles();
             this.createAndPlaceFrogHomes();
+            this.createAnimationSprites();
         }
 
         private void createAndPlaceFrogHomes()
@@ -141,6 +150,14 @@ namespace FroggerStarter.Controller
             this.setPlayerToCenterOfBottomLane();
         }
 
+        private void createAnimationSprites()
+        {
+            foreach (DeathAnimationFrame frame in this.deathAnimation.Frames)
+            {
+                    this.gameCanvas.Children.Add(frame.Sprite);
+            }
+        }
+
         private void setPlayerToCenterOfBottomLane()
         {
             this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
@@ -161,7 +178,49 @@ namespace FroggerStarter.Controller
 
         private void lifeTimerTick(object sender, object e)
         {
-            this.decrementTimer();
+            if (!this.playerManager.IsGameOverConditionMet() && !this.isDeathAnimationRunning())
+            {
+                this.decrementTimer();
+            }
+            
+        }
+
+        private bool isDeathAnimationRunning()
+        {
+            return this.animationTimer.IsEnabled;
+        }
+
+        private void animationTimerTick(object sender, object e)
+        {
+            if (this.animationIndex > 0)
+            {
+                this.deathAnimation.hideCurrentFrame(this.animationIndex - 1);
+            }
+            if (this.animationIndex == 4)
+            {
+                this.animationTimer.Stop();
+                if (!this.playerManager.IsGameOverConditionMet())
+                {
+                    this.player.Sprite.Visibility = Visibility.Visible;
+                }
+                this.animationIndex = 0;
+            }
+            else
+            {
+                this.deathAnimation.playNextFrame(this.animationIndex);
+                this.animationIndex++;
+            }
+            
+            
+
+        }
+
+        private void setAnimationFramesToPlayerLocation()
+        {
+            foreach (var frame in this.deathAnimation.Frames)
+            {
+                frame.SetFrameLocation(this.player.X, this.player.Y);
+            }
         }
 
         private void handleGameOperations()
@@ -171,7 +230,7 @@ namespace FroggerStarter.Controller
             this.handleReachingHouse();
             GamePage.ScoreTextBlock.Text = "Score: " + this.playerManager.Score; //TODO oof
             GamePage.LivesTextBlock.Text = "Lives: " + this.playerManager.RemainingLives;
-            GamePage.TimerTextBlock.Text = "Lives: " + this.timeLeft;
+            GamePage.TimerTextBlock.Text = "Timer: " + this.timeLeft;
             this.roadManager.WrapRoad();
         }
 
@@ -180,6 +239,7 @@ namespace FroggerStarter.Controller
             if (this.timeLeft == 0)
             {
                 this.playerManager.DecrementLives();
+                this.startAnimation();
                 this.timeLeft = 20;
             }
             else
@@ -196,7 +256,7 @@ namespace FroggerStarter.Controller
         public void MovePlayerLeft()
         {
             if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
-            )
+                                                       && !this.isDeathAnimationRunning() && !this.isDeathAnimationRunning())
             {
                 this.player.MoveLeft();
             }
@@ -214,7 +274,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            if (!this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet())
+            if (!this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() && !this.isDeathAnimationRunning() && !this.isDeathAnimationRunning())
             {
                 this.player.MoveRight();
             }
@@ -232,7 +292,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            if (!this.isPlayerOnTopBoundary() && !this.playerManager.IsGameOverConditionMet())
+            if (!this.isPlayerOnTopBoundary() && !this.playerManager.IsGameOverConditionMet() && !this.isDeathAnimationRunning())
             {
                 this.player.MoveUp();
             }
@@ -266,7 +326,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet())
+            if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet() && !this.isDeathAnimationRunning())
             {
                 this.player.MoveDown();
             }
@@ -294,12 +354,16 @@ namespace FroggerStarter.Controller
         private void handlePlayerLosingLife()
         {
             this.playerManager.DecrementLives();
-            this.setPlayerToCenterOfBottomLane();
+            this.startAnimation();
+            this.timeLeft = 20;
         }
 
-        private void playDeathAnimation(Object sender, Object e)
+        private void startAnimation()
         {
-
+            this.animationTimer.Start();
+            this.setAnimationFramesToPlayerLocation();
+            this.player.Sprite.Visibility = Visibility.Collapsed;
+            this.setPlayerToCenterOfBottomLane();
         }
 
         private void handleReachingHouse()
