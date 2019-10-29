@@ -59,9 +59,9 @@ namespace FroggerStarter.Controller
         /// <summary>
         /// Increments the score.
         /// </summary>
-        public void IncrementScore()
+        public void IncrementScore(int scoreToAdd)
         {
-            this.Score++;
+            this.Score += scoreToAdd * this.RemainingLives;
         }
 
         /// <summary>

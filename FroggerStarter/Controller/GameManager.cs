@@ -21,6 +21,8 @@ namespace FroggerStarter.Controller
         private Canvas gameCanvas;
         private Frog player;
         private DispatcherTimer timer;
+        private DispatcherTimer lifeTimer;
+        private int timeLeft;
         private readonly RoadManager roadManager;
         private readonly PlayerManager playerManager;
         private readonly FrogHomeManager frogHomeManager;
@@ -58,7 +60,9 @@ namespace FroggerStarter.Controller
             this.playerManager = new PlayerManager();
             this.frogHomeManager = new FrogHomeManager();
             this.collisionDetection = new CollisionDetection();
+            this.timeLeft = 20;
             this.setupGameTimer();
+            this.setupLifeTimer();
         }
 
         #endregion
@@ -71,6 +75,14 @@ namespace FroggerStarter.Controller
             this.timer.Tick += this.timerOnTick;
             this.timer.Interval = new TimeSpan(0, 0, 0, 0, 15);
             this.timer.Start();
+        }
+
+        private void setupLifeTimer()
+        {
+            this.lifeTimer = new DispatcherTimer();
+            this.lifeTimer.Tick += this.lifeTimerTick;
+            this.lifeTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            this.lifeTimer.Start();
         }
 
         /// <summary>
@@ -142,6 +154,11 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void lifeTimerTick(object sender, object e)
+        {
+            this.decrementTimer();
+        }
+
         private void handleGameOperations()
         {
             this.roadManager.MoveVehiclesInRoad();
@@ -149,7 +166,21 @@ namespace FroggerStarter.Controller
             this.handleReachingHouse();
             GamePage.ScoreTextBlock.Text = "Score: " + this.playerManager.Score; //TODO oof
             GamePage.LivesTextBlock.Text = "Lives: " + this.playerManager.RemainingLives;
+            GamePage.TimerTextBlock.Text = "Lives: " + this.timeLeft;
             this.roadManager.WrapRoad();
+        }
+
+        private void decrementTimer()
+        {
+            if (this.timeLeft == 0)
+            {
+                this.playerManager.DecrementLives();
+                this.timeLeft = 20;
+            }
+            else
+            {
+                this.timeLeft--;
+            }
         }
 
         /// <summary>
@@ -266,7 +297,8 @@ namespace FroggerStarter.Controller
             if (this.isPlayerOnAFrogHome())
             {
                 this.playerManager.IncrementHousesOccupied();
-                this.playerManager.IncrementScore();
+                this.playerManager.IncrementScore(this.timeLeft);
+                this.timeLeft = 20;
                 this.setPlayerToCenterOfBottomLane();
             }
         }

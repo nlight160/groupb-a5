@@ -29,6 +29,8 @@ namespace FroggerStarter.View
 
         public static TextBlock GameOverTextBlock { get; set; }
 
+        public static TextBlock TimerTextBlock { get; set; }
+
 
         #endregion
 
@@ -49,8 +51,10 @@ namespace FroggerStarter.View
                            .SetPreferredMinSize(new Size(this.applicationWidth, this.applicationHeight));
 
             LivesTextBlock = this.livesTextBlock;
-            ScoreTextBlock = this.scoreTextBlock;
+            ScoreTextBlock = this.scoreTextBlock; //TODO nasty
             GameOverTextBlock = this.gameOverTextBlock;
+            TimerTextBlock = this.timerTextBlock;
+            TimerTextBlock.Text = $"Timer: 20";
 
             Window.Current.CoreWindow.KeyDown += this.coreWindowOnKeyDown;
             this.gameManager = new GameManager(this.applicationHeight, this.applicationWidth);
