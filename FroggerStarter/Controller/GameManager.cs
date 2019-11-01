@@ -206,8 +206,6 @@ namespace FroggerStarter.Controller
                 this.setGameOverScreen();
                 this.soundManager.PlayGameOverSound();
                 this.timer.Stop();
-
-                
             }
         }
 
@@ -323,8 +321,9 @@ namespace FroggerStarter.Controller
                                                        && !this.isDeathAnimationRunning())
             {
                 this.player.MoveLeft();
-            }else if (this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
-                                                            && !this.isDeathAnimationRunning())
+            }
+            else if (this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
+                                                           && !this.isDeathAnimationRunning())
             {
                 this.soundManager.PlayWallCollisionSound();
             }
