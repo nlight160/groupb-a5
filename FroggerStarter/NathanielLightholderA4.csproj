@@ -126,6 +126,7 @@
     <Compile Include="Controller\FrogHomeManager.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
+    <Compile Include="Controller\SoundManager.cs" />
     <Compile Include="Model\Car.cs" />
     <Compile Include="Model\StationaryObject.cs" />
     <Compile Include="Model\AnimationFrame.cs" />
@@ -178,6 +179,14 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Game Sounds\133283__leszek-szary__game-over.wav" />
+    <Content Include="Assets\Game Sounds\220173__gameaudio__spacey-1up-power-up.wav" />
+    <Content Include="Assets\Game Sounds\242501__gabrielaraujo__powerup-success.wav" />
+    <Content Include="Assets\Game Sounds\442943__qubodup__level-up.wav" />
+    <Content Include="Assets\PlayerDying\381382__coltonmanz__alarm.wav" />
+    <Content Include="Assets\PlayerDying\344402__jawbutch__body-wall-impact.wav" />
+    <Content Include="Assets\PlayerDying\420356__eponn__crash.wav" />
+    <Content Include="Assets\PlayerDying\9508__petenice__splash.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />

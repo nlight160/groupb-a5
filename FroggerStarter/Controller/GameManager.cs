@@ -57,6 +57,7 @@ namespace FroggerStarter.Controller
         private readonly FrogHomeManager frogHomeManager;
         private readonly CollisionDetection collisionDetection;
         private readonly AnimationManager deathAnimation;
+        private readonly SoundManager soundManager;
 
         #endregion
 
@@ -91,6 +92,7 @@ namespace FroggerStarter.Controller
             this.frogHomeManager = new FrogHomeManager(FrogHomeOffset);
             this.collisionDetection = new CollisionDetection();
             this.deathAnimation = new AnimationManager();
+            this.soundManager = new SoundManager();
 
             this.timeLeft = 20;
             this.animationIndex = 0;
@@ -202,12 +204,17 @@ namespace FroggerStarter.Controller
             else
             {
                 this.setGameOverScreen();
+                this.soundManager.PlayGameOverSound();
+                this.timer.Stop();
+
+                
             }
         }
 
         private void setGameOverScreen()
         {
             var isGameOver = new GameOverEventArg {GameOver = true};
+            this.soundManager.PlayGameOverSound();
             this.GameOver?.Invoke(this, isGameOver);
         }
 
@@ -295,6 +302,7 @@ namespace FroggerStarter.Controller
             if (this.timeLeft == 0)
             {
                 this.playerManager.DecrementLives();
+                this.soundManager.PlayTimeOutSound();
                 this.handleStartAnimation();
                 this.timeLeft = 20;
             }
@@ -315,6 +323,10 @@ namespace FroggerStarter.Controller
                                                        && !this.isDeathAnimationRunning())
             {
                 this.player.MoveLeft();
+            }else if (this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
+                                                            && !this.isDeathAnimationRunning())
+            {
+                this.soundManager.PlayWallCollisionSound();
             }
         }
 
@@ -334,6 +346,11 @@ namespace FroggerStarter.Controller
                 !this.isDeathAnimationRunning())
             {
                 this.player.MoveRight();
+            }
+            else if (this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() &&
+                     !this.isDeathAnimationRunning())
+            {
+                this.soundManager.PlayWallCollisionSound();
             }
         }
 
@@ -420,6 +437,7 @@ namespace FroggerStarter.Controller
         private void handlePlayerLosingLife()
         {
             this.playerManager.DecrementLives();
+            this.soundManager.PlayVehicleCollisionSound();
             this.handleStartAnimation();
             this.timeLeft = 20;
         }
@@ -438,6 +456,7 @@ namespace FroggerStarter.Controller
             {
                 this.playerManager.IncrementHousesOccupied();
                 this.playerManager.IncrementScore(this.timeLeft);
+                this.soundManager.PlayHomeSound();
                 this.timeLeft = 20;
                 this.setPlayerToCenterOfBottomLane();
             }
