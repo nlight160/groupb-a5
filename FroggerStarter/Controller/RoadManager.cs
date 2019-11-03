@@ -83,8 +83,7 @@ namespace FroggerStarter.Controller
         private void constructLane4()
         {
             var lane = new Lane(this.backgroundWidth);
-            lane.AddVehicle(this.vehicleFactory.ConstructTruckThatMovesLeft(4));
-            lane.AddVehicle(this.vehicleFactory.ConstructTruckThatMovesLeft(4));
+            lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesLeft(10));
             lane.SetVehiclesToLane(this.calculateLanePosition(4));
             this.lanes.Add(lane);
         }

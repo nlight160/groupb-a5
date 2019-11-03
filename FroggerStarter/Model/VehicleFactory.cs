@@ -85,6 +85,44 @@ namespace FroggerStarter.Model
             return new Truck(VehicleDirection.Right, vehicleSpeed);
         }
 
+        /// <summary>
+        ///     Constructs the super car that moves left.
+        ///     Precondition: speed &gt; 0
+        /// </summary>
+        /// <param name="vehicleSpeed">The vehicle speed.</param>
+        /// <returns>
+        ///     A new super car that moves left
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">vehicleSpeed</exception>
+        public SuperCar ConstructSuperCarThatMovesLeft(int vehicleSpeed)
+        {
+            if (vehicleSpeed < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vehicleSpeed));
+            }
+
+            return new SuperCar(VehicleDirection.Left, vehicleSpeed);
+        }
+
+        /// <summary>
+        ///     Constructs the super car that moves right.
+        ///     Precondition: speed &gt; 0
+        /// </summary>
+        /// <param name="vehicleSpeed">The vehicle speed.</param>
+        /// <returns>
+        ///     A new super car that moves right
+        /// </returns>
+        /// <exception cref="ArgumentOutOfRangeException">vehicleSpeed</exception>
+        public SuperCar ConstructSuperCarThatMovesRight(int vehicleSpeed)
+        {
+            if (vehicleSpeed < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vehicleSpeed));
+            }
+
+            return new SuperCar(VehicleDirection.Right, vehicleSpeed);
+        }
+
         #endregion
     }
 }
