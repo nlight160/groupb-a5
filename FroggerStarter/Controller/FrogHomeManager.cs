@@ -9,7 +9,7 @@ namespace FroggerStarter.Controller
     /// <summary>
     /// </summary>
     /// <seealso cref="System.Collections.IEnumerable" />
-    public class FrogHomeManager : IEnumerable
+    public class FrogHomeManager : IEnumerable<FrogHome>
     {
         #region Data members
 
@@ -71,7 +71,7 @@ namespace FroggerStarter.Controller
         ///     Precondition: none
         ///     Postcondition: frog homes are set centered and spaced equally at goal
         /// </summary>
-        public void SetFrogHomes()
+        public void PlaceFrogHomes()
         {
             var nextX = 0;
             foreach (var frogHome in this.homes)
@@ -80,6 +80,11 @@ namespace FroggerStarter.Controller
                 frogHome.Y = frogHome.Height;
                 nextX += this.frogHomeOffset;
             }
+        }
+
+        IEnumerator<FrogHome> IEnumerable<FrogHome>.GetEnumerator()
+        {
+            return homes.GetEnumerator();
         }
 
         #endregion

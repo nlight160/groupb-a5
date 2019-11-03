@@ -9,11 +9,11 @@ namespace FroggerStarter.Model
     ///     Stores and places vehicles in the lane
     /// </summary>
     /// <seealso cref="Vehicle" />
-    public class Lane : IEnumerable
+    public class Lane : IEnumerable<Vehicle>
     {
         #region Data members
 
-        private readonly ICollection<Vehicle> vehicles;
+        private readonly List<Vehicle> vehicles;
         private readonly int laneWidth;
 
         #endregion
@@ -34,7 +34,7 @@ namespace FroggerStarter.Model
                 throw new ArgumentOutOfRangeException(nameof(laneWidth));
             }
 
-            this.vehicles = new Collection<Vehicle>();
+            this.vehicles = new List<Vehicle>();
             this.laneWidth = laneWidth;
         }
 
@@ -84,7 +84,7 @@ namespace FroggerStarter.Model
 
         private void setVehicleXtoBeginningOfTheLane(Vehicle vehicle)
         {
-            if (vehicle.Direction == VehicleDirection.Left && vehicle.X < 0)
+            if (vehicle.Direction == VehicleDirection.Left && vehicle.X < -vehicle.Width)
             {
                 vehicle.X = this.laneWidth + vehicle.Width;
             }
@@ -147,6 +147,11 @@ namespace FroggerStarter.Model
             {
                 vehicle.MoveVehicle();
             }
+        }
+
+        IEnumerator<Vehicle> IEnumerable<Vehicle>.GetEnumerator()
+        {
+            return this.vehicles.GetEnumerator();
         }
 
         #endregion

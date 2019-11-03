@@ -8,7 +8,7 @@ namespace FroggerStarter.Controller
     ///     Manages all of the lanes
     /// </summary>
     /// <seealso cref="System.Collections.IEnumerable" />
-    public class RoadManager : IEnumerable
+    public class RoadManager : IEnumerable<Lane>
     {
         #region Data members
 
@@ -144,6 +144,11 @@ namespace FroggerStarter.Controller
             {
                 lane.WrapLane();
             }
+        }
+
+        IEnumerator<Lane> IEnumerable<Lane>.GetEnumerator()
+        {
+            return this.lanes.GetEnumerator();
         }
 
         #endregion

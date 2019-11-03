@@ -19,6 +19,7 @@ namespace FroggerStarter.Controller
         private const int FrogHomeOffset = 150;
         private const int TopBoundaryY = 3;
         private const int NumberOfHomes = 5;
+        private const int InitialTimeLeft = 20;
 
         /// <summary>
         ///     The game over
@@ -94,7 +95,7 @@ namespace FroggerStarter.Controller
             this.deathAnimation = new AnimationManager();
             this.soundManager = new SoundManager();
 
-            this.timeLeft = 20;
+            this.timeLeft = InitialTimeLeft;
             this.animationIndex = 0;
 
             this.setupGameTimer();
@@ -126,7 +127,7 @@ namespace FroggerStarter.Controller
         {
             this.animationTimer = new DispatcherTimer();
             this.animationTimer.Tick += this.animationTimerTick;
-            this.animationTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
+            this.animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 650);
         }
 
         /// <summary>
@@ -149,7 +150,7 @@ namespace FroggerStarter.Controller
         private void createAndPlaceFrogHomes()
         {
             this.addFrogHomesToManager(NumberOfHomes);
-            this.frogHomeManager.SetFrogHomes();
+            this.frogHomeManager.PlaceFrogHomes();
         }
 
         private void addFrogHomesToManager(int numberOfHomes)
@@ -183,7 +184,7 @@ namespace FroggerStarter.Controller
 
         private void createAnimationSprites()
         {
-            foreach (var frame in this.deathAnimation.Frames)
+            foreach (AnimationFrame frame in this.deathAnimation)
             {
                 this.gameCanvas.Children.Add(frame.Sprite);
             }
@@ -260,7 +261,7 @@ namespace FroggerStarter.Controller
 
         private void setAnimationFramesToPlayerLocation()
         {
-            foreach (var frame in this.deathAnimation.Frames)
+            foreach (AnimationFrame frame in this.deathAnimation)
             {
                 frame.SetFrameLocation(this.player.X, this.player.Y);
             }
@@ -269,7 +270,7 @@ namespace FroggerStarter.Controller
         private void handleGameOperations()
         {
             this.roadManager.MoveVehiclesInRoad();
-            this.handleCarCollision();
+            this.handleAllCarCollisions();
             this.handleReachingHouse();
             this.updateScore();
             this.updateLives();
@@ -302,7 +303,7 @@ namespace FroggerStarter.Controller
                 this.playerManager.DecrementLives();
                 this.soundManager.PlayTimeOutSound();
                 this.handleStartAnimation();
-                this.timeLeft = 20;
+                this.timeLeft = InitialTimeLeft;
             }
             else
             {
@@ -419,17 +420,22 @@ namespace FroggerStarter.Controller
             return this.player.Y >= this.backgroundHeight - this.player.Height * 2;
         }
 
-        private void handleCarCollision()
+        private void handleAllCarCollisions()
         {
             foreach (Lane lane in this.roadManager)
             {
                 foreach (Vehicle vehicle in lane)
                 {
-                    if (this.collisionDetection.CheckForVehicleOnPlayerCollision(this.player, vehicle))
-                    {
-                        this.handlePlayerLosingLife();
-                    }
+                    this.handleSingleCarCollision(vehicle);
                 }
+            }
+        }
+
+        private void handleSingleCarCollision(Vehicle vehicle)
+        {
+            if (this.collisionDetection.CheckForVehicleOnPlayerCollision(this.player, vehicle))
+            {
+                this.handlePlayerLosingLife();
             }
         }
 
@@ -438,12 +444,13 @@ namespace FroggerStarter.Controller
             this.playerManager.DecrementLives();
             this.soundManager.PlayVehicleCollisionSound();
             this.handleStartAnimation();
-            this.timeLeft = 20;
+            this.timeLeft = InitialTimeLeft;
         }
 
         private void handleStartAnimation()
         {
             this.animationTimer.Start();
+            this.deathAnimation.PlayNextFrame(0);
             this.setAnimationFramesToPlayerLocation();
             this.player.Sprite.Visibility = Visibility.Collapsed;
             this.setPlayerToCenterOfBottomLane();
@@ -456,7 +463,7 @@ namespace FroggerStarter.Controller
                 this.playerManager.IncrementHousesOccupied();
                 this.playerManager.IncrementScore(this.timeLeft);
                 this.soundManager.PlayHomeSound();
-                this.timeLeft = 20;
+                this.timeLeft = InitialTimeLeft;
                 this.setPlayerToCenterOfBottomLane();
             }
         }

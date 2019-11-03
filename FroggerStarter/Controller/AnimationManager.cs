@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using FroggerStarter.Model;
@@ -9,17 +10,11 @@ namespace FroggerStarter.Controller
     /// <summary>
     ///     Manages the death frames to form an animation sequence
     /// </summary>
-    public class AnimationManager
+    public class AnimationManager : IEnumerable<AnimationFrame>
     {
-        #region Properties
+        #region Data members
 
-        /// <summary>
-        ///     Gets the frames.
-        /// </summary>
-        /// <value>
-        ///     The frames.
-        /// </value>
-        public IList<AnimationFrame> Frames { get; }
+        private IList<AnimationFrame> frames;
 
         #endregion
 
@@ -32,7 +27,7 @@ namespace FroggerStarter.Controller
         /// </summary>
         public AnimationManager()
         {
-            this.Frames = new List<AnimationFrame>();
+            this.frames = new List<AnimationFrame>();
             this.initializeDeathSprites();
         }
 
@@ -42,10 +37,10 @@ namespace FroggerStarter.Controller
 
         private void initializeDeathSprites()
         {
-            this.Frames.Add(new AnimationFrame(new DeathSprite1()));
-            this.Frames.Add(new AnimationFrame(new DeathSprite2()));
-            this.Frames.Add(new AnimationFrame(new DeathSprite3()));
-            this.Frames.Add(new AnimationFrame(new DeathSprite4()));
+            this.frames.Add(new AnimationFrame(new DeathSprite1()));
+            this.frames.Add(new AnimationFrame(new DeathSprite2()));
+            this.frames.Add(new AnimationFrame(new DeathSprite3()));
+            this.frames.Add(new AnimationFrame(new DeathSprite4()));
         }
 
         /// <summary>
@@ -57,12 +52,12 @@ namespace FroggerStarter.Controller
         /// <exception cref="ArgumentOutOfRangeException">frameIndex</exception>
         public void PlayNextFrame(int frameIndex)
         {
-            if (frameIndex < 0 || frameIndex > this.Frames.Count)
+            if (frameIndex < 0 || frameIndex > this.frames.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(frameIndex));
             }
 
-            this.Frames[frameIndex].Sprite.Visibility = Visibility.Visible;
+            this.frames[frameIndex].Sprite.Visibility = Visibility.Visible;
         }
 
         /// <summary>
@@ -74,13 +69,33 @@ namespace FroggerStarter.Controller
         /// <exception cref="ArgumentOutOfRangeException">frameIndex</exception>
         public void HideCurrentFrame(int frameIndex)
         {
-            if (frameIndex < 0 || frameIndex > this.Frames.Count)
+            if (frameIndex < 0 || frameIndex > this.frames.Count)
             {
                 throw new ArgumentOutOfRangeException(nameof(frameIndex));
             }
 
-            this.Frames[frameIndex].Sprite.Visibility = Visibility.Collapsed;
+            this.frames[frameIndex].Sprite.Visibility = Visibility.Collapsed;
         }
+
+        /// <summary>
+        /// Returns an enumerator that iterates through a collection.
+        /// </summary>
+        /// <returns>
+        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        /// </returns>
+        public IEnumerator GetEnumerator()
+        {
+            foreach (var animationFrame in this.frames)
+            {
+                yield return animationFrame;
+            }
+        }
+
+        IEnumerator<AnimationFrame> IEnumerable<AnimationFrame>.GetEnumerator()
+        {
+            return this.frames.GetEnumerator();
+        }
+
 
         #endregion
     }
