@@ -68,6 +68,35 @@ namespace FroggerStarter.Controller
             return player.BoundingBox.IntersectsWith(home.BoundingBox);
         }
 
+        /// <summary> TODO only implemented for bonus time
+        ///     Checks for player on frog home collision.
+        ///     Precondition: player != null AND powerup != null
+        /// </summary>
+        /// <param name="player">The player.</param>
+        /// <param name="powerUp">The power up.</param>
+        /// <returns>
+        ///     True if player is intersecting a home's bounding box, false otherwise
+        /// </returns>
+        /// <exception cref="ArgumentNullException">
+        ///     player
+        ///     or
+        ///     home
+        /// </exception>
+        public bool CheckForPlayerOnBonusTimePowerUpCollision(Frog player, BonusTimePowerUp powerUp)
+        {
+            if (player == null)
+            {
+                throw new ArgumentNullException(nameof(player));
+            }
+
+            if (powerUp == null)
+            {
+                throw new ArgumentNullException(nameof(powerUp));
+            }
+
+            return player.BoundingBox.IntersectsWith(powerUp.BoundingBox);
+        }
+
         #endregion
     }
 }

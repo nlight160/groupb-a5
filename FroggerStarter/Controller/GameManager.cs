@@ -57,6 +57,7 @@ namespace FroggerStarter.Controller
         private readonly CollisionDetection collisionDetection;
         private readonly AnimationManager deathAnimation;
         private readonly SoundManager soundManager;
+        private readonly BonusTimePowerUp bonusTimePowerUp;
 
         #endregion
 
@@ -92,6 +93,7 @@ namespace FroggerStarter.Controller
             this.collisionDetection = new CollisionDetection();
             this.deathAnimation = new AnimationManager();
             this.soundManager = new SoundManager();
+            this.bonusTimePowerUp = new BonusTimePowerUp((int) this.backgroundWidth, (int) this.backgroundHeight);
 
             this.timeLeft = InitialTimeLeft;
 
@@ -134,6 +136,12 @@ namespace FroggerStarter.Controller
             this.createAndPlaceVehicles();
             this.createAndPlaceFrogHomes();
             this.createAnimationSprites();
+            this.createAndPlaceBonusTimePowerUp();
+        }
+
+        private void createAndPlaceBonusTimePowerUp()
+        {
+            this.gameCanvas.Children.Add(this.bonusTimePowerUp.Sprite);
         }
 
         private void createAndPlaceFrogHomes()
@@ -219,11 +227,23 @@ namespace FroggerStarter.Controller
             this.roadManager.MoveVehiclesInRoad();
             this.handleAllCarCollisions();
             this.handleReachingHouse();
+            this.handlePowerUp();
             this.updateScore();
             this.updateLives();
             this.updateTimer();
             this.roadManager.WrapRoad();
             this.handlePlayerVisibility();
+        }
+
+        private void handlePowerUp() //TODO name isn't accurate
+        {
+            if (this.collisionDetection.CheckForPlayerOnBonusTimePowerUpCollision(this.player, this.bonusTimePowerUp) &&
+                this.bonusTimePowerUp.Sprite.Visibility == Visibility.Visible)
+            {
+                this.timeLeft += this.bonusTimePowerUp.GetBonusTime();
+                this.bonusTimePowerUp.Sprite.Visibility = Visibility.Collapsed;
+                this.bonusTimePowerUp.StartBonusTimePowerUpTimer();
+            }
         }
 
         private void handlePlayerVisibility()
