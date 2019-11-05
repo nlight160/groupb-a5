@@ -8,7 +8,7 @@ namespace FroggerStarter.Controller
     ///     Manages all of the lanes
     /// </summary>
     /// <seealso cref="System.Collections.IEnumerable" />
-    public class RoadManager : IEnumerable<Lane>
+    public class RoadManager : IEnumerable<Vehicle>
     {
         #region Data members
 
@@ -48,11 +48,15 @@ namespace FroggerStarter.Controller
         /// <returns>
         ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Vehicle> GetEnumerator()
         {
             foreach (var lane in this.lanes)
             {
-                yield return lane;
+                foreach (var item in lane)
+                {
+                    yield return item;
+                }
+                
             }
         }
 
@@ -144,10 +148,9 @@ namespace FroggerStarter.Controller
                 lane.WrapLane();
             }
         }
-
-        IEnumerator<Lane> IEnumerable<Lane>.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.lanes.GetEnumerator();
+            return this.GetEnumerator();
         }
 
         #endregion

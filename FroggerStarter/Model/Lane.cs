@@ -48,7 +48,7 @@ namespace FroggerStarter.Model
         /// <returns>
         ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
         /// </returns>
-        public IEnumerator GetEnumerator()
+        public IEnumerator<Vehicle> GetEnumerator()
         {
             foreach (var vehicle in this.vehicles)
             {
@@ -149,7 +149,7 @@ namespace FroggerStarter.Model
             }
         }
 
-        IEnumerator<Vehicle> IEnumerable<Vehicle>.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return this.vehicles.GetEnumerator();
         }

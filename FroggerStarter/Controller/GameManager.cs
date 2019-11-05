@@ -159,12 +159,11 @@ namespace FroggerStarter.Controller
         private void createAndPlaceVehicles()
         {
             this.roadManager.ConstructRoad();
-            foreach (Lane lane in this.roadManager)
+            foreach (var vehicle in this.roadManager)
             {
-                foreach (Vehicle vehicle in lane)
-                {
+               
                     this.gameCanvas.Children.Add(vehicle.Sprite);
-                }
+                
             }
         }
 
@@ -400,12 +399,11 @@ namespace FroggerStarter.Controller
 
         private void handleAllCarCollisions()
         {
-            foreach (Lane lane in this.roadManager)
+            foreach (var vehicle in this.roadManager)
             {
-                foreach (Vehicle vehicle in lane)
-                {
+                
                     this.handleSingleCarCollision(vehicle);
-                }
+                
             }
         }
 
