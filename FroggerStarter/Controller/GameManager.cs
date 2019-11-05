@@ -14,13 +14,6 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private const int BottomLaneOffset = 5;
-        private const int LaneHeight = 50;
-        private const int FrogHomeOffset = 150;
-        private const int TopBoundaryY = 3;
-        private const int NumberOfHomes = 5;
-        private const int InitialTimeLeft = 20;
-
         /// <summary>
         ///     The game over
         /// </summary>
@@ -58,6 +51,7 @@ namespace FroggerStarter.Controller
         private readonly AnimationManager deathAnimation;
         private readonly SoundManager soundManager;
         private readonly BonusTimePowerUp bonusTimePowerUp;
+        private readonly GameSettings gameSettings;
 
         #endregion
 
@@ -87,15 +81,17 @@ namespace FroggerStarter.Controller
 
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
-            this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight, LaneHeight);
+            this.gameSettings = new GameSettings();
+            this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight,
+                this.gameSettings.LaneHeight);
             this.playerManager = new PlayerManager();
-            this.frogHomeManager = new FrogHomeManager(FrogHomeOffset);
+            this.frogHomeManager = new FrogHomeManager(this.gameSettings.FrogHomeOffset);
             this.collisionDetection = new CollisionDetection();
             this.deathAnimation = new AnimationManager();
             this.soundManager = new SoundManager();
             this.bonusTimePowerUp = new BonusTimePowerUp((int) this.backgroundWidth, (int) this.backgroundHeight);
 
-            this.timeLeft = InitialTimeLeft;
+            this.timeLeft = this.gameSettings.InitialTimeLeft;
 
             this.setupGameTimer();
             this.setupLifeTimer();
@@ -146,7 +142,7 @@ namespace FroggerStarter.Controller
 
         private void createAndPlaceFrogHomes()
         {
-            this.addFrogHomesToManager(NumberOfHomes);
+            this.addFrogHomesToManager(this.gameSettings.NumberOfHomes);
             this.frogHomeManager.PlaceFrogHomes();
         }
 
@@ -190,7 +186,7 @@ namespace FroggerStarter.Controller
         private void setPlayerToCenterOfBottomLane()
         {
             this.player.X = this.backgroundWidth / 2 - this.player.Width / 2;
-            this.player.Y = this.backgroundHeight - this.player.Height - BottomLaneOffset;
+            this.player.Y = this.backgroundHeight - this.player.Height - this.gameSettings.BottomLaneOffset;
         }
 
         private void timerOnTick(object sender, object e)
@@ -284,7 +280,7 @@ namespace FroggerStarter.Controller
                 this.playerManager.DecrementLives();
                 this.soundManager.PlayTimeOutSound();
                 this.handleDeathAnimation();
-                this.timeLeft = InitialTimeLeft;
+                this.timeLeft = this.gameSettings.InitialTimeLeft;
             }
             else
             {
@@ -356,7 +352,8 @@ namespace FroggerStarter.Controller
 
         private bool isPlayerOnTopBoundary()
         {
-            if (this.player.Y < this.player.Height * TopBoundaryY && !this.isPlayerUnderneathFrogHome())
+            if (this.player.Y < this.player.Height * this.gameSettings.TopBoundaryModifier &&
+                !this.isPlayerUnderneathFrogHome())
             {
                 this.handlePlayerLosingLife();
                 return true;
@@ -379,7 +376,7 @@ namespace FroggerStarter.Controller
 
         private bool isPlayerUnderneathFrogHome()
         {
-            return Math.Abs(this.player.X % FrogHomeOffset) <= 0 || Math.Abs(this.player.X) <= 0;
+            return Math.Abs(this.player.X % this.gameSettings.FrogHomeOffset) <= 0 || Math.Abs(this.player.X) <= 0;
         }
 
         /// <summary>
@@ -425,7 +422,7 @@ namespace FroggerStarter.Controller
             this.playerManager.DecrementLives();
             this.soundManager.PlayVehicleCollisionSound();
             this.handleDeathAnimation();
-            this.timeLeft = InitialTimeLeft;
+            this.timeLeft = this.gameSettings.InitialTimeLeft;
         }
 
         private void handleDeathAnimation()
@@ -451,7 +448,7 @@ namespace FroggerStarter.Controller
                 this.playerManager.IncrementHousesOccupied();
                 this.playerManager.IncrementScore(this.timeLeft);
                 this.soundManager.PlayHomeSound();
-                this.timeLeft = InitialTimeLeft;
+                this.timeLeft = this.gameSettings.InitialTimeLeft;
                 this.setPlayerToCenterOfBottomLane();
             }
         }
