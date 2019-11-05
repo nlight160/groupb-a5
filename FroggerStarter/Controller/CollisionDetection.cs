@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
@@ -10,20 +11,14 @@ namespace FroggerStarter.Controller
     {
         #region Methods
 
-        /// <summary>
-        ///     Checks for vehicle on player collision.
-        ///     Precondition: player != null AND vehicle != null
-        /// </summary>
+        /// <summary>Checks for vehicle on player collision.
+        ///   Precondition: player != null AND vehicle != null</summary>
         /// <param name="player">The player.</param>
         /// <param name="vehicle">The vehicle.</param>
-        /// <returns>
-        ///     True if player is intersecting a vehicle's bounding box, false otherwise
-        /// </returns>
-        /// <exception cref="ArgumentNullException">
-        ///     player
-        ///     or
-        ///     vehicle
-        /// </exception>
+        /// <returns>True if player is intersecting a visible vehicle's bounding box, false otherwise</returns>
+        /// <exception cref="ArgumentNullException">player
+        ///   or
+        ///   vehicle</exception>
         public bool CheckForVehicleOnPlayerCollision(Frog player, Vehicle vehicle)
         {
             if (player == null)
@@ -36,7 +31,8 @@ namespace FroggerStarter.Controller
                 throw new ArgumentNullException(nameof(vehicle));
             }
 
-            return player.BoundingBox.IntersectsWith(vehicle.BoundingBox);
+            return player.BoundingBox.IntersectsWith(vehicle.BoundingBox) 
+                   && vehicle.Sprite.Visibility == Visibility.Visible;
         }
 
         /// <summary>

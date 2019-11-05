@@ -1,5 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Windows.UI.Xaml;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
@@ -17,7 +20,9 @@ namespace FroggerStarter.Controller
         private readonly int backgroundWidth;
         private readonly int backgroundHeight;
         private readonly int laneHeight;
+        private int vehicleIndex;
         private readonly VehicleFactory vehicleFactory;
+        private DispatcherTimer vehicleTimer;
 
         #endregion
 
@@ -36,11 +41,41 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.laneHeight = laneHeight;
             this.vehicleFactory = new VehicleFactory();
+            this.vehicleIndex = 0;
+
         }
 
         #endregion
 
         #region Methods
+
+        private void setupVehicleTimer()
+        {
+            this.vehicleTimer = new DispatcherTimer();
+            this.vehicleTimer.Tick += this.addVehicleOnTick;
+            this.vehicleTimer.Interval = new TimeSpan(0, 0, 0, 10, 0);
+
+        }
+
+        private void addVehicleOnTick(object sender, object e)
+        {
+            
+        }
+
+        private Vehicle determineWhichVehicleToAdd()
+        {
+            foreach (var lane in this.lanes)
+            {
+                if (this.vehicleIndex >= lane.Count())
+                {
+                    return null;
+                }
+
+                return lane.ElementAt(this.vehicleIndex);
+            }
+
+            return null;
+        }
 
         /// <summary>
         ///     Returns an enumerator that iterates through a collection.
@@ -52,9 +87,9 @@ namespace FroggerStarter.Controller
         {
             foreach (var lane in this.lanes)
             {
-                foreach (var item in lane)
+                foreach (var vehicle in lane)
                 {
-                    yield return item;
+                    yield return vehicle;
                 }
                 
             }
