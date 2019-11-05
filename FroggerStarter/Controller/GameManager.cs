@@ -227,7 +227,7 @@ namespace FroggerStarter.Controller
             this.roadManager.MoveVehiclesInRoad();
             this.handleAllCarCollisions();
             this.handleReachingHouse();
-            this.handlePowerUp();
+            this.handleBonusTimePowerUp();
             this.updateScore();
             this.updateLives();
             this.updateTimer();
@@ -235,11 +235,12 @@ namespace FroggerStarter.Controller
             this.handlePlayerVisibility();
         }
 
-        private void handlePowerUp() //TODO name isn't accurate
+        private void handleBonusTimePowerUp()
         {
             if (this.collisionDetection.CheckForPlayerOnBonusTimePowerUpCollision(this.player, this.bonusTimePowerUp) &&
                 this.bonusTimePowerUp.Sprite.Visibility == Visibility.Visible)
             {
+                this.soundManager.PlayPowerUpSound();
                 this.timeLeft += this.bonusTimePowerUp.GetBonusTime();
                 this.bonusTimePowerUp.Sprite.Visibility = Visibility.Collapsed;
                 this.bonusTimePowerUp.StartBonusTimePowerUpTimer();
