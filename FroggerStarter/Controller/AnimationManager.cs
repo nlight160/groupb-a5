@@ -14,7 +14,9 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private IList<AnimationFrame> frames;
+        private readonly IList<AnimationFrame> frames;
+        private int frameIndex;
+        private DispatcherTimer deathAnimationTimer;
 
         #endregion
 
@@ -29,59 +31,19 @@ namespace FroggerStarter.Controller
         {
             this.frames = new List<AnimationFrame>();
             this.initializeDeathSprites();
+            this.frameIndex = 0;
+            this.setupAnimationTimer();
         }
 
         #endregion
 
         #region Methods
 
-        private void initializeDeathSprites()
-        {
-            this.frames.Add(new AnimationFrame(new DeathSprite1()));
-            this.frames.Add(new AnimationFrame(new DeathSprite2()));
-            this.frames.Add(new AnimationFrame(new DeathSprite3()));
-            this.frames.Add(new AnimationFrame(new DeathSprite4()));
-        }
-
         /// <summary>
-        ///     Plays the next frame.
-        ///     Precondition: frameIndex is within range
-        ///     Postcondition: frame at index is visible
-        /// </summary>
-        /// <param name="frameIndex">Index of the frame.</param>
-        /// <exception cref="ArgumentOutOfRangeException">frameIndex</exception>
-        public void PlayNextFrame(int frameIndex)
-        {
-            if (frameIndex < 0 || frameIndex > this.frames.Count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(frameIndex));
-            }
-
-            this.frames[frameIndex].Sprite.Visibility = Visibility.Visible;
-        }
-
-        /// <summary>
-        ///     Hides the current frame.
-        ///     Precondition: frameIndex is within range
-        ///     Postcondition: frame at index is hidden
-        /// </summary>
-        /// <param name="frameIndex">Index of the frame.</param>
-        /// <exception cref="ArgumentOutOfRangeException">frameIndex</exception>
-        public void HideCurrentFrame(int frameIndex)
-        {
-            if (frameIndex < 0 || frameIndex > this.frames.Count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(frameIndex));
-            }
-
-            this.frames[frameIndex].Sprite.Visibility = Visibility.Collapsed;
-        }
-
-        /// <summary>
-        /// Returns an enumerator that iterates through a collection.
+        ///     Returns an enumerator that iterates through a collection.
         /// </summary>
         /// <returns>
-        /// An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
+        ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
         /// </returns>
         public IEnumerator GetEnumerator()
         {
@@ -96,6 +58,100 @@ namespace FroggerStarter.Controller
             return this.frames.GetEnumerator();
         }
 
+        private void initializeDeathSprites()
+        {
+            this.frames.Add(new AnimationFrame(new DeathSprite1()));
+            this.frames.Add(new AnimationFrame(new DeathSprite2()));
+            this.frames.Add(new AnimationFrame(new DeathSprite3()));
+            this.frames.Add(new AnimationFrame(new DeathSprite4()));
+        }
+
+        /// <summary>
+        ///     Plays the next frame.
+        ///     Precondition: frameIndex is within range
+        ///     Postcondition: frame at index is visible
+        /// </summary>
+        /// <param name="index">Index of the frame.</param>
+        /// <exception cref="ArgumentOutOfRangeException">frameIndex</exception>
+        public void PlayNextFrame(int index)
+        {
+            if (index < 0 || index > this.frames.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            this.frames[index].Sprite.Visibility = Visibility.Visible;
+        }
+
+        /// <summary>
+        ///     Hides the current frame.
+        ///     Precondition: frameIndex is within range
+        ///     Postcondition: frame at index is hidden
+        /// </summary>
+        /// <param name="index">Index of the frame.</param>
+        /// <exception cref="ArgumentOutOfRangeException">frameIndex</exception>
+        public void HideCurrentFrame(int index)
+        {
+            if (index < 0 || index > this.frames.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(index));
+            }
+
+            this.frames[index].Sprite.Visibility = Visibility.Collapsed;
+        }
+
+        private void setupAnimationTimer()
+        {
+            this.deathAnimationTimer = new DispatcherTimer();
+            this.deathAnimationTimer.Tick += this.animationTimerTick;
+            this.deathAnimationTimer.Interval = new TimeSpan(0, 0, 0, 0, 500);
+        }
+
+        private void animationTimerTick(object sender, object e)
+        {
+            if (this.frameIndex > 0)
+            {
+                this.HideCurrentFrame(this.frameIndex - 1);
+            }
+
+            if (this.frameIndex == 4)
+            {
+                this.handleStopAnimation();
+            }
+            else
+            {
+                this.PlayNextFrame(this.frameIndex);
+                this.frameIndex++;
+            }
+        }
+
+        /// <summary>
+        ///     Determines whether [is death animation running].
+        ///     Precondition: none
+        /// </summary>
+        /// <returns>
+        ///     <c>true</c> if [is death animation running]; otherwise, <c>false</c>.
+        /// </returns>
+        public bool IsDeathAnimationRunning()
+        {
+            return this.deathAnimationTimer.IsEnabled;
+        }
+
+        private void handleStopAnimation()
+        {
+            this.deathAnimationTimer.Stop();
+            this.frameIndex = 0;
+        }
+
+        /// <summary>
+        ///     Starts the death animation timer.
+        ///     Precondition: none
+        ///     Postcondition: death animation timer begins
+        /// </summary>
+        public void StartDeathAnimationTimer()
+        {
+            this.deathAnimationTimer.Start();
+        }
 
         #endregion
     }
