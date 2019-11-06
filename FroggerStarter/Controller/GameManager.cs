@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -56,6 +55,7 @@ namespace FroggerStarter.Controller
         private readonly SoundManager soundManager;
         private readonly BonusTimePowerUp bonusTimePowerUp;
         private readonly GameSettings gameSettings;
+        private readonly InvincibilityPowerUp invincibilityPowerUp;
 
         #endregion
 
@@ -94,6 +94,7 @@ namespace FroggerStarter.Controller
             this.deathAnimation = new AnimationManager();
             this.soundManager = new SoundManager();
             this.bonusTimePowerUp = new BonusTimePowerUp((int) this.backgroundWidth, (int) this.backgroundHeight);
+            this.invincibilityPowerUp = new InvincibilityPowerUp();
 
             this.timeLeft = this.gameSettings.InitialTimeLeft;
             this.vehicleIndex = 0;
@@ -146,12 +147,13 @@ namespace FroggerStarter.Controller
             this.createAndPlaceVehicles();
             this.createAndPlaceFrogHomes();
             this.createAnimationSprites();
-            this.createAndPlaceBonusTimePowerUp();
+            this.createAndPlacePowerUps();
         }
 
-        private void createAndPlaceBonusTimePowerUp()
+        private void createAndPlacePowerUps()
         {
             this.gameCanvas.Children.Add(this.bonusTimePowerUp.Sprite);
+            this.gameCanvas.Children.Add(this.invincibilityPowerUp.Sprite);
         }
 
         private void createAndPlaceFrogHomes()
@@ -175,10 +177,9 @@ namespace FroggerStarter.Controller
             this.roadManager.ConstructRoad();
             foreach (var vehicle in this.roadManager)
             {
-               
-                    this.gameCanvas.Children.Add(vehicle.Sprite);
-                
+                this.gameCanvas.Children.Add(vehicle.Sprite);
             }
+
             this.makeVehicleVisible();
         }
 
@@ -252,6 +253,7 @@ namespace FroggerStarter.Controller
             this.handleAllCarCollisions();
             this.handleReachingHouse();
             this.handleBonusTimePowerUp();
+            this.handleInvincibilityPowerUp();
             this.updateScore();
             this.updateLives();
             this.updateTimer();
@@ -261,13 +263,24 @@ namespace FroggerStarter.Controller
 
         private void handleBonusTimePowerUp()
         {
-            if (this.collisionDetection.CheckForPlayerOnBonusTimePowerUpCollision(this.player, this.bonusTimePowerUp) &&
+            if (this.collisionDetection.CheckForPlayerOnPowerUpCollision(this.player, this.bonusTimePowerUp) &&
                 this.bonusTimePowerUp.Sprite.Visibility == Visibility.Visible)
             {
                 this.soundManager.PlayPowerUpSound();
                 this.timeLeft += this.bonusTimePowerUp.GetBonusTime();
                 this.bonusTimePowerUp.Sprite.Visibility = Visibility.Collapsed;
                 this.bonusTimePowerUp.StartBonusTimePowerUpTimer();
+            }
+        }
+
+        private void handleInvincibilityPowerUp()
+        {
+            if (this.collisionDetection.CheckForPlayerOnPowerUpCollision(this.player, this.invincibilityPowerUp) &&
+                this.invincibilityPowerUp.Sprite.Visibility == Visibility.Visible)
+            {
+                this.soundManager.PlayPowerUpSound();
+                this.invincibilityPowerUp.Sprite.Visibility = Visibility.Collapsed;
+                this.invincibilityPowerUp.StartInvincibilityPowerUpTimer();
             }
         }
 
@@ -430,15 +443,14 @@ namespace FroggerStarter.Controller
         {
             foreach (var vehicle in this.roadManager)
             {
-                
-                    this.handleSingleCarCollision(vehicle);
-                
+                this.handleSingleCarCollision(vehicle);
             }
         }
 
         private void handleSingleCarCollision(Vehicle vehicle)
         {
-            if (this.collisionDetection.CheckForVehicleOnPlayerCollision(this.player, vehicle))
+            if (this.collisionDetection.CheckForVehicleOnPlayerCollision(this.player, vehicle) &&
+                !this.invincibilityPowerUp.IsInvincibilityActive())
             {
                 this.handlePlayerLosingLife();
             }

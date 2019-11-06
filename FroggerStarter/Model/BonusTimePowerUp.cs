@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Numerics;
 using Windows.UI.Xaml;
 using FroggerStarter.View.Sprites;
 
@@ -27,7 +26,8 @@ namespace FroggerStarter.Model
         /// <summary>
         ///     Initializes a new instance of the <see cref="BonusTimePowerUp" /> class.
         /// </summary>
-        /// <param name="backgroundWidth">Width of the background.</param> TODO magic numbers present in class
+        /// <param name="backgroundWidth">Width of the background.</param>
+        /// TODO magic numbers present in class
         /// <param name="backgroundHeight">Height of the background.</param>
         public BonusTimePowerUp(int backgroundWidth, int backgroundHeight)
         {
@@ -62,7 +62,7 @@ namespace FroggerStarter.Model
             if (this.totalTime == this.timeUntilNextPowerUp)
             {
                 this.resetBonusTimePowerUp();
-                this.StopBonusTimePowerUpTimer();
+                this.respawnTimer.Stop();
             }
 
             this.totalTime++;
@@ -77,12 +77,7 @@ namespace FroggerStarter.Model
             return this.random.Next(1, 11);
         }
 
-        /// <summary>
-        ///     Resets the time until next power up.
-        ///     Precondition: none
-        /// </summary>
-        /// <returns>The time delay to spawn the next power up</returns>
-        public int calculateTimeUntilNextPowerUp()
+        private int calculateTimeUntilNextPowerUp()
         {
             return this.random.Next(this.totalTime + 1, this.totalTime + 21);
         }
@@ -96,14 +91,6 @@ namespace FroggerStarter.Model
             this.timeUntilNextPowerUp = this.calculateTimeUntilNextPowerUp();
         }
 
-        /// <summary>
-        ///     Stops the bonus time power up timer.
-        /// </summary>
-        public void StopBonusTimePowerUpTimer()
-        {
-            this.respawnTimer.Stop();
-        }
-
         private void resetBonusTimePowerUp()
         {
             X = this.roundDownToNearestMultipleOfFifty(this.random.Next(0, this.backgroundWidth - 50));
@@ -113,7 +100,7 @@ namespace FroggerStarter.Model
 
         private int roundDownToNearestMultipleOfFifty(int value)
         {
-            int remainder = value % 50;
+            var remainder = value % 50;
             return value - remainder;
         }
 

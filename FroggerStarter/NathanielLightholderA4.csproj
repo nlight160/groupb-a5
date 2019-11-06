@@ -130,6 +130,7 @@
     <Compile Include="Controller\SoundManager.cs" />
     <Compile Include="Model\BonusTimePowerUp.cs" />
     <Compile Include="Model\Car.cs" />
+    <Compile Include="Model\InvincibilityPowerUp.cs" />
     <Compile Include="Model\SuperCar.cs" />
     <Compile Include="Model\StationaryObject.cs" />
     <Compile Include="Model\AnimationFrame.cs" />
@@ -167,6 +168,9 @@
     </Compile>
     <Compile Include="View\Sprites\FrogHomeSprite.xaml.cs">
       <DependentUpon>FrogHomeSprite.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Sprites\InvincibilitySprite.xaml.cs">
+      <DependentUpon>InvincibilitySprite.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Sprites\Vehicles\SuperCarSprite.xaml.cs">
       <DependentUpon>SuperCarSprite.xaml</DependentUpon>
@@ -239,6 +243,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="View\Sprites\FrogHomeSprite.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Sprites\InvincibilitySprite.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

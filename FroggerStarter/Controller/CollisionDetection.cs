@@ -64,7 +64,7 @@ namespace FroggerStarter.Controller
             return player.BoundingBox.IntersectsWith(home.BoundingBox);
         }
 
-        /// <summary> TODO only implemented for bonus time
+        /// <summary> TODO change to generic power up when implemented
         ///     Checks for player on frog home collision.
         ///     Precondition: player != null AND powerup != null
         /// </summary>
@@ -78,7 +78,7 @@ namespace FroggerStarter.Controller
         ///     or
         ///     home
         /// </exception>
-        public bool CheckForPlayerOnBonusTimePowerUpCollision(Frog player, BonusTimePowerUp powerUp)
+        public bool CheckForPlayerOnPowerUpCollision(Frog player, StationaryObject powerUp)
         {
             if (player == null)
             {
