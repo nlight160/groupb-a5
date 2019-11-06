@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Model;
@@ -41,8 +43,10 @@ namespace FroggerStarter.Controller
         private Frog player;
         private DispatcherTimer timer;
         private DispatcherTimer lifeTimer;
+        private DispatcherTimer vehicleTimer;
 
         private int timeLeft;
+        private int vehicleIndex;
 
         private readonly RoadManager roadManager;
         private readonly PlayerManager playerManager;
@@ -92,9 +96,11 @@ namespace FroggerStarter.Controller
             this.bonusTimePowerUp = new BonusTimePowerUp((int) this.backgroundWidth, (int) this.backgroundHeight);
 
             this.timeLeft = this.gameSettings.InitialTimeLeft;
+            this.vehicleIndex = 0;
 
             this.setupGameTimer();
             this.setupLifeTimer();
+            this.setupVehicleTimer();
         }
 
         #endregion
@@ -115,6 +121,14 @@ namespace FroggerStarter.Controller
             this.lifeTimer.Tick += this.lifeTimerTick;
             this.lifeTimer.Interval = new TimeSpan(0, 0, 0, 1, 0);
             this.lifeTimer.Start();
+        }
+
+        private void setupVehicleTimer()
+        {
+            this.vehicleTimer = new DispatcherTimer();
+            this.vehicleTimer.Tick += this.vehicleTimerTick;
+            this.vehicleTimer.Interval = new TimeSpan(0, 0, 0, 5, 0);
+            this.vehicleTimer.Start();
         }
 
         /// <summary>
@@ -165,6 +179,13 @@ namespace FroggerStarter.Controller
                     this.gameCanvas.Children.Add(vehicle.Sprite);
                 
             }
+            this.makeVehicleVisible();
+        }
+
+        private void makeVehicleVisible()
+        {
+            this.roadManager.ElementAt(this.vehicleIndex).Sprite.Visibility = Visibility.Visible;
+            this.vehicleIndex++;
         }
 
         private void createAndPlacePlayer()
@@ -214,6 +235,14 @@ namespace FroggerStarter.Controller
             if (!this.playerManager.IsGameOverConditionMet() && !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.decrementTimer();
+            }
+        }
+
+        private void vehicleTimerTick(object sender, object e)
+        {
+            if (this.vehicleIndex < this.roadManager.Count())
+            {
+                this.makeVehicleVisible();
             }
         }
 

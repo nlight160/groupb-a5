@@ -1,4 +1,5 @@
-﻿using FroggerStarter.View.Sprites.Vehicles;
+﻿using Windows.UI.Xaml;
+using FroggerStarter.View.Sprites.Vehicles;
 
 namespace FroggerStarter.Model
 {
@@ -29,7 +30,10 @@ namespace FroggerStarter.Model
 
         private void initializeCarSprite()
         {
-            Sprite = new CarSprite();
+            Sprite = new CarSprite
+            {
+                Visibility = Visibility.Collapsed
+            };
         }
 
         #endregion

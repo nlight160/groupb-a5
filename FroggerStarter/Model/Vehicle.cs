@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 
 namespace FroggerStarter.Model
 {
