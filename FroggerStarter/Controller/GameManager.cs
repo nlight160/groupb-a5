@@ -53,9 +53,8 @@ namespace FroggerStarter.Controller
         private readonly CollisionDetection collisionDetection;
         private readonly AnimationManager deathAnimation;
         private readonly SoundManager soundManager;
-        private readonly BonusTimePowerUp bonusTimePowerUp;
+        private readonly PowerUpManager powerUpManager;
         private readonly GameSettings gameSettings;
-        private readonly InvincibilityPowerUp invincibilityPowerUp;
 
         #endregion
 
@@ -85,6 +84,7 @@ namespace FroggerStarter.Controller
 
             this.backgroundHeight = backgroundHeight;
             this.backgroundWidth = backgroundWidth;
+            this.soundManager = new SoundManager();
             this.gameSettings = new GameSettings();
             this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight,
                 this.gameSettings.LaneHeight);
@@ -92,9 +92,8 @@ namespace FroggerStarter.Controller
             this.frogHomeManager = new FrogHomeManager(this.gameSettings.FrogHomeOffset);
             this.collisionDetection = new CollisionDetection();
             this.deathAnimation = new AnimationManager();
-            this.soundManager = new SoundManager();
-            this.bonusTimePowerUp = new BonusTimePowerUp((int) this.backgroundWidth, (int) this.backgroundHeight);
-            this.invincibilityPowerUp = new InvincibilityPowerUp();
+            this.powerUpManager =
+                new PowerUpManager(this.soundManager, (int) this.backgroundWidth, (int) this.backgroundHeight);
 
             this.timeLeft = this.gameSettings.InitialTimeLeft;
             this.vehicleIndex = 0;
@@ -152,8 +151,8 @@ namespace FroggerStarter.Controller
 
         private void createAndPlacePowerUps()
         {
-            this.gameCanvas.Children.Add(this.bonusTimePowerUp.Sprite);
-            this.gameCanvas.Children.Add(this.invincibilityPowerUp.Sprite);
+            this.gameCanvas.Children.Add(this.powerUpManager.TimePowerUp.Sprite);
+            this.gameCanvas.Children.Add(this.powerUpManager.InvincibilityPowerUp.Sprite);
         }
 
         private void createAndPlaceFrogHomes()
@@ -263,24 +262,26 @@ namespace FroggerStarter.Controller
 
         private void handleBonusTimePowerUp()
         {
-            if (this.collisionDetection.CheckForPlayerOnPowerUpCollision(this.player, this.bonusTimePowerUp) &&
-                this.bonusTimePowerUp.Sprite.Visibility == Visibility.Visible)
+            if (this.collisionDetection.CheckForPlayerOnPowerUpCollision(this.player,
+                    this.powerUpManager.TimePowerUp) &&
+                this.powerUpManager.TimePowerUp.Sprite.Visibility == Visibility.Visible)
             {
                 this.soundManager.PlayPowerUpSound();
-                this.timeLeft += this.bonusTimePowerUp.GetBonusTime();
-                this.bonusTimePowerUp.Sprite.Visibility = Visibility.Collapsed;
-                this.bonusTimePowerUp.StartBonusTimePowerUpTimer();
+                this.timeLeft += this.powerUpManager.TimePowerUp.GetBonusTime();
+                this.powerUpManager.TimePowerUp.Sprite.Visibility = Visibility.Collapsed;
+                this.powerUpManager.StartBonusTimePowerUpTimer();
             }
         }
 
         private void handleInvincibilityPowerUp()
         {
-            if (this.collisionDetection.CheckForPlayerOnPowerUpCollision(this.player, this.invincibilityPowerUp) &&
-                this.invincibilityPowerUp.Sprite.Visibility == Visibility.Visible)
+            if (this.collisionDetection.CheckForPlayerOnPowerUpCollision(this.player,
+                    this.powerUpManager.InvincibilityPowerUp) &&
+                this.powerUpManager.InvincibilityPowerUp.Sprite.Visibility == Visibility.Visible)
             {
                 this.soundManager.PlayPowerUpSound();
-                this.invincibilityPowerUp.Sprite.Visibility = Visibility.Collapsed;
-                this.invincibilityPowerUp.StartInvincibilityPowerUpTimer();
+                this.powerUpManager.InvincibilityPowerUp.Sprite.Visibility = Visibility.Collapsed;
+                this.powerUpManager.StartInvincibilityPowerUpTimer();
             }
         }
 
@@ -438,7 +439,7 @@ namespace FroggerStarter.Controller
         private void handleSingleCarCollision(Vehicle vehicle)
         {
             if (this.collisionDetection.CheckForVehicleOnPlayerCollision(this.player, vehicle) &&
-                !this.invincibilityPowerUp.IsInvincibilityActive())
+                !this.powerUpManager.IsInvincibilityActive())
             {
                 this.handlePlayerLosingLife();
             }

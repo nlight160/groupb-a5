@@ -126,6 +126,7 @@
     <Compile Include="Controller\FrogHomeManager.cs" />
     <Compile Include="Controller\GameSettings.cs" />
     <Compile Include="Controller\PlayerManager.cs" />
+    <Compile Include="Controller\PowerUpManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
     <Compile Include="Controller\SoundManager.cs" />
     <Compile Include="Model\BonusTimePowerUp.cs" />
