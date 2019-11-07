@@ -260,6 +260,7 @@ namespace FroggerStarter.Controller
             this.setPlayerToCenterOfBottomLane();
             this.roadManager.RoundCount++;
             this.createAndPlaceVehicles();
+            this.updateLevel();
             this.playerManager.NextLevel();
             this.changeCanvasTheme();
         }
