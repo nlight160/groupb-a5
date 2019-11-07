@@ -403,18 +403,6 @@ namespace FroggerStarter.Controller
             return false;
         }
 
-        private void handlePlayerOnOccupiedFrogHome()
-        {
-            foreach (FrogHome frogHome in this.frogHomeManager)
-            {
-                if (frogHome.IsFrogHomeOccupied() &&
-                    this.collisionDetection.CheckForPlayerOnFrogHomeCollision(this.player, frogHome))
-                {
-                    this.handlePlayerLosingLife();
-                }
-            }
-        }
-
         private bool isPlayerUnderneathFrogHome()
         {
             return Math.Abs(this.player.X % this.gameSettings.FrogHomeOffset) <= 0 || Math.Abs(this.player.X) <= 0;
@@ -484,7 +472,6 @@ namespace FroggerStarter.Controller
         {
             if (this.isPlayerOnAFrogHome())
             {
-                this.playerManager.IncrementHousesOccupied();
                 this.playerManager.IncrementScore(this.timeLeft);
                 this.soundManager.PlayHomeSound();
                 this.timeLeft = this.gameSettings.InitialTimeLeft;
@@ -498,13 +485,25 @@ namespace FroggerStarter.Controller
             {
                 if (this.collisionDetection.CheckForPlayerOnFrogHomeCollision(this.player, home))
                 {
-                    this.handlePlayerOnOccupiedFrogHome();
-                    home.MarkFrogHomeOccupied();
+                    this.handleFrogHomeOccupation(home);
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private void handleFrogHomeOccupation(FrogHome home)
+        {
+            if (!home.IsFrogHomeOccupied())
+            {
+                home.MarkFrogHomeOccupied();
+                this.playerManager.IncrementHousesOccupied();
+            }
+            else
+            {
+                this.handlePlayerLosingLife();
+            }
         }
 
         #endregion

@@ -36,8 +36,8 @@ namespace FroggerStarter.Model
         private void initializeInvincibilityPowerUpSprite()
         {
             Sprite = new InvincibilitySprite();
-            X = 350;
-            Y = 300;
+            X = 300;
+            Y = 205;
         }
 
         private void setupInvincibilityTimer()
