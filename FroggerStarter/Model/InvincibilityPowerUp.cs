@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml;
+using FroggerStarter.Controller;
 using FroggerStarter.View.Sprites;
 
 namespace FroggerStarter.Model
@@ -12,6 +13,7 @@ namespace FroggerStarter.Model
         #region Data members
 
         private DispatcherTimer invincibilityTimer;
+        private readonly SoundManager soundManager;
 
         #endregion
 
@@ -24,6 +26,7 @@ namespace FroggerStarter.Model
         {
             this.initializeInvincibilityPowerUpSprite();
             this.setupInvincibilityTimer();
+            this.soundManager = new SoundManager(); //TODO this might be unnecessary coupling
         }
 
         #endregion
@@ -47,6 +50,7 @@ namespace FroggerStarter.Model
         private void invincibilityTimerTick(object sender, object e)
         {
             this.invincibilityTimer.Stop();
+            this.soundManager.PlayPowerDownSound();
         }
 
         /// <summary>

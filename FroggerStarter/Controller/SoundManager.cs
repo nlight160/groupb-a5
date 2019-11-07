@@ -85,6 +85,19 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
+        /// <summary>
+        /// Plays the power down sound.
+        /// </summary>
+        public async void PlayPowerDownSound()
+        {
+            var element = new MediaElement();
+            var folder = await Package.Current.InstalledLocation.GetFolderAsync("Assets\\Game Sounds");
+            var file = await folder.GetFileAsync("power_down.wav");
+            var stream = await file.OpenAsync(FileAccessMode.Read);
+            element.SetSource(stream, "");
+            element.Play();
+        }
+
         /// <summary>Plays the game over sound.</summary>
         public async void PlayGameOverSound()
         {
@@ -95,5 +108,6 @@ namespace FroggerStarter.Controller
             element.SetSource(stream, "");
             element.Play();
         }
+
     }
 }
