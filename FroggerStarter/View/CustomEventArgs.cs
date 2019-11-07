@@ -59,6 +59,23 @@ namespace FroggerStarter.View
         #endregion
     }
 
+    /// <summary>Event handles updating level</summary>
+    /// <seealso cref="System.EventArgs" />
+    public class UpdateLevelEventArg : EventArgs
+    {
+        #region Properties
+
+        /// <summary>
+        ///     Gets or sets the  level.
+        /// </summary>
+        /// <value>
+        ///     The level.
+        /// </value>
+        public int Level { get; set; }
+
+        #endregion
+    }
+
     /// <summary>
     ///     Handles updating the lives
     /// </summary>

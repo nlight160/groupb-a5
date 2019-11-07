@@ -37,6 +37,12 @@ namespace FroggerStarter.Model
             Sprite.Visibility = Visibility.Visible;
         }
 
+        /// <summary>Marks the frog home un occupied.</summary>
+        public void MarkFrogHomeUnOccupied()
+        {
+            Sprite.Visibility = Visibility.Collapsed;
+        }
+
         /// <summary>
         ///     Determines whether [is frog home occupied].
         ///     Precondition: none

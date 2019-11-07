@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using FroggerStarter.Model;
 using FroggerStarter.View;
+using FroggerStarter.View.Sprites.Vehicles;
 
 namespace FroggerStarter.Controller
 {
@@ -34,6 +35,11 @@ namespace FroggerStarter.Controller
         ///     The update lives
         /// </summary>
         public EventHandler<UpdateLivesEventArgs> UpdateLives;
+
+        /// <summary>
+        ///     The update lives
+        /// </summary>
+        public EventHandler<UpdateLevelEventArg> UpdateLevel;
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
@@ -183,6 +189,23 @@ namespace FroggerStarter.Controller
             this.makeVehicleVisible();
         }
 
+        private void deleteCurrentVehicles()
+        {
+            var count = 0;
+            var childrenList = this.gameCanvas.Children.ToArray();
+            foreach (var item in childrenList)
+            {
+                if (item is CarSprite || item is TruckSprite || item is SuperCarSprite)
+                {
+                    this.gameCanvas.Children[count].Visibility = Visibility.Collapsed;
+                    this.gameCanvas.Children.Remove(item);
+                    count = 0;
+                }
+
+                count++;
+            }
+        }
+
         private void makeVehicleVisible()
         {
             this.roadManager.ElementAt(this.vehicleIndex).Sprite.Visibility = Visibility.Visible;
@@ -212,9 +235,13 @@ namespace FroggerStarter.Controller
 
         private void timerOnTick(object sender, object e)
         {
-            if (!this.playerManager.IsGameOverConditionMet())
+            if (!this.playerManager.IsGameOverConditionMet() && !this.playerManager.IsRoundChanging())
             {
                 this.handleGameOperations();
+            }
+            else if (this.playerManager.IsRoundChanging() && !this.roadManager.IsLastRound())
+            {
+                this.handleLevelChange();
             }
             else
             {
@@ -222,6 +249,17 @@ namespace FroggerStarter.Controller
                 this.soundManager.PlayGameOverSound();
                 this.timer.Stop();
             }
+        }
+
+        private void handleLevelChange()
+        {
+            this.soundManager.PlayCompleteLevelSound();
+            this.deleteCurrentVehicles();
+            this.hideFrogHomes();
+            this.setPlayerToCenterOfBottomLane();
+            this.roadManager.RoundCount++;
+            this.createAndPlaceVehicles();
+            this.playerManager.NextLevel();
         }
 
         private void setGameOverScreen()
@@ -312,6 +350,12 @@ namespace FroggerStarter.Controller
         {
             var updateLives = new UpdateLivesEventArgs {RemainingLives = this.playerManager.RemainingLives};
             this.UpdateLives?.Invoke(this, updateLives);
+        }
+
+        private void updateLevel()
+        {
+            var updateLevel = new UpdateLevelEventArg {Level = this.playerManager.Level};
+            this.UpdateLevel?.Invoke(this, updateLevel);
         }
 
         private void decrementTimer()
@@ -489,6 +533,14 @@ namespace FroggerStarter.Controller
                 this.soundManager.PlayHomeSound();
                 this.timeLeft = this.gameSettings.InitialTimeLeft;
                 this.setPlayerToCenterOfBottomLane();
+            }
+        }
+
+        private void hideFrogHomes()
+        {
+            foreach (FrogHome home in this.frogHomeManager)
+            {
+                home.MarkFrogHomeUnOccupied();
             }
         }
 

@@ -31,6 +31,10 @@
         /// </value>
         public int HomesOccupied { get; private set; }
 
+        /// <summary>Gets the level.</summary>
+        /// <value>The level.</value>
+        public int Level { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -44,6 +48,7 @@
         {
             this.RemainingLives = 4;
             this.Score = 0;
+            this.Level = 1;
         }
 
         #endregion
@@ -60,6 +65,16 @@
             if (this.RemainingLives > 0)
             {
                 this.RemainingLives--;
+            }
+        }
+
+        /// <summary>Nexts the level.</summary>
+        public void NextLevel()
+        {
+            if (this.HomesOccupied == 5)
+            {
+                this.Level++;
+                this.HomesOccupied = 0;
             }
         }
 
@@ -81,7 +96,15 @@
         /// </returns>
         public bool IsGameOverConditionMet()
         {
-            return this.RemainingLives == 0 || this.HomesOccupied == 5;
+            return this.RemainingLives == 0 || this.Level == 4;
+        }
+
+        /// <summary>Determines whether [is round changing].</summary>
+        /// <returns>
+        ///   <c>true</c> if [is round changing]; otherwise, <c>false</c>.</returns>
+        public bool IsRoundChanging()
+        {
+            return this.HomesOccupied == 5;
         }
 
         /// <summary>
