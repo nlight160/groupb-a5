@@ -18,7 +18,7 @@
 
         <Rectangle Canvas.Top="355" Fill="Gray" Width="{StaticResource AppWidth}" Height="55" />
 
-        <TextBlock Canvas.Left="248" Canvas.Top="10" Text="Frogger" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.459" Height="54" Width="162" Foreground="#FFF0E3E3" FontFamily="Bauhaus 93" FontSize="36" FontStyle="Normal" TextAlignment="Center"/>
+        <TextBlock Canvas.Left="248" Canvas.Top="10" Text="Frogger" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.459" Height="54" Width="162" Foreground="DarkGreen"  FontFamily="Bauhaus 93" FontSize="36" FontStyle="Normal" TextAlignment="Center"/>
         <TextBlock x:Name="gameOverTextBlock" Canvas.Left="147" Canvas.Top="140" Text="Game Over" TextWrapping="Wrap" FontFamily="Arial Black" FontSize="72" Height="128" Width="394" Foreground="#FFFBF009" Visibility="Collapsed" Canvas.ZIndex="10"/>
         <TextBlock x:Name="scoreTextBlock" Canvas.Left="555" Canvas.Top="19" Text="Score: X" TextWrapping="Wrap" Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16"/>
         <TextBlock x:Name="livesTextBlock" Canvas.Left="475" Canvas.Top="19" Text="Lives: X" TextWrapping="Wrap" Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16"/>

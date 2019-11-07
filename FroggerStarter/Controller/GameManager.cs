@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.View;
 using FroggerStarter.View.Sprites.Vehicles;
@@ -259,6 +261,7 @@ namespace FroggerStarter.Controller
             this.roadManager.RoundCount++;
             this.createAndPlaceVehicles();
             this.playerManager.NextLevel();
+            this.changeCanvasTheme();
         }
 
         private void setGameOverScreen()
@@ -320,6 +323,18 @@ namespace FroggerStarter.Controller
                 this.soundManager.PlayPowerUpSound();
                 this.powerUpManager.InvincibilityPowerUp.Sprite.Visibility = Visibility.Collapsed;
                 this.powerUpManager.StartInvincibilityPowerUpTimer();
+            }
+        }
+
+        private void changeCanvasTheme()
+        {
+            if (this.roadManager.RoundCount == 2)
+            {
+                this.gameCanvas.Background = new SolidColorBrush(Colors.Bisque);
+            }
+            else
+            {
+                this.gameCanvas.Background = new SolidColorBrush(Colors.GreenYellow);
             }
         }
 

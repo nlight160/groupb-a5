@@ -226,7 +226,7 @@ namespace FroggerStarter.Controller
         private void constructLane1Level2()
         {
             var lane = new Lane(this.backgroundWidth);
-            lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesLeft(2));
+            lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesLeft(6));
             lane.SetVehiclesToLane(this.calculateLanePosition(1));
             this.lanes.Add(lane);
         }
@@ -253,7 +253,7 @@ namespace FroggerStarter.Controller
         private void constructLane3Level3()
         {
             var lane = new Lane(this.backgroundWidth);
-            lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesLeft(5));
+            lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesLeft(8));
             lane.SetVehiclesToLane(this.calculateLanePosition(3));
             this.lanes.Add(lane);
         }
