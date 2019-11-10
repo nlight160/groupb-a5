@@ -400,6 +400,7 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
                                                        && !this.deathAnimation.IsDeathAnimationRunning())
             {
+                this.player.Sprite.RotateSpriteToFaceLeft();
                 this.player.MoveLeft();
             }
             else if (this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
@@ -424,6 +425,7 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() &&
                 !this.deathAnimation.IsDeathAnimationRunning())
             {
+                this.player.Sprite.RotateSpriteToFaceRight();
                 this.player.MoveRight();
             }
             else if (this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() &&
@@ -448,6 +450,7 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerOnTopBoundary() && !this.playerManager.IsGameOverConditionMet() &&
                 !this.deathAnimation.IsDeathAnimationRunning())
             {
+                this.player.Sprite.RotateSpriteToFaceUp();
                 this.player.MoveUp();
             }
         }
@@ -479,6 +482,7 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet() &&
                 !this.deathAnimation.IsDeathAnimationRunning())
             {
+                this.player.Sprite.RotateSpriteToFaceDown();
                 this.player.MoveDown();
             }
         }
