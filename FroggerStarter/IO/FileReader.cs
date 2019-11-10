@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Permissions;
 using System.Threading.Tasks;
@@ -38,6 +39,8 @@ namespace FroggerStarter.IO
             var path = Path.Combine(Environment.CurrentDirectory, @"groupb-a5\", fileName);
             var storageFolder =
                 ApplicationData.Current.LocalFolder;
+
+            Debug.Print(path);
 
             IStorageFile file = await storageFolder.GetFileAsync(path);
         }

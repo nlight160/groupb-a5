@@ -19,13 +19,10 @@ namespace FroggerStarter.IO
         {
        
             var fileName = "HighScoreBoard.xml";
-            var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
-            var path = Path.Combine(projectDirectory, "");
-            var storageFolder =
-                ApplicationData.Current.LocalFolder;
-            var p = storageFolder.Path;
+            var projectDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var path = Path.Combine(projectDirectory, fileName);
 
-            using (StreamWriter sw = new StreamWriter(projectDirectory+ @"\HighScoreBoard.xml", true))
+            using (StreamWriter sw = new StreamWriter(path, true))
             {
                 sw.Write(score);
             }

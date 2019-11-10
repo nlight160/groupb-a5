@@ -289,7 +289,12 @@ namespace FroggerStarter.Controller
             {
                 var name = this.addScoreContentDialog.PlayerName;
 
-                var score = new Score(name,this.playerManager.Score, this.playerManager.Level );
+                var score = new Score();
+                
+                score.Name = name;
+                score.Value = this.playerManager.Score;
+                score.Level = this.playerManager.Level;
+                
                 this.scoreBoard.AddNewScore(score);
             }
             var isGameOver = new GameOverEventArg {GameOver = true};
@@ -432,7 +437,7 @@ namespace FroggerStarter.Controller
             {
                 this.player.Sprite.RotateSpriteToFaceLeft();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceLeft();
-                this.AlternateSpriteMovement();
+                this.alternateSpriteMovement();
                 this.player.MoveLeft();
             }
             else if (this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
@@ -459,7 +464,7 @@ namespace FroggerStarter.Controller
             {
                 this.player.Sprite.RotateSpriteToFaceRight();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceRight();
-                this.AlternateSpriteMovement();
+                this.alternateSpriteMovement();
                 this.player.MoveRight();
             }
             else if (this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() &&
@@ -486,7 +491,7 @@ namespace FroggerStarter.Controller
             {
                 this.player.Sprite.RotateSpriteToFaceUp();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceUp();
-                this.AlternateSpriteMovement();
+                this.alternateSpriteMovement();
                 this.player.MoveUp();
             }
         }
@@ -520,7 +525,7 @@ namespace FroggerStarter.Controller
             {
                 this.player.Sprite.RotateSpriteToFaceDown();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceDown();
-                this.AlternateSpriteMovement();
+                this.alternateSpriteMovement();
                 this.player.MoveDown();
             }
         }
@@ -618,7 +623,7 @@ namespace FroggerStarter.Controller
             }
         }
 
-        public void AlternateSpriteMovement()
+        private void alternateSpriteMovement()
         {
             if (this.player.Sprite.Visibility == Visibility.Visible)
             {

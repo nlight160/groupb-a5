@@ -21,16 +21,5 @@ namespace FroggerStarter.Model
         /// <value>The level.</value>
         public  int Level { get; set; }
 
-        /// <summary>Initializes a new instance of the <see cref="Score"/> class.</summary>
-        /// <param name="name">The name.</param>
-        /// <param name="score">The score.</param>
-        /// <param name="level">The level.</param>
-        public Score(string name, int score, int level)
-        {
-            this.Name = name;
-            this.Value = score;
-            this.Level = level;
-        }
-
     }
 }
