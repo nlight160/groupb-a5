@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Security.Permissions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
 using FroggerStarter.Model;
+using FileAttributes = Windows.Storage.FileAttributes;
 
 namespace FroggerStarter.IO
 {
@@ -37,13 +39,7 @@ namespace FroggerStarter.IO
             var storageFolder =
                 ApplicationData.Current.LocalFolder;
 
-
             IStorageFile file = await storageFolder.GetFileAsync(path);
-
-            if (file.FileType == ".xml")
-            {
-                this.readFromXml(file);
-            }
         }
 
         private async void readFromXml(IStorageFile file)

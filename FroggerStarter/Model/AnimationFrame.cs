@@ -17,10 +17,10 @@ namespace FroggerStarter.Model
         ///     Precondition: deathSprite != null
         ///     Postcondition: A new death animation frame is created
         /// </summary>
-        /// <param name="deathSprite">The death sprite.</param>
-        public AnimationFrame(BaseSprite deathSprite)
+        /// <param name="animationSprite">The death sprite.</param>
+        public AnimationFrame(BaseSprite animationSprite)
         {
-            Sprite = deathSprite ?? throw new ArgumentNullException();
+            Sprite = animationSprite ?? throw new ArgumentNullException();
             Sprite.Visibility = Visibility.Collapsed;
         }
 

@@ -8,6 +8,7 @@ using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.View;
 using FroggerStarter.View.ContentDialogs;
+using FroggerStarter.View.Sprites;
 using FroggerStarter.View.Sprites.Vehicles;
 
 namespace FroggerStarter.Controller
@@ -62,6 +63,7 @@ namespace FroggerStarter.Controller
         private readonly FrogHomeManager frogHomeManager;
         private readonly CollisionDetection collisionDetection;
         private readonly AnimationManager deathAnimation;
+        private readonly AnimationFrame playerMovingFrame;
         private readonly SoundManager soundManager;
         private readonly PowerUpManager powerUpManager;
         private readonly ScoreBoardManager scoreBoard;
@@ -112,6 +114,7 @@ namespace FroggerStarter.Controller
             this.addScoreContentDialog = new AddScoreContentDialog();
             this.timeLeft = this.gameSettings.InitialTimeLeft;
             this.vehicleIndex = 0;
+            this.playerMovingFrame = new AnimationFrame(new FrogMovingSprite());
 
             this.setupGameTimer();
             this.setupLifeTimer();
@@ -217,8 +220,11 @@ namespace FroggerStarter.Controller
 
         private void makeVehicleVisible()
         {
-            this.roadManager.ElementAt(this.vehicleIndex).Sprite.Visibility = Visibility.Visible;
-            this.vehicleIndex++;
+            if (this.vehicleIndex < this.roadManager.Count())
+            {
+                this.roadManager.ElementAt(this.vehicleIndex).Sprite.Visibility = Visibility.Visible;
+                this.vehicleIndex++;
+            }
         }
 
         private void createAndPlacePlayer()
@@ -234,6 +240,8 @@ namespace FroggerStarter.Controller
             {
                 this.gameCanvas.Children.Add(frame.Sprite);
             }
+
+            this.gameCanvas.Children.Add(this.playerMovingFrame.Sprite);
         }
 
         private void setPlayerToCenterOfBottomLane()
@@ -317,6 +325,7 @@ namespace FroggerStarter.Controller
             this.updateLives();
             this.updateTimer();
             this.roadManager.WrapRoad();
+            this.playerMovingFrame.SetFrameLocation(this.player.X, this.player.Y);
             this.handlePlayerVisibility();
         }
 
@@ -359,11 +368,14 @@ namespace FroggerStarter.Controller
 
         private void handlePlayerVisibility()
         {
+            var x = this.backgroundWidth / 2 - this.player.Width / 2; //TODO need to pull out a constant or refactor method that sets player to bottom center
+            var y = this.backgroundHeight - this.player.Height - this.gameSettings.BottomLaneOffset;
             if (this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.Visibility = Visibility.Collapsed;
+                this.playerMovingFrame.Sprite.Visibility = Visibility.Collapsed;
             }
-            else
+            else if (Math.Abs(this.player.X - x) <= 0 && Math.Abs(this.player.Y - y) <= 0)
             {
                 this.player.Sprite.Visibility = Visibility.Visible;
             }
@@ -419,6 +431,8 @@ namespace FroggerStarter.Controller
                                                        && !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceLeft();
+                this.playerMovingFrame.Sprite.RotateSpriteToFaceLeft();
+                this.AlternateSpriteMovement();
                 this.player.MoveLeft();
             }
             else if (this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
@@ -444,6 +458,8 @@ namespace FroggerStarter.Controller
                 !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceRight();
+                this.playerMovingFrame.Sprite.RotateSpriteToFaceRight();
+                this.AlternateSpriteMovement();
                 this.player.MoveRight();
             }
             else if (this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() &&
@@ -469,6 +485,8 @@ namespace FroggerStarter.Controller
                 !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceUp();
+                this.playerMovingFrame.Sprite.RotateSpriteToFaceUp();
+                this.AlternateSpriteMovement();
                 this.player.MoveUp();
             }
         }
@@ -501,6 +519,8 @@ namespace FroggerStarter.Controller
                 !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceDown();
+                this.playerMovingFrame.Sprite.RotateSpriteToFaceDown();
+                this.AlternateSpriteMovement();
                 this.player.MoveDown();
             }
         }
@@ -509,6 +529,7 @@ namespace FroggerStarter.Controller
         {
             return this.player.Y >= this.backgroundHeight - this.player.Height * 2;
         }
+
 
         private void handleAllCarCollisions()
         {
@@ -594,6 +615,20 @@ namespace FroggerStarter.Controller
             else
             {
                 this.handlePlayerLosingLife();
+            }
+        }
+
+        public void AlternateSpriteMovement()
+        {
+            if (this.player.Sprite.Visibility == Visibility.Visible)
+            {
+                this.player.Sprite.Visibility = Visibility.Collapsed;
+                this.playerMovingFrame.Sprite.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                this.playerMovingFrame.Sprite.Visibility = Visibility.Collapsed;
+                this.player.Sprite.Visibility = Visibility.Visible;
             }
         }
 
