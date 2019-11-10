@@ -18,18 +18,15 @@ namespace FroggerStarter.IO
         public async Task SaveAFileAsync(Score score)
         {
        
-            var fileName = "HighScoreBoard.xml";
+            var fileName = "C: \\Users\\Marcus\\Desktop\\HighScoreBoard.xml";
             var projectDirectory = Directory.GetParent(Environment.CurrentDirectory).Parent.FullName;
             var path = Path.Combine(projectDirectory, "");
             var storageFolder =
                 ApplicationData.Current.LocalFolder;
             var p = storageFolder.Path;
-
-            using (StreamWriter sw = new StreamWriter(projectDirectory+ @"\HighScoreBoard.xml", true))
-            {
-                sw.Write(score);
-            }
-            IStorageFile newFile = await StorageFile.GetFileFromPathAsync(path);
+            var file = new FileInfo("C: \\Users\\Marcus\\Desktop\\HighScoreBoard.xml");
+           
+            IStorageFile newFile = await StorageFile.GetFileFromPathAsync(fileName);
 
             if (newFile.Name.EndsWith(".xml"))
             {
