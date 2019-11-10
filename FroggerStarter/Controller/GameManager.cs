@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
 using FroggerStarter.View;
+using FroggerStarter.View.ContentDialogs;
 using FroggerStarter.View.Sprites.Vehicles;
 
 namespace FroggerStarter.Controller
@@ -62,7 +64,10 @@ namespace FroggerStarter.Controller
         private readonly AnimationManager deathAnimation;
         private readonly SoundManager soundManager;
         private readonly PowerUpManager powerUpManager;
+        private readonly ScoreBoardManager scoreBoard;
         private readonly GameSettings gameSettings;
+        private readonly HighScoreContentDialog highScoreContentDialog;
+        private readonly AddScoreContentDialog addScoreContentDialog;
 
         #endregion
 
@@ -97,12 +102,14 @@ namespace FroggerStarter.Controller
             this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight,
                 this.gameSettings.LaneHeight);
             this.playerManager = new PlayerManager();
+            this.scoreBoard = new ScoreBoardManager();
             this.frogHomeManager = new FrogHomeManager(this.gameSettings.FrogHomeOffset);
             this.collisionDetection = new CollisionDetection();
             this.deathAnimation = new AnimationManager();
             this.powerUpManager =
                 new PowerUpManager(this.soundManager, (int) this.backgroundWidth, (int) this.backgroundHeight);
-
+            this.highScoreContentDialog = new HighScoreContentDialog();
+            this.addScoreContentDialog = new AddScoreContentDialog();
             this.timeLeft = this.gameSettings.InitialTimeLeft;
             this.vehicleIndex = 0;
 
@@ -155,6 +162,7 @@ namespace FroggerStarter.Controller
             this.createAndPlaceFrogHomes();
             this.createAnimationSprites();
             this.createAndPlacePowerUps();
+
         }
 
         private void createAndPlacePowerUps()
@@ -234,7 +242,7 @@ namespace FroggerStarter.Controller
             this.player.Y = this.backgroundHeight - this.player.Height - this.gameSettings.BottomLaneOffset;
         }
 
-        private void timerOnTick(object sender, object e)
+        private  void timerOnTick(object sender, object e)
         {
             if (!this.playerManager.IsGameOverConditionMet() && !this.playerManager.IsRoundChanging())
             {
@@ -246,7 +254,7 @@ namespace FroggerStarter.Controller
             }
             else
             {
-                this.setGameOverScreen();
+                 this.setGameOverScreen();
                 this.soundManager.PlayGameOverSound();
                 this.timer.Stop();
             }
@@ -265,11 +273,21 @@ namespace FroggerStarter.Controller
             this.changeCanvasTheme();
         }
 
-        private void setGameOverScreen()
+        private async void setGameOverScreen()
         {
+            
+            await this.addScoreContentDialog.ShowAsync();
+            if (this.addScoreContentDialog.IsPrimary)
+            {
+                var name = this.addScoreContentDialog.PlayerName;
+
+                var score = new Score(name,this.playerManager.Score, this.playerManager.Level );
+                this.scoreBoard.AddNewScore(score);
+            }
             var isGameOver = new GameOverEventArg {GameOver = true};
             this.soundManager.PlayGameOverSound();
             this.GameOver?.Invoke(this, isGameOver);
+            
         }
 
         private void lifeTimerTick(object sender, object e)

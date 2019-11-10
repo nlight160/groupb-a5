@@ -128,10 +128,16 @@
     <Compile Include="Controller\PlayerManager.cs" />
     <Compile Include="Controller\PowerUpManager.cs" />
     <Compile Include="Controller\RoadManager.cs" />
+    <Compile Include="Controller\ScoreBoardManager.cs" />
     <Compile Include="Controller\SoundManager.cs" />
+    <Compile Include="Extensions\ListExtensions.cs" />
+    <Compile Include="IO\FileReader.cs" />
+    <Compile Include="IO\SaveFileWriter.cs" />
     <Compile Include="Model\BonusTimePowerUp.cs" />
     <Compile Include="Model\Car.cs" />
     <Compile Include="Model\InvincibilityPowerUp.cs" />
+    <Compile Include="Model\Score.cs" />
+    <Compile Include="Model\ScoreBoard.cs" />
     <Compile Include="Model\SuperCar.cs" />
     <Compile Include="Model\StationaryObject.cs" />
     <Compile Include="Model\AnimationFrame.cs" />
@@ -144,6 +150,14 @@
     <Compile Include="Controller\GameManager.cs" />
     <Compile Include="Model\GameObject.cs" />
     <Compile Include="Model\VehicleFactory.cs" />
+    <Compile Include="Utility\RelayCommand.cs" />
+    <Compile Include="ViewModel\ScoreBoardViewModel.cs" />
+    <Compile Include="View\ContentDialogs\AddScoreContentDialog.xaml.cs">
+      <DependentUpon>AddScoreContentDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ContentDialogs\HighScoreContentDialog.xaml.cs">
+      <DependentUpon>HighScoreContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\CustomEventArgs.cs" />
     <Compile Include="View\GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>
@@ -216,6 +230,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="View\ContentDialogs\AddScoreContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ContentDialogs\HighScoreContentDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\GamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
