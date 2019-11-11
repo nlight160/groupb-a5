@@ -1,6 +1,7 @@
 
 ﻿using System;
  using System.Security.Cryptography.X509Certificates;
+ using FroggerStarter.Extensions;
  using FroggerStarter.IO;
 using FroggerStarter.Model;
 using FroggerStarter.ViewModel;
@@ -78,6 +79,8 @@ using FroggerStarter.ViewModel;
         public async void SaveNewScore(Score score)
         {
             await this.SaveFile.SaveAFileAsync(score);
+            
+            this.viewModel.Scores = this.viewModel.Scores.ToObservableCollection();
         }
 
              #endregion

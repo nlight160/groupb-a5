@@ -25,5 +25,6 @@ namespace FroggerStarter.Model
 
         public  int Level { get;  set; }
 
+
     }
 }
