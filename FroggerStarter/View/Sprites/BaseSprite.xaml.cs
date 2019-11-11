@@ -49,6 +49,34 @@ namespace FroggerStarter.View.Sprites
             RenderTransform = new ScaleTransform {ScaleX = -1};
         }
 
+        public void RotateSpriteToFaceLeft()
+        {
+            RenderTransformOrigin = new Point(0.5, 0.5);
+            RenderTransform = new RotateTransform {Angle = 270};
+
+        }
+
+        public void RotateSpriteToFaceRight()
+        {
+            RenderTransformOrigin = new Point(0.5, 0.5);
+            RenderTransform = new RotateTransform { Angle = 90 };
+
+        }
+
+        public void RotateSpriteToFaceDown()
+        {
+            RenderTransformOrigin = new Point(0.5, 0.5);
+            RenderTransform = new RotateTransform { Angle = 180 };
+
+        }
+
+        public void RotateSpriteToFaceUp()
+        {
+            RenderTransformOrigin = new Point(0.5, 0.5);
+            RenderTransform = new RotateTransform { Angle = 0 };
+
+        }
+
         #endregion
     }
 }

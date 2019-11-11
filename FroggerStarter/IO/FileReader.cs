@@ -13,7 +13,7 @@ namespace FroggerStarter.IO
         #region Data members
 
         /// <summary>The score board</summary>
-        public readonly ScoreBoard ScoreBoard;
+        public  ScoreBoard ScoreBoard;
 
         #endregion
 
@@ -33,33 +33,32 @@ namespace FroggerStarter.IO
         public async Task ReadCurrentFileAsync()
         {
             var fileName = "HighScoreBoard.xml";
-            var path = Path.Combine(Environment.CurrentDirectory, @"groupb-a5\", fileName);
-            var storageFolder =
-                ApplicationData.Current.LocalFolder;
+           
 
+            var theFolder = ApplicationData.Current.LocalFolder;
+            var theFile = await theFolder.GetFileAsync(fileName);
+            var inStream = await theFile.OpenStreamForReadAsync();
 
-            IStorageFile file = await storageFolder.GetFileAsync(path);
-
-            if (file.FileType == ".xml")
+            var deserializer = new XmlSerializer(typeof(ScoreBoard));
+            var result = (ScoreBoard)deserializer.Deserialize(inStream);
+            foreach (var item in result)
             {
-                this.readFromXml(file);
+                this.ScoreBoard.Add(item);
             }
+            inStream.Dispose();
         }
 
         private async void readFromXml(IStorageFile file)
         {
             var serializer = new XmlSerializer(typeof(ScoreBoard));
             ScoreBoard result;
-
+            
             var stream = await file.OpenStreamForReadAsync();
             {
-                result = (ScoreBoard) serializer.Deserialize(stream);
+                result = (ScoreBoard)serializer.Deserialize(stream);
             }
 
-            foreach (var item in result)
-            {
-                this.ScoreBoard.AddScore(item);
-            }
+            
         }
 
         #endregion

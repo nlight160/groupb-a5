@@ -46,7 +46,7 @@
         /// </summary>
         public PlayerManager()
         {
-            this.RemainingLives = 4;
+            this.RemainingLives = 1;
             this.Score = 0;
             this.Level = 1;
         }

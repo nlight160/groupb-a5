@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using FroggerStarter.Extensions;
 using FroggerStarter.Model;
@@ -12,7 +13,7 @@ namespace FroggerStarter.ViewModel
     {
         #region Data members
 
-        private readonly ScoreBoard scoreBoard;
+        public ScoreBoard scoreBoard;
 
         private ObservableCollection<Score> scores;
 
@@ -27,7 +28,7 @@ namespace FroggerStarter.ViewModel
             get { return this.scores; }
             set
             {
-                this.scores = value;
+                this.scores = new ObservableCollection<Score>(value.OrderBy(x=> x.Name).ToList());
                 this.OnPropertyChanged();
             }
         }
@@ -39,11 +40,12 @@ namespace FroggerStarter.ViewModel
         /// <summary>Initializes a new instance of the <see cref="ScoreBoardViewModel" /> class.</summary>
         public ScoreBoardViewModel()
         {
-            ScoreBoard scoreBoard;
+            
             this.scoreBoard = new ScoreBoard();
-            this.Scores = this.scoreBoard.ToObservableCollection();
+            this.Scores = this.scoreBoard.Scores.ToObservableCollection();
         }
 
+      
         #endregion
 
         #region Methods

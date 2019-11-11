@@ -1,15 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
     /// Instance of  score board
     /// </summary>
+     [Serializable]
+     [XmlRoot(ElementName = "Score")]
     public class ScoreBoard : IEnumerable<Score>
     {
-
+        
         private readonly IList<Score> scoreBoard;
+        public ICollection<Score> Scores => this.scoreBoard;
 
         /// <summary>Initializes a new instance of the <see cref="ScoreBoard"/> class.</summary>
         public ScoreBoard()
@@ -19,7 +24,7 @@ namespace FroggerStarter.Model
 
         /// <summary>Adds the score.</summary>
         /// <param name="score">The score.</param>
-        public void AddScore(Score score)
+        public void Add(Score score)
         {
             if (score != null)
             {
