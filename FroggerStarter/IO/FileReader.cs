@@ -45,12 +45,9 @@ namespace FroggerStarter.IO
             var theFile = await theFolder.GetFileAsync(fileName);
             var inStream = await theFile.OpenStreamForReadAsync();
 
-            var deserializer = new XmlSerializer(typeof(ScoreBoard));
-            var result = (ScoreBoard)deserializer.Deserialize(inStream);
-            foreach (var item in result)
-            {
-                this.ScoreBoard.Add(item);
-            }
+            var deserializer = new XmlSerializer(typeof(Score));
+            var result = (Score)deserializer.Deserialize(inStream);
+           
             inStream.Dispose();
 
         }

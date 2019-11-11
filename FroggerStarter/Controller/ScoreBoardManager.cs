@@ -80,7 +80,7 @@ using FroggerStarter.ViewModel;
         {
             await this.SaveFile.SaveAFileAsync(score);
             
-            this.viewModel.Scores = this.viewModel.Scores.ToObservableCollection();
+            this.viewModel.Scores.Add(score);
         }
 
              #endregion
