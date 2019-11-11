@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -44,11 +45,24 @@ namespace FroggerStarter.IO
             var theFolder = ApplicationData.Current.LocalFolder;
             var theFile = await theFolder.GetFileAsync(fileName);
             var inStream = await theFile.OpenStreamForReadAsync();
+         
+            var projectDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            Debug.Print(projectDirectory);
+            var path = Path.Combine(projectDirectory, fileName);
+
+            var board = new ScoreBoard();
+
+            IStorageFile newFile = await StorageFile.GetFileFromPathAsync(path);
+            var folder = ApplicationData.Current.LocalFolder;
+
+            
 
             var deserializer = new XmlSerializer(typeof(Score));
-            var result = (Score)deserializer.Deserialize(inStream);
-           
-            inStream.Dispose();
+            using (FileStream fileStream = new FileStream(newFile.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                var test = (Score)deserializer.Deserialize(fileStream);
+            }
+            
 
         }
 

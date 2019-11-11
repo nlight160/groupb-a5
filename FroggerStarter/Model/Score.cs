@@ -20,7 +20,7 @@ namespace FroggerStarter.Model
         public  int Value { get;  set; }
 
         /// <summary>Gets or sets the level.</summary>
-        /// <value>The level.</value
+        /// <value>The level.</value>
         [XmlElement("Level")]
 
         public  int Level { get;  set; }

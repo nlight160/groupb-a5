@@ -9,7 +9,7 @@ namespace FroggerStarter.Model
     ///     Instance of  score board
     /// </summary>
      [Serializable]
-     [XmlRoot(ElementName = "Score")]
+     [XmlRoot(ElementName = "ScoreBoard")]
     public class ScoreBoard : IEnumerable<Score>
     {
 
