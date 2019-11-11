@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 using Windows.Storage;
+using Windows.UI.Xaml.Media.Animation;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.IO
@@ -38,20 +41,17 @@ namespace FroggerStarter.IO
         /// </summary>
         public async Task ReadCurrentFileAsync()
         {
-            var fileName = "HighScoreBoard.xml";
-           
+            string fileName = "HighScoreBoard.xml";
+            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string path = Path.Combine(folderPath, fileName);
+            XmlRootAttribute xRoot = new XmlRootAttribute {ElementName = "Scores", IsNullable = true};
 
-            var theFolder = ApplicationData.Current.LocalFolder;
-            var theFile = await theFolder.GetFileAsync(fileName);
-            var inStream = await theFile.OpenStreamForReadAsync();
+            XmlSerializer serializer = new XmlSerializer(typeof(ScoreBoard), xRoot);
 
-            var deserializer = new XmlSerializer(typeof(ScoreBoard));
-            var result = (ScoreBoard)deserializer.Deserialize(inStream);
-            foreach (var item in result)
-            {
-                this.ScoreBoard.Add(item);
-            }
-            inStream.Dispose();
+            StreamReader reader = new StreamReader(path);
+            this.ScoreBoard = (ScoreBoard)serializer.Deserialize(reader);
+            reader.Close();
+
 
         }
 

@@ -60,7 +60,7 @@ namespace FroggerStarter.IO
                
                 var serializer = new XmlSerializer(typeof(Score));
                 serializer.Serialize(xmlWriter, score);
-                xmlWriter.WriteEndElement();
+                xmlWriter.WriteEndDocument();
                 xmlWriter.Close();
             }
             
