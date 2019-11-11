@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 using Windows.Storage;
@@ -35,26 +36,34 @@ namespace FroggerStarter.IO
             var projectDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var path = Path.Combine(projectDirectory, fileName);
 
-
+            var board = new ScoreBoard();
 
             IStorageFile newFile = await StorageFile.GetFileFromPathAsync(path);
             var folder = ApplicationData.Current.LocalFolder;
             var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            var xDocument = XDocument.Load(path);
-            var root = xDocument.Element("Score");
-            var rows = root.Descendants("Score");
-            var firstRow = rows.First();
-            firstRow.AddBeforeSelf(
-                new XElement("Score",
-                    new XElement("Name", score.Name),
-                    new XElement("Value", score.Value),
-                    new XElement("Level", score.Level)));
-            xDocument.Save(path);
-            using (var writer = xDocument.CreateWriter())
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings();
+            xmlWriterSettings.Indent = true;
+            xmlWriterSettings.NewLineOnAttributes = true;
+            using (XmlWriter xmlWriter = XmlWriter.Create(file.Path, xmlWriterSettings))
             {
+                xmlWriter.WriteStartDocument();
+                xmlWriter.WriteStartElement("Score");
+                xmlWriter.WriteElementString("Name", score.Name);
+                xmlWriter.WriteElementString("Value", score.Value.ToString());
+                xmlWriter.WriteElementString("Level",score.Level.ToString() );
+                xmlWriter.WriteEndElement();
+                xmlWriter.WriteEndDocument();
+                xmlWriter.Flush();
                 var serializer = new XmlSerializer(typeof(Score));
-                serializer.Serialize(writer, score);
+                
+                serializer.Serialize(xmlWriter, score);
+                xmlWriter.Close();
             }
+            
+            var xDocument = XDocument.Load(file.Path);
+           
+            xDocument.Save(path);
+           
 
            
         }

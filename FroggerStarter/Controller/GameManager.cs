@@ -305,6 +305,7 @@ namespace FroggerStarter.Controller
                 };
 
                 this.scoreBoard.AddNewScore(score);
+                this.scoreBoard.SaveNewScore(score);
                 this.scoreBoard.ReadHighScore();
                 await this.highScoreContentDialog.ShowAsync();
             }
