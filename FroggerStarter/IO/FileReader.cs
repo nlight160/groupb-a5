@@ -1,21 +1,22 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
-using System.Security.Permissions;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
 using FroggerStarter.Model;
-using FileAttributes = Windows.Storage.FileAttributes;
 
 namespace FroggerStarter.IO
 {
-    /// <summary>Reads XML File</summary>
+    /// <summary>
+    ///     Reads XML File
+    /// </summary>
     public class FileReader
     {
         #region Data members
 
-        /// <summary>The score board</summary>
+        /// <summary>
+        ///     The score board
+        /// </summary>
         public readonly ScoreBoard ScoreBoard;
 
         #endregion
@@ -32,15 +33,17 @@ namespace FroggerStarter.IO
 
         #region Methods
 
-        /// <summary>Reads the current file asynchronous.</summary>
+        /// <summary>
+        ///     Reads the current file asynchronous.
+        ///     Precondition: none
+        ///     Postcondition: file is read
+        /// </summary>
         public async Task ReadCurrentFileAsync()
         {
             var fileName = "HighScoreBoard.xml";
             var path = Path.Combine(Environment.CurrentDirectory, @"groupb-a5\", fileName);
             var storageFolder =
                 ApplicationData.Current.LocalFolder;
-
-            Debug.Print(path);
 
             IStorageFile file = await storageFolder.GetFileAsync(path);
         }

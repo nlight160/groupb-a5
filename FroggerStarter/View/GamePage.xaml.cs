@@ -33,7 +33,7 @@ namespace FroggerStarter.View
         {
             this.InitializeComponent();
 
-            ApplicationView.GetForCurrentView().Title = "Frogger V2 by Nathaniel Lightholder";
+            ApplicationView.GetForCurrentView().Title = "Frogger V3 by Group B";
             ApplicationView.PreferredLaunchViewSize = new Size
                 {Width = this.applicationWidth, Height = this.applicationHeight};
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;

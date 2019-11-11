@@ -15,6 +15,9 @@ namespace FroggerStarter.Controller
         #region Data members
 
         private const int LaneOffsetFromBottom = 55;
+        private const int LastRound = 3;
+        private const int FirstRound = 1;
+        private const int SecondRound = 2;
         private readonly IList<Lane> lanes;
         private readonly int backgroundWidth;
         private readonly int backgroundHeight;
@@ -80,7 +83,7 @@ namespace FroggerStarter.Controller
         ///   <c>true</c> if [is last round]; otherwise, <c>false</c>.</returns>
         public bool IsLastRound()
         {
-            return RoundCount == 3;
+            return RoundCount == LastRound;
         }
 
         /// <summary>
@@ -90,11 +93,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void ConstructRoad()
         {
-            if (this.RoundCount == 1)
+            if (this.RoundCount == FirstRound)
             {
                 this.constructRoadLevel1();
             }
-            else if (this.RoundCount == 2)
+            else if (this.RoundCount == SecondRound)
             {
                 this.constructRoadLevel2();
             }
@@ -106,11 +109,11 @@ namespace FroggerStarter.Controller
 
         private void constructRoadLevel1()
         {
-            this.constructLane1();
-            this.constructLane2();
-            this.constructLane3();
-            this.constructLane4();
-            this.constructLane5();
+            this.constructLane1Level1();
+            this.constructLane2Level1();
+            this.constructLane3Level1();
+            this.constructLane4Level1();
+            this.constructLane5Level1();
             this.makeFirstVehiclesVisible();
         }
 
@@ -138,7 +141,7 @@ namespace FroggerStarter.Controller
             this.makeFirstVehiclesVisible();
         }
 
-        private void constructLane5()
+        private void constructLane5Level1()
         {
             var lane = new Lane(this.backgroundWidth);
             lane.AddVehicle(this.vehicleFactory.ConstructCarThatMovesRight(5));
@@ -148,7 +151,7 @@ namespace FroggerStarter.Controller
             this.lanes.Add(lane);
         }
 
-        private void constructLane4()
+        private void constructLane4Level1()
         {
             var lane = new Lane(this.backgroundWidth);
             lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesLeft(10));
@@ -156,7 +159,7 @@ namespace FroggerStarter.Controller
             this.lanes.Add(lane);
         }
 
-        private void constructLane3()
+        private void constructLane3Level1()
         {
             var lane = new Lane(this.backgroundWidth);
             lane.AddVehicle(this.vehicleFactory.ConstructCarThatMovesLeft(3));
@@ -166,7 +169,7 @@ namespace FroggerStarter.Controller
             this.lanes.Add(lane);
         }
 
-        private void constructLane2()
+        private void constructLane2Level1()
         {
             var lane = new Lane(this.backgroundWidth);
             lane.AddVehicle(this.vehicleFactory.ConstructTruckThatMovesRight(2));
@@ -175,7 +178,7 @@ namespace FroggerStarter.Controller
             this.lanes.Add(lane);
         }
 
-        private void constructLane1()
+        private void constructLane1Level1()
         {
             var lane = new Lane(this.backgroundWidth);
             lane.AddVehicle(this.vehicleFactory.ConstructCarThatMovesLeft(1));
@@ -226,7 +229,7 @@ namespace FroggerStarter.Controller
         private void constructLane1Level2()
         {
             var lane = new Lane(this.backgroundWidth);
-            lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesLeft(6));
+            lane.AddVehicle(this.vehicleFactory.ConstructSuperCarThatMovesRight(6));
             lane.SetVehiclesToLane(this.calculateLanePosition(1));
             this.lanes.Add(lane);
         }

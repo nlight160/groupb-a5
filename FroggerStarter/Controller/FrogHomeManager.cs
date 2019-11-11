@@ -37,6 +37,7 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Returns an enumerator that iterates through a collection.
+        ///     Precondition: none
         /// </summary>
         /// <returns>
         ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
@@ -47,6 +48,11 @@ namespace FroggerStarter.Controller
             {
                 yield return frogHome;
             }
+        }
+
+        IEnumerator<FrogHome> IEnumerable<FrogHome>.GetEnumerator()
+        {
+            return this.homes.GetEnumerator();
         }
 
         /// <summary>
@@ -80,11 +86,6 @@ namespace FroggerStarter.Controller
                 frogHome.Y = frogHome.Height;
                 nextX += this.frogHomeOffset;
             }
-        }
-
-        IEnumerator<FrogHome> IEnumerable<FrogHome>.GetEnumerator()
-        {
-            return homes.GetEnumerator();
         }
 
         #endregion

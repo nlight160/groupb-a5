@@ -49,32 +49,48 @@ namespace FroggerStarter.View.Sprites
             RenderTransform = new ScaleTransform {ScaleX = -1};
         }
 
+        /// <summary>
+        ///     Rotates the sprite to face left.
+        ///     Precondition: none
+        ///     Postcondition: sprite is facing left
+        /// </summary>
         public void RotateSpriteToFaceLeft()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
             RenderTransform = new RotateTransform {Angle = 270};
-
         }
 
+        /// <summary>
+        ///     Rotates the sprite to face right.
+        ///     Precondition: none
+        ///     Postcondition: sprite is facing right
+        /// </summary>
         public void RotateSpriteToFaceRight()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
-            RenderTransform = new RotateTransform { Angle = 90 };
-
+            RenderTransform = new RotateTransform {Angle = 90};
         }
 
+        /// <summary>
+        ///     Rotates the sprite to face down.
+        ///     Precondition: none
+        ///     Postcondition: sprite is facing down
+        /// </summary>
         public void RotateSpriteToFaceDown()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
-            RenderTransform = new RotateTransform { Angle = 180 };
-
+            RenderTransform = new RotateTransform {Angle = 180};
         }
 
+        /// <summary>
+        ///     Rotates the sprite to face up.
+        ///     Precondition: none
+        ///     Postcondition: sprite is facing up
+        /// </summary>
         public void RotateSpriteToFaceUp()
         {
             RenderTransformOrigin = new Point(0.5, 0.5);
-            RenderTransform = new RotateTransform { Angle = 0 };
-
+            RenderTransform = new RotateTransform {Angle = 0};
         }
 
         #endregion

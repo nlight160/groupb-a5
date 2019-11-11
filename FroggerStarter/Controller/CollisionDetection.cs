@@ -64,7 +64,7 @@ namespace FroggerStarter.Controller
             return player.BoundingBox.IntersectsWith(home.BoundingBox);
         }
 
-        /// <summary> TODO change to generic power up when implemented
+        /// <summary>
         ///     Checks for player on frog home collision.
         ///     Precondition: player != null AND powerup != null
         /// </summary>

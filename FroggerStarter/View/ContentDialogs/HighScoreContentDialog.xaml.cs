@@ -1,33 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
+﻿using Windows.UI.Xaml.Controls;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FroggerStarter.View.ContentDialogs
 {
-    /// <summary></summary>
+    /// <summary>
+    ///     Handles high score content dialog
+    /// </summary>
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
     public sealed partial class HighScoreContentDialog : ContentDialog
     {
-        /// <summary>Initializes a new instance of the <see cref="HighScoreContentDialog"/> class.</summary>
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="HighScoreContentDialog" /> class.
+        ///     Precondition: none
+        ///     Postcondition: a high score content dialog is created
+        /// </summary>
         public HighScoreContentDialog()
         {
             this.InitializeComponent();
         }
+
+        #endregion
+
+        #region Methods
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -36,5 +35,7 @@ namespace FroggerStarter.View.ContentDialogs
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
+
+        #endregion
     }
 }

@@ -3,29 +3,39 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
-using Windows.Storage.Pickers;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.IO
 {
-    /// <summary></summary>
+    /// <summary>
+    ///     Saves and writes to xml file
+    /// </summary>
     public class SaveFileWriter
     {
         #region Methods
 
-        /// <summary>Saves a file asynchronous.</summary>
+        /// <summary>
+        ///     Saves a file asynchronous.
+        ///     Precondition: score != null
+        ///     Postcondition: score is serialized and saved
+        /// </summary>
         /// <param name="score">The score.</param>
         public async Task SaveAFileAsync(Score score)
         {
-       
+            if (score == null)
+            {
+                throw new ArgumentNullException(nameof(score));
+            }
+
             var fileName = "HighScoreBoard.xml";
             var projectDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var path = Path.Combine(projectDirectory, fileName);
 
-            using (StreamWriter sw = new StreamWriter(path, true))
+            using (var sw = new StreamWriter(path, true))
             {
                 sw.Write(score);
             }
+
             IStorageFile newFile = await StorageFile.GetFileFromPathAsync(path);
 
             if (newFile.Name.EndsWith(".xml"))

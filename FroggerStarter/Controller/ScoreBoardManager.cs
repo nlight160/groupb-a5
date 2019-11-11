@@ -1,37 +1,67 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FroggerStarter.IO;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.Controller
 {
+    /// <summary>
+    ///     Manages the score board
+    /// </summary>
     public class ScoreBoardManager
     {
+        #region Data members
+
+        /// <summary>
+        ///     The score board
+        /// </summary>
         public ScoreBoard ScoreBoard;
 
-        public FileReader FileReder;
+        /// <summary>
+        ///     The file reader
+        /// </summary>
+        public FileReader FileReader;
 
+        /// <summary>
+        ///     The save file
+        /// </summary>
         public SaveFileWriter SaveFile;
 
-        /// <summary>Initializes a new instance of the <see cref="ScoreManager"/> class.</summary>
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ScoreBoardManager" /> class.
+        ///     Precondition: none
+        ///     Postcondition: A new scoreboard manager is created
+        /// </summary>
         public ScoreBoardManager()
         {
             this.ScoreBoard = new ScoreBoard();
-            this.FileReder = new FileReader();
+            this.FileReader = new FileReader();
             this.SaveFile = new SaveFileWriter();
         }
 
-        /// <summary>Adds the new score.</summary>
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        ///     Adds the new score.
+        ///     Precondition: score != null
+        ///     Postcondition: score is serialized and saved
+        /// </summary>
         /// <param name="score">The score.</param>
         public async void AddNewScore(Score score)
         {
-           await this.SaveFile.SaveAFileAsync(score);
+            if (score == null)
+            {
+                throw new ArgumentNullException(nameof(score));
+            }
+
+            await this.SaveFile.SaveAFileAsync(score);
         }
 
-
+        #endregion
     }
 }

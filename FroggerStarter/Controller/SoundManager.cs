@@ -8,7 +8,13 @@ namespace FroggerStarter.Controller
     /// <summary>Defines a Sound Manager Object</summary>
     public class SoundManager
     {
-        /// <summary>Plays the vehicle collision sound.</summary>
+        #region Methods
+
+        /// <summary>
+        ///     Plays the vehicle collision sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayVehicleCollisionSound()
         {
             var element = new MediaElement();
@@ -19,7 +25,11 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
-        /// <summary>Plays the falling water sound.</summary>
+        /// <summary>
+        ///     Plays the falling water sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayFallingWaterSound()
         {
             var element = new MediaElement();
@@ -30,7 +40,11 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
-        /// <summary>Plays the wall collision sound.</summary>
+        /// <summary>
+        ///     Plays the wall collision sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayWallCollisionSound()
         {
             var element = new MediaElement();
@@ -41,7 +55,11 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
-        /// <summary>Plays the time out sound.</summary>
+        /// <summary>
+        ///     Plays the time out sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayTimeOutSound()
         {
             var element = new MediaElement();
@@ -52,7 +70,11 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
-        /// <summary>Plays the home sound.</summary>
+        /// <summary>
+        ///     Plays the home sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayHomeSound()
         {
             var element = new MediaElement();
@@ -63,7 +85,11 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
-        /// <summary>Plays the complete level sound.</summary>
+        /// <summary>
+        ///     Plays the complete level sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayCompleteLevelSound()
         {
             var element = new MediaElement();
@@ -74,7 +100,11 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
-        /// <summary>Plays the power up sound.</summary>
+        /// <summary>
+        ///     Plays the power up sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayPowerUpSound()
         {
             var element = new MediaElement();
@@ -86,7 +116,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Plays the power down sound.
+        ///     Plays the power down sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
         /// </summary>
         public async void PlayPowerDownSound()
         {
@@ -98,7 +130,11 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
-        /// <summary>Plays the game over sound.</summary>
+        /// <summary>
+        ///     Plays the game over sound.
+        ///     Precondition: none
+        ///     Postcondition: the sound is played
+        /// </summary>
         public async void PlayGameOverSound()
         {
             var element = new MediaElement();
@@ -109,5 +145,6 @@ namespace FroggerStarter.Controller
             element.Play();
         }
 
+        #endregion
     }
 }

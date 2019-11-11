@@ -1,28 +1,45 @@
-﻿using System;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace FroggerStarter.View.ContentDialogs
 {
-    /// <summary>Add score</summary>
+    /// <summary>
+    ///     handles Add score content dialog
+    /// </summary>
     public sealed partial class AddScoreContentDialog
     {
+        #region Data members
+
         /// <summary>
-        /// Name of the player
+        ///     Name of the player
         /// </summary>
         public string PlayerName;
 
+        /// <summary>
+        ///     The is primary
+        /// </summary>
         public bool IsPrimary;
 
+        #endregion
 
-        /// <summary>Initializes a new instance of the <see cref="AddScoreContentDialog"/> class.</summary>
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="AddScoreContentDialog" /> class.
+        ///     Precondition: none
+        ///     PostCondtion: an add scoe content dialog is created
+        /// </summary>
         public AddScoreContentDialog()
         {
             this.InitializeComponent();
             IsPrimaryButtonEnabled = false;
             this.IsPrimary = false;
         }
+
+        #endregion
+
+        #region Methods
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -36,7 +53,7 @@ namespace FroggerStarter.View.ContentDialogs
 
         private void NameBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (this.nameBox.Text == String.Empty)
+            if (this.nameBox.Text == string.Empty)
             {
                 IsPrimaryButtonEnabled = false;
             }
@@ -45,5 +62,7 @@ namespace FroggerStarter.View.ContentDialogs
                 IsPrimaryButtonEnabled = true;
             }
         }
+
+        #endregion
     }
 }

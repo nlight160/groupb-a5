@@ -19,6 +19,8 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class GameManager
     {
+        private const int SecondRound = 2;
+
         #region Data members
 
         /// <summary>
@@ -165,7 +167,6 @@ namespace FroggerStarter.Controller
             this.createAndPlaceFrogHomes();
             this.createAnimationSprites();
             this.createAndPlacePowerUps();
-
         }
 
         private void createAndPlacePowerUps()
@@ -250,7 +251,7 @@ namespace FroggerStarter.Controller
             this.player.Y = this.backgroundHeight - this.player.Height - this.gameSettings.BottomLaneOffset;
         }
 
-        private  void timerOnTick(object sender, object e)
+        private void timerOnTick(object sender, object e)
         {
             if (!this.playerManager.IsGameOverConditionMet() && !this.playerManager.IsRoundChanging())
             {
@@ -262,7 +263,7 @@ namespace FroggerStarter.Controller
             }
             else
             {
-                 this.setGameOverScreen();
+                this.setGameOverScreen();
                 this.soundManager.PlayGameOverSound();
                 this.timer.Stop();
             }
@@ -283,24 +284,29 @@ namespace FroggerStarter.Controller
 
         private async void setGameOverScreen()
         {
-            
+            var isGameOver = new GameOverEventArg {GameOver = true};
+            this.soundManager.PlayGameOverSound();
+            this.GameOver?.Invoke(this, isGameOver);
+
+            await this.handleAddScoreDialog();
+        }
+
+        private async Task handleAddScoreDialog()
+        {
             await this.addScoreContentDialog.ShowAsync();
             if (this.addScoreContentDialog.IsPrimary)
             {
                 var name = this.addScoreContentDialog.PlayerName;
 
-                var score = new Score();
-                
-                score.Name = name;
-                score.Value = this.playerManager.Score;
-                score.Level = this.playerManager.Level;
-                
+                var score = new Score
+                {
+                    Name = name,
+                    Value = this.playerManager.Score,
+                    Level = this.playerManager.Level
+                };
+
                 this.scoreBoard.AddNewScore(score);
             }
-            var isGameOver = new GameOverEventArg {GameOver = true};
-            this.soundManager.PlayGameOverSound();
-            this.GameOver?.Invoke(this, isGameOver);
-            
         }
 
         private void lifeTimerTick(object sender, object e)
@@ -313,16 +319,13 @@ namespace FroggerStarter.Controller
 
         private void vehicleTimerTick(object sender, object e)
         {
-            if (this.vehicleIndex < this.roadManager.Count())
-            {
-                this.makeVehicleVisible();
-            }
+            this.makeVehicleVisible();
         }
 
         private void handleGameOperations()
         {
             this.roadManager.MoveVehiclesInRoad();
-            this.handleAllCarCollisions();
+            this.handleAllCarsCollisions();
             this.handleReachingHouse();
             this.handleBonusTimePowerUp();
             this.handleInvincibilityPowerUp();
@@ -361,19 +364,19 @@ namespace FroggerStarter.Controller
 
         private void changeCanvasTheme()
         {
-            if (this.roadManager.RoundCount == 2)
+            if (this.roadManager.RoundCount == SecondRound)
             {
                 this.gameCanvas.Background = new SolidColorBrush(Colors.Bisque);
             }
             else
             {
-                this.gameCanvas.Background = new SolidColorBrush(Colors.GreenYellow);
+                this.gameCanvas.Background = new SolidColorBrush(Colors.Aqua);
             }
         }
 
         private void handlePlayerVisibility()
         {
-            var x = this.backgroundWidth / 2 - this.player.Width / 2; //TODO need to pull out a constant or refactor method that sets player to bottom center
+            var x = this.backgroundWidth / 2 - this.player.Width / 2;
             var y = this.backgroundHeight - this.player.Height - this.gameSettings.BottomLaneOffset;
             if (this.deathAnimation.IsDeathAnimationRunning())
             {
@@ -432,12 +435,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
-                                                       && !this.deathAnimation.IsDeathAnimationRunning())
+            if (this.canPlayerMove())
             {
                 this.player.Sprite.RotateSpriteToFaceLeft();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceLeft();
-                this.alternateSpriteMovement();
+                this.animatePlayerMovement();
                 this.player.MoveLeft();
             }
             else if (this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
@@ -445,6 +447,12 @@ namespace FroggerStarter.Controller
             {
                 this.soundManager.PlayWallCollisionSound();
             }
+        }
+
+        private bool canPlayerMove()
+        {
+            return !this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
+                                                          && !this.deathAnimation.IsDeathAnimationRunning();
         }
 
         private bool isPlayerAdjacentToLeftBoundary()
@@ -459,12 +467,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            if (!this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() &&
-                !this.deathAnimation.IsDeathAnimationRunning())
+            if (this.canPlayerMove())
             {
                 this.player.Sprite.RotateSpriteToFaceRight();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceRight();
-                this.alternateSpriteMovement();
+                this.animatePlayerMovement();
                 this.player.MoveRight();
             }
             else if (this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet() &&
@@ -486,12 +493,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            if (!this.isPlayerOnTopBoundary() && !this.playerManager.IsGameOverConditionMet() &&
-                !this.deathAnimation.IsDeathAnimationRunning())
+            if (this.canPlayerMove())
             {
                 this.player.Sprite.RotateSpriteToFaceUp();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceUp();
-                this.alternateSpriteMovement();
+                this.animatePlayerMovement();
                 this.player.MoveUp();
             }
         }
@@ -520,12 +526,11 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet() &&
-                !this.deathAnimation.IsDeathAnimationRunning())
+            if (this.canPlayerMove())
             {
                 this.player.Sprite.RotateSpriteToFaceDown();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceDown();
-                this.alternateSpriteMovement();
+                this.animatePlayerMovement();
                 this.player.MoveDown();
             }
         }
@@ -535,8 +540,7 @@ namespace FroggerStarter.Controller
             return this.player.Y >= this.backgroundHeight - this.player.Height * 2;
         }
 
-
-        private void handleAllCarCollisions()
+        private void handleAllCarsCollisions()
         {
             foreach (var vehicle in this.roadManager)
             {
@@ -623,7 +627,7 @@ namespace FroggerStarter.Controller
             }
         }
 
-        private void alternateSpriteMovement()
+        private void animatePlayerMovement()
         {
             if (this.player.Sprite.Visibility == Visibility.Visible)
             {

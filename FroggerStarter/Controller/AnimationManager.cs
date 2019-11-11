@@ -41,6 +41,7 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Returns an enumerator that iterates through a collection.
+        ///     Precondition: none
         /// </summary>
         /// <returns>
         ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
