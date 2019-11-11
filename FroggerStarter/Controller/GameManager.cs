@@ -503,6 +503,7 @@ namespace FroggerStarter.Controller
             if (this.player.Y < this.player.Height * this.gameSettings.TopBoundaryModifier &&
                 !this.isPlayerUnderneathFrogHome())
             {
+                this.soundManager.PlayWallCollisionSound();
                 this.handlePlayerLosingLife();
                 return true;
             }
@@ -530,6 +531,11 @@ namespace FroggerStarter.Controller
                 this.animatePlayerMovement();
                 this.player.MoveDown();
             }
+            else if (this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet() &&
+                     !this.deathAnimation.IsDeathAnimationRunning())
+            {
+                this.soundManager.PlayWallCollisionSound();
+            }
         }
 
         private bool isPlayerAdjacentToBottomBoundary()
@@ -550,6 +556,7 @@ namespace FroggerStarter.Controller
             if (this.collisionDetection.CheckForVehicleOnPlayerCollision(this.player, vehicle) &&
                 !this.powerUpManager.IsInvincibilityActive())
             {
+                this.soundManager.PlayVehicleCollisionSound();
                 this.handlePlayerLosingLife();
             }
         }
@@ -557,7 +564,6 @@ namespace FroggerStarter.Controller
         private void handlePlayerLosingLife()
         {
             this.playerManager.DecrementLives();
-            this.soundManager.PlayVehicleCollisionSound();
             this.handleDeathAnimation();
             this.timeLeft = this.gameSettings.InitialTimeLeft;
         }
