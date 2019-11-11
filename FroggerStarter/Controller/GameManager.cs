@@ -19,9 +19,9 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class GameManager
     {
-        private const int SecondRound = 2;
-
         #region Data members
+
+        private const int SecondRound = 2;
 
         /// <summary>
         ///     The game over
@@ -298,8 +298,7 @@ namespace FroggerStarter.Controller
             {
                 var name = this.addScoreContentDialog.PlayerName;
 
-                var score = new Score
-                {
+                var score = new Score {
                     Name = name,
                     Value = this.playerManager.Score,
                     Level = this.playerManager.Level
@@ -435,7 +434,8 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerLeft()
         {
-            if (this.canPlayerMove())
+            if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
+                                                       && !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceLeft();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceLeft();
@@ -447,12 +447,6 @@ namespace FroggerStarter.Controller
             {
                 this.soundManager.PlayWallCollisionSound();
             }
-        }
-
-        private bool canPlayerMove()
-        {
-            return !this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
-                                                          && !this.deathAnimation.IsDeathAnimationRunning();
         }
 
         private bool isPlayerAdjacentToLeftBoundary()
@@ -467,7 +461,8 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerRight()
         {
-            if (this.canPlayerMove())
+            if (!this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet()
+                                                        && !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceRight();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceRight();
@@ -493,7 +488,8 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerUp()
         {
-            if (this.canPlayerMove())
+            if (!this.isPlayerOnTopBoundary() && !this.playerManager.IsGameOverConditionMet()
+                                              && !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceUp();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceUp();
@@ -526,7 +522,8 @@ namespace FroggerStarter.Controller
         /// </summary>
         public void MovePlayerDown()
         {
-            if (this.canPlayerMove())
+            if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet()
+                                                         && !this.deathAnimation.IsDeathAnimationRunning())
             {
                 this.player.Sprite.RotateSpriteToFaceDown();
                 this.playerMovingFrame.Sprite.RotateSpriteToFaceDown();
