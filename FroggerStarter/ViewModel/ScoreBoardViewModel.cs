@@ -8,6 +8,7 @@ using FroggerStarter.Model;
 namespace FroggerStarter.ViewModel
 {
     /// <summary>
+    ///     Connects the game page score input to the data in the model
     /// </summary>
     public class ScoreBoardViewModel : INotifyPropertyChanged
     {
@@ -25,7 +26,7 @@ namespace FroggerStarter.ViewModel
         /// <value>The scores.</value>
         public ObservableCollection<Score> Scores
         {
-            get { return this.scores; }
+            get => this.scores;
             set
             {
                 this.scores = new ObservableCollection<Score>(value.OrderBy(x=> x.Name).ToList());
@@ -37,10 +38,14 @@ namespace FroggerStarter.ViewModel
 
         #region Constructors
 
-        /// <summary>Initializes a new instance of the <see cref="ScoreBoardViewModel" /> class.</summary>
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ScoreBoardViewModel" /> class.
+        ///     Precondition: none
+        ///     Postcondition: a new score board view model is created
+        /// </summary>
         public ScoreBoardViewModel()
         {
-            
+
             this.scoreBoard = new ScoreBoard();
             this.Scores = this.scoreBoard.Scores.ToObservableCollection();
         }

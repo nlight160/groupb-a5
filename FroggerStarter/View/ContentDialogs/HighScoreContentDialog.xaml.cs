@@ -4,7 +4,9 @@
 
 namespace FroggerStarter.View.ContentDialogs
 {
-    /// <summary></summary>
+    /// <summary>
+    ///     Handles high score content dialog
+    /// </summary>
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
@@ -13,12 +15,22 @@ namespace FroggerStarter.View.ContentDialogs
         /// <summary>The is primary</summary>
         public bool IsPrimary;
 
-        /// <summary>Initializes a new instance of the <see cref="HighScoreContentDialog"/> class.</summary>
+        #region Constructors
+
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="HighScoreContentDialog" /> class.
+        ///     Precondition: none
+        ///     Postcondition: a high score content dialog is created
+        /// </summary>
         public HighScoreContentDialog()
         {
             this.InitializeComponent();
             this.IsPrimary = false;
         }
+
+        #endregion
+
+        #region Methods
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
@@ -28,5 +40,7 @@ namespace FroggerStarter.View.ContentDialogs
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
+
+        #endregion
     }
 }

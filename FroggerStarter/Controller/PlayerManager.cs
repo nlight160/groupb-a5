@@ -68,7 +68,11 @@
             }
         }
 
-        /// <summary>Nexts the level.</summary>
+        /// <summary>
+        ///     Increments the level.
+        ///     Precondition: none
+        ///     PostCondition: HomesOccupied is reset and level increases by one
+        /// </summary>
         public void NextLevel()
         {
             if (this.HomesOccupied == 5)
@@ -90,6 +94,7 @@
 
         /// <summary>
         ///     Determines whether [is game over].
+        ///     PreCondition: none
         /// </summary>
         /// <returns>
         ///     <c>true</c> if [is game over]; otherwise, <c>false</c>.
@@ -99,9 +104,13 @@
             return this.RemainingLives == 0 || this.Level == 4;
         }
 
-        /// <summary>Determines whether [is round changing].</summary>
+        /// <summary>
+        ///     Determines whether [is round changing].
+        ///     Precondition: none
+        /// </summary>
         /// <returns>
-        ///   <c>true</c> if [is round changing]; otherwise, <c>false</c>.</returns>
+        ///     <c>true</c> if [is round changing]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsRoundChanging()
         {
             return this.HomesOccupied == 5;

@@ -1,44 +1,86 @@
-﻿using FroggerStarter.IO;
+
+﻿using System;
+ using System.Security.Cryptography.X509Certificates;
+ using FroggerStarter.IO;
 using FroggerStarter.Model;
 using FroggerStarter.ViewModel;
 
-namespace FroggerStarter.Controller
-{
-    /// <summary>Represents a score board</summary>
-    public class ScoreBoardManager
-    {
-        public ScoreBoard ScoreBoard;
+ namespace FroggerStarter.Controller
+ {
+     /// <summary>Represents a score board</summary>
 
-        public FileReader FileReader;
+     public class ScoreBoardManager
+     {
+         #region Data members
 
-        public SaveFileWriter SaveFile;
+         /// <summary>
+         ///     The score board
+         /// </summary>
+         public ScoreBoard ScoreBoard;
 
-        public ScoreBoardViewModel viewModel;
 
-        /// <summary>Initializes a new instance of the <see cref="ScoreManager"/> class.</summary>
-        public ScoreBoardManager()
+         /// <summary>
+         ///     The file reader
+         /// </summary>
+
+         public FileReader FileReader;
+
+         /// <summary>
+         ///     The save file
+         /// </summary>
+         public SaveFileWriter SaveFile;
+
+
+         public ScoreBoardViewModel viewModel;
+
+
+         /// <summary>
+         ///     Initializes a new instance of the <see cref="ScoreBoardManager" /> class.
+         ///     Precondition: none
+         ///     Postcondition: A new scoreboard manager is created
+         /// </summary>
+         public ScoreBoardManager()
+         {
+             this.ScoreBoard = new ScoreBoard();
+             this.FileReader = new FileReader();
+             this.SaveFile = new SaveFileWriter();
+             this.viewModel = new ScoreBoardViewModel();
+         }
+
+         #endregion
+
+         #region Methods
+
+         /// <summary>
+         ///     Adds the new score.
+         ///     Precondition: score != null
+         ///     Postcondition: score is serialized and saved
+         /// </summary>
+         /// <param name="score">The score.</param>
+         public async void AddNewScore(Score score)
+         {
+             if (score == null)
+             {
+                 throw new ArgumentNullException(nameof(score));
+             }
+
+             this.ScoreBoard.Add(score);
+         }
+
+         /// <summary>Reads the high score.</summary>
+             public async void ReadHighScore()
+             {
+                 await this.FileReader.ReadCurrentFileAsync();
+                 this.ScoreBoard = this.FileReader.ScoreBoard;
+
+             }
+
+        public async void SaveNewScore(Score score)
         {
-            this.ScoreBoard = new ScoreBoard();
-            this.FileReader = new FileReader();
-            this.SaveFile = new SaveFileWriter();
-            this.viewModel = new ScoreBoardViewModel();
+            await this.SaveFile.SaveAFileAsync(score);
         }
 
-        /// <summary>Adds the new score.</summary>
-        /// <param name="score">The score.</param>
-        public async void AddNewScore(Score score)
-        {
-           await this.SaveFile.SaveAFileAsync(score);
-        }
-
-        /// <summary>Reads the high score.</summary>
-        public async void ReadHighScore()
-        {
-            await this.FileReader.ReadCurrentFileAsync();
-            this.ScoreBoard = this.FileReader.ScoreBoard;
+             #endregion
          
-        }
-
-
-    }
-}
+     }
+ }

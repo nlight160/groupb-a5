@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Windows.UI.Xaml;
 using FroggerStarter.Model;
 
@@ -9,15 +8,15 @@ namespace FroggerStarter.Controller
     /// </summary>
     public class PowerUpManager
     {
+        #region Data members
+
         private const int MinBonusTimeRespawn = 1;
         private const int MaxBonusTimeRespawn = 21;
         private const int InvincibilityDuration = 10;
         private const int MinSpawnY = 150;
-        private const int EdgeBuffer = 50;
+        private const int EdgeOfPlayArea = 50;
         private const int RoadOffset = 5;
         private const int MinSpawnX = 0;
-
-        #region Data members
 
         private readonly Random random;
         private DispatcherTimer respawnTimer;
@@ -53,7 +52,7 @@ namespace FroggerStarter.Controller
         #region Constructors
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PowerUpManager"/> class.
+        ///     Initializes a new instance of the <see cref="PowerUpManager" /> class.
         /// </summary>
         /// <param name="soundManager">The sound manager.</param>
         /// <param name="backgroundWidth">Width of the background.</param>
@@ -70,7 +69,7 @@ namespace FroggerStarter.Controller
             this.totalTime = 0;
             this.timeUntilNextPowerUp = this.calculateTimeUntilNextPowerUp();
             this.setupBonusTimeTimer();
-            this.soundManager = soundManager; //TODO this might be unnecessary coupling
+            this.soundManager = soundManager;
             this.setupInvincibilityTimer();
         }
 
@@ -103,6 +102,8 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Starts the bonus time power up timer.
+        ///     Precondition: none
+        ///     Postcondition: BonusTime power up timer starts
         /// </summary>
         public void StartBonusTimePowerUpTimer()
         {
@@ -112,9 +113,12 @@ namespace FroggerStarter.Controller
 
         private void resetBonusTimePowerUp()
         {
-            this.TimePowerUp.X = this.roundDownToNearestMultipleOfFifty(this.random.Next(MinSpawnX, this.backgroundWidth - EdgeBuffer));
+            this.TimePowerUp.X =
+                this.roundDownToNearestMultipleOfFifty(
+                    this.random.Next(MinSpawnX, this.backgroundWidth - EdgeOfPlayArea));
             this.TimePowerUp.Y =
-                this.roundDownToNearestMultipleOfFifty(this.random.Next(MinSpawnY, this.backgroundHeight - EdgeBuffer)) + RoadOffset;
+                this.roundDownToNearestMultipleOfFifty(
+                    this.random.Next(MinSpawnY, this.backgroundHeight - EdgeOfPlayArea)) + RoadOffset;
             this.TimePowerUp.Sprite.Visibility = Visibility.Visible;
         }
 

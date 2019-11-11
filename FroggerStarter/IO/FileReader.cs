@@ -7,7 +7,9 @@ using FroggerStarter.Model;
 
 namespace FroggerStarter.IO
 {
-    /// <summary>Reads XML File</summary>
+    /// <summary>
+    ///     Reads XML File
+    /// </summary>
     public class FileReader
     {
         #region Data members
@@ -29,7 +31,11 @@ namespace FroggerStarter.IO
 
         #region Methods
 
-        /// <summary>Reads the current file asynchronous.</summary>
+        /// <summary>
+        ///     Reads the current file asynchronous.
+        ///     Precondition: none
+        ///     Postcondition: file is read
+        /// </summary>
         public async Task ReadCurrentFileAsync()
         {
             var fileName = "HighScoreBoard.xml";
@@ -46,6 +52,7 @@ namespace FroggerStarter.IO
                 this.ScoreBoard.Add(item);
             }
             inStream.Dispose();
+
         }
 
         private async void readFromXml(IStorageFile file)

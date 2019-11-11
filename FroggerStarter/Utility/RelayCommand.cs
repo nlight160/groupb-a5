@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace FroggerStarter.Utility
@@ -11,39 +7,16 @@ namespace FroggerStarter.Utility
     /// <seealso cref="System.Windows.Input.ICommand" />
     public class RelayCommand : ICommand
     {
-        private Action<object> execute;
-        private Predicate<object> canExecute;
+        #region Data members
+
+        private readonly Action<object> execute;
+        private readonly Predicate<object> canExecute;
+
+        #endregion
+
+        #region Constructors
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
-        public bool CanExecute(object parameter)
-        {
-            bool result = canExecute?.Invoke(parameter) ?? true;
-            return result;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="parameter"></param>
-        public void Execute(object parameter)
-        {
-            if (CanExecute(parameter))
-            {
-                execute(parameter);
-            }
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public event EventHandler CanExecuteChanged;
-
-        /// <summary>
-        /// 
         /// </summary>
         /// <param name="execute"></param>
         /// <param name="canExecute"></param>
@@ -53,12 +26,43 @@ namespace FroggerStarter.Utility
             this.canExecute = canExecute;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>
-        /// Typically, protected but made public, so can trigger a manual refresh on the result of CanExecute.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns>true if can execute, otherwise false</returns>
+        public bool CanExecute(object parameter)
+        {
+            var result = this.canExecute?.Invoke(parameter) ?? true;
+            return result;
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="parameter"></param>
+        public void Execute(object parameter)
+        {
+            if (this.CanExecute(parameter))
+            {
+                this.execute(parameter);
+            }
+        }
+
+        /// <summary>
+        /// </summary>
+        public event EventHandler CanExecuteChanged;
+
+        /// <summary>
+        ///     Typically, protected but made public, so can trigger a manual refresh on the result of CanExecute.
         /// </summary>
         public virtual void OnCanExecuteChanged()
         {
-            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            this.CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        #endregion
     }
 }

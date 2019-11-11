@@ -35,6 +35,7 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Gets the bonus time.
+        ///     Precondition: none
         /// </summary>
         /// <returns> the bonus time between 1 and 10 inclusive </returns>
         public int GetBonusTime()

@@ -3,6 +3,7 @@
 namespace FroggerStarter.Model
 {
     /// <summary>
+    ///     Handles Invincibility power up data
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.StationaryObject" />
     public class InvincibilityPowerUp : StationaryObject
@@ -18,6 +19,8 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="InvincibilityPowerUp" /> class.
+        ///     Precondition: none
+        ///     Postcondition: a new Invincibility power up is created
         /// </summary>
         public InvincibilityPowerUp()
         {

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace FroggerStarter.Model
 {
@@ -44,6 +43,7 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Returns an enumerator that iterates through a collection.
+        ///     Precondition: none
         /// </summary>
         /// <returns>
         ///     An <see cref="T:System.Collections.IEnumerator"></see> object that can be used to iterate through the collection.
@@ -56,8 +56,14 @@ namespace FroggerStarter.Model
             }
         }
 
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.vehicles.GetEnumerator();
+        }
+
         /// <summary>
         ///     Adds the vehicle.
+        ///     Precondition: vehicle != null
         /// </summary>
         /// <param name="vehicle">The vehicle.</param>
         /// <exception cref="ArgumentNullException">vehicle</exception>
@@ -73,6 +79,8 @@ namespace FroggerStarter.Model
 
         /// <summary>
         ///     Wraps the lane.
+        ///     Precondition: none
+        ///     Postcondition: vehicle location is set back to beginning of lane
         /// </summary>
         public void WrapLane()
         {
@@ -147,11 +155,6 @@ namespace FroggerStarter.Model
             {
                 vehicle.MoveVehicle();
             }
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.vehicles.GetEnumerator();
         }
 
         #endregion
