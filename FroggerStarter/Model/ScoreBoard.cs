@@ -27,14 +27,9 @@ namespace FroggerStarter.Model
         public ScoreBoard()
         {
             this.scoreBoard = new List<Score>();
-            this.createScore();
         }
 
-        public Score this[int i]
-        {
-            get => this.scoreBoard[i];
-            set => this.scoreBoard[i] = value;
-        }
+       
 
         /// <summary>Adds the score.</summary>
         /// <param name="score">The score.</param>
@@ -44,17 +39,6 @@ namespace FroggerStarter.Model
             {
                 this.scoreBoard.Add(score);
             }
-        }
-
-        public void createScore()
-        {
-            var score = new Score();
-            score.Name = "Me";
-            score.Value = 4;
-            score.Level = 6;
-                this.scoreBoard.Add(score);
-            this.scoreBoard.Add(score);
-            this.scoreBoard.Add(score);
         }
 
 

@@ -2,10 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using FroggerStarter.Extensions;
-using FroggerStarter.IO;
 using FroggerStarter.Model;
+using NathanielLightholderA4.Annotations;
 
 namespace FroggerStarter.ViewModel
 {
@@ -20,7 +19,6 @@ namespace FroggerStarter.ViewModel
 
         private ObservableCollection<Score> scores;
 
-
         #endregion
 
         #region Properties
@@ -32,13 +30,11 @@ namespace FroggerStarter.ViewModel
             get => this.scores;
             set
             {
+
                 this.scores = value;
                 this.OnPropertyChanged();
             }
         }
-
-        public FileReader FileReader { get; private set; }
-        public SaveFileWriter SaveFile { get; private set; }
 
         #endregion
 
@@ -52,14 +48,17 @@ namespace FroggerStarter.ViewModel
         public ScoreBoardViewModel()
         {
 
-            this.FileReader = new FileReader();
-            this.SaveFile = new SaveFileWriter();
             this.scoreBoard = new ScoreBoard();
             this.Scores = this.scoreBoard.ToObservableCollection();
         }
 
+        public void updateScores()
+        {
+            this.Scores = this.scoreBoard.ToObservableCollection();
+        }
 
-        
+
+      
         #endregion
 
         #region Methods
@@ -68,9 +67,10 @@ namespace FroggerStarter.ViewModel
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>
-        /// </summary>
-        /// <param name="propertyName"></param>
+        /// <summary>Called when [property changed].</summary>
+        /// <param name="propertyName">Name of the property.</param>
+        [NotifyPropertyChangedInvocator]
+        
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
