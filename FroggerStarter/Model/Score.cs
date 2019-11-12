@@ -25,6 +25,14 @@ namespace FroggerStarter.Model
 
         public  int Level { get;  set; }
 
+       
+
+        public Score()
+        {
+            Name = String.Empty;
+            Value = 0;
+            Level = 0;
+        }
 
     }
 }

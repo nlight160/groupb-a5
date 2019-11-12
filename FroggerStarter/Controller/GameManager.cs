@@ -309,7 +309,7 @@ namespace FroggerStarter.Controller
                 this.scoreBoard.ReadHighScore();
                 await this.highScoreContentDialog.ShowAsync();
             }
-
+            
 
             var isGameOver = new GameOverEventArg {GameOver = true};
             this.soundManager.PlayGameOverSound();

@@ -2,7 +2,9 @@
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using FroggerStarter.Extensions;
+using FroggerStarter.IO;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.ViewModel
@@ -18,6 +20,7 @@ namespace FroggerStarter.ViewModel
 
         private ObservableCollection<Score> scores;
 
+
         #endregion
 
         #region Properties
@@ -29,10 +32,13 @@ namespace FroggerStarter.ViewModel
             get => this.scores;
             set
             {
-                this.scores = new ObservableCollection<Score>(value.OrderBy(x=> x.Name).ToList());
+                this.scores = value;
                 this.OnPropertyChanged();
             }
         }
+
+        public FileReader FileReader { get; private set; }
+        public SaveFileWriter SaveFile { get; private set; }
 
         #endregion
 
@@ -46,11 +52,14 @@ namespace FroggerStarter.ViewModel
         public ScoreBoardViewModel()
         {
 
+            this.FileReader = new FileReader();
+            this.SaveFile = new SaveFileWriter();
             this.scoreBoard = new ScoreBoard();
-            this.Scores = this.scoreBoard.Scores.ToObservableCollection();
+            this.Scores = this.scoreBoard.ToObservableCollection();
         }
 
-      
+
+        
         #endregion
 
         #region Methods

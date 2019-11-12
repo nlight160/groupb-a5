@@ -1,4 +1,6 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Controls;
+using FroggerStarter.Model;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -10,11 +12,8 @@ namespace FroggerStarter.View.ContentDialogs
     /// <seealso cref="Windows.UI.Xaml.Controls.ContentDialog" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector" />
     /// <seealso cref="Windows.UI.Xaml.Markup.IComponentConnector2" />
-    public sealed partial class HighScoreContentDialog : ContentDialog
+    public sealed partial class HighScoreContentDialog
     {
-        /// <summary>The is primary</summary>
-        public bool IsPrimary;
-
         #region Constructors
 
         /// <summary>
@@ -25,16 +24,15 @@ namespace FroggerStarter.View.ContentDialogs
         public HighScoreContentDialog()
         {
             this.InitializeComponent();
-            this.IsPrimary = false;
         }
 
         #endregion
 
         #region Methods
 
+        
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
-            this.IsPrimary = true;
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

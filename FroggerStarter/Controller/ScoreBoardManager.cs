@@ -1,89 +1,80 @@
-
-﻿using System;
- using System.Security.Cryptography.X509Certificates;
- using FroggerStarter.Extensions;
- using FroggerStarter.IO;
+using System;
 using FroggerStarter.Model;
+using FroggerStarter.View.ContentDialogs;
 using FroggerStarter.ViewModel;
 
- namespace FroggerStarter.Controller
- {
-     /// <summary>Represents a score board</summary>
+namespace FroggerStarter.Controller
+{
+    /// <summary>Represents a score board</summary>
+    public class ScoreBoardManager
+    {
+        #region Data members
 
-     public class ScoreBoardManager
-     {
-         #region Data members
+        /// <summary>
+        ///     The score board
+        /// </summary>
+        public ScoreBoard ScoreBoard;
 
-         /// <summary>
-         ///     The score board
-         /// </summary>
-         public ScoreBoard ScoreBoard;
+        /// <summary>
+        ///     The file reader
+        /// </summary>
+        public ScoreBoardViewModel viewModel;
 
+        #endregion
 
-         /// <summary>
-         ///     The file reader
-         /// </summary>
+        #region Constructors
 
-         public FileReader FileReader;
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ScoreBoardManager" /> class.
+        ///     Precondition: none
+        ///     Postcondition: A new scoreboard manager is created
+        /// </summary>
+        public ScoreBoardManager()
+        {
+            this.ScoreBoard = new ScoreBoard();
 
-         /// <summary>
-         ///     The save file
-         /// </summary>
-         public SaveFileWriter SaveFile;
+            this.viewModel = new ScoreBoardViewModel();
 
+        }
 
-         public ScoreBoardViewModel viewModel;
+        #endregion
 
+        #region Methods
 
-         /// <summary>
-         ///     Initializes a new instance of the <see cref="ScoreBoardManager" /> class.
-         ///     Precondition: none
-         ///     Postcondition: A new scoreboard manager is created
-         /// </summary>
-         public ScoreBoardManager()
-         {
-             this.ScoreBoard = new ScoreBoard();
-             this.FileReader = new FileReader();
-             this.SaveFile = new SaveFileWriter();
-             this.viewModel = new ScoreBoardViewModel();
-         }
+        /// <summary>
+        ///     Adds the new score.
+        ///     Precondition: score != null
+        ///     Postcondition: score is serialized and saved
+        /// </summary>
+        /// <param name="score">The score.</param>
+        public async void AddNewScore(Score score)
+        {
+            if (score == null)
+            {
+                throw new ArgumentNullException(nameof(score));
+            }
 
-         #endregion
+            this.ScoreBoard.Add(score);
+        }
 
-         #region Methods
+        /// <summary>Reads the high score.</summary>
+        public async void ReadHighScore()
+        {
+            await this.viewModel.FileReader.ReadCurrentFileAsync();
 
-         /// <summary>
-         ///     Adds the new score.
-         ///     Precondition: score != null
-         ///     Postcondition: score is serialized and saved
-         /// </summary>
-         /// <param name="score">The score.</param>
-         public async void AddNewScore(Score score)
-         {
-             if (score == null)
-             {
-                 throw new ArgumentNullException(nameof(score));
-             }
+            this.viewModel.Scores = await this.viewModel.FileReader.GetListAsync();
 
-             this.ScoreBoard.Add(score);
-         }
+        }
 
-         /// <summary>Reads the high score.</summary>
-             public async void ReadHighScore()
-             {
-                 await this.FileReader.ReadCurrentFileAsync();
-                 this.ScoreBoard = this.FileReader.ScoreBoard;
-
-             }
-
+        /// <summary>Saves the new score.</summary>
+        /// <param name="score">The score.</param>
         public async void SaveNewScore(Score score)
         {
-            await this.SaveFile.SaveAFileAsync(score);
-            
+            await this.viewModel.SaveFile.SaveAFileAsync(score);
+
             this.viewModel.Scores.Add(score);
         }
 
-             #endregion
-         
-     }
- }
+        #endregion
+    }
+}

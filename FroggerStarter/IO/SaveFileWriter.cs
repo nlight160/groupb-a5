@@ -30,6 +30,7 @@ namespace FroggerStarter.IO
                 throw new ArgumentNullException(nameof(score));
             }
 
+
             var fileName = "HighScoreBoard.xml";
             var projectDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             Debug.Print(projectDirectory);
@@ -37,37 +38,33 @@ namespace FroggerStarter.IO
 
             var board = new ScoreBoard();
 
-            IStorageFile newFile = await StorageFile.GetFileFromPathAsync(path);
-            var folder = ApplicationData.Current.LocalFolder;
-
-            var file = await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
+           
             var xmlWriterSettings = new XmlWriterSettings
             {
                 Indent = true,
                 NewLineOnAttributes = true
             };
-            using (var xmlWriter = XmlWriter.Create(file.Path, xmlWriterSettings))
+            using (var xmlWriter = XmlWriter.Create(path, xmlWriterSettings))
             {
                 xmlWriter.WriteStartDocument();
                 xmlWriter.WriteStartElement("Score");
                 xmlWriter.WriteStartElement(score.Name);
                 xmlWriter.WriteAttributeString("Value", score.Value.ToString());
-                xmlWriter.WriteAttributeString("Level",score.Level.ToString() );
+                xmlWriter.WriteAttributeString("Level", score.Level.ToString());
                 xmlWriter.WriteEndElement();
                 xmlWriter.Flush();
-               
+
                 var serializer = new XmlSerializer(typeof(Score));
                 serializer.Serialize(xmlWriter, score);
-                xmlWriter.WriteEndElement();
-
+                xmlWriter.WriteEndDocument();
                 xmlWriter.Close();
             }
 
-            var xDocument = XDocument.Load(file.Path);
+            var xDocument = XDocument.Load(path);
+            Debug.Print(xDocument.ToString());
+            xDocument.Save(path);
 
-            xDocument.Save(file.Path);
 
-           
         }
 
         private async void writeToXml(IStorageFile newFile, Score score)

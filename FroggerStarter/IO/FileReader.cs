@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Windows.Storage;
+using FroggerStarter.Extensions;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.IO
@@ -16,7 +17,7 @@ namespace FroggerStarter.IO
         #region Data members
 
         /// <summary>The score board</summary>
-        public  ScoreBoard ScoreBoard;
+        public ScoreBoard ScoreBoard;
 
         #endregion
 
@@ -40,43 +41,37 @@ namespace FroggerStarter.IO
         public async Task ReadCurrentFileAsync()
         {
             var fileName = "HighScoreBoard.xml";
-           
+            var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            var path = Path.Combine(folderPath, fileName);
+            var xRoot = new XmlRootAttribute {ElementName = "Score", IsNullable = true};
 
-            var theFolder = ApplicationData.Current.LocalFolder;
-            var theFile = await theFolder.GetFileAsync(fileName);
-            var inStream = await theFile.OpenStreamForReadAsync();
-         
-            var projectDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-            Debug.Print(projectDirectory);
-            var path = Path.Combine(projectDirectory, fileName);
+            XmlSerializer serializer = new XmlSerializer(typeof(ScoreBoard), xRoot);
 
-            var board = new ScoreBoard();
-
-            IStorageFile newFile = await StorageFile.GetFileFromPathAsync(path);
-            var folder = ApplicationData.Current.LocalFolder;
-
-            
-
-            var deserializer = new XmlSerializer(typeof(Score));
-            using (FileStream fileStream = new FileStream(newFile.Path, FileMode.Open, FileAccess.Read, FileShare.Read))
-            {
-                var test = (Score)deserializer.Deserialize(fileStream);
-            }
-            
-
+            StreamReader reader = new StreamReader(path);
+            this.ScoreBoard = (ScoreBoard)serializer.Deserialize(reader);
+            reader.Close();
         }
 
         private async void readFromXml(IStorageFile file)
         {
             var serializer = new XmlSerializer(typeof(ScoreBoard));
             ScoreBoard result;
-            
+
             var stream = await file.OpenStreamForReadAsync();
             {
-                result = (ScoreBoard)serializer.Deserialize(stream);
+                result = (ScoreBoard) serializer.Deserialize(stream);
             }
+        }
 
-            
+        /// <summary>
+        ///     Gets the list asynchronously.
+        /// </summary>
+        /// <returns>
+        ///     the collection object
+        /// </returns>
+        public Task<ObservableCollection<Score>> GetListAsync()
+        {
+            return Task.Run(() => this.ScoreBoard.ToObservableCollection());
         }
 
         #endregion
