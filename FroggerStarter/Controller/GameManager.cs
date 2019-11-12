@@ -15,7 +15,7 @@ using FroggerStarter.View.Sprites.Vehicles;
 namespace FroggerStarter.Controller
 {
     /// <summary>
-    ///     Manages all aspects of the game play including moving the player, 
+    ///     Manages all aspects of the game play including moving the player,
     ///     the vehicles as well as lives and score.
     /// </summary>
     public class GameManager
