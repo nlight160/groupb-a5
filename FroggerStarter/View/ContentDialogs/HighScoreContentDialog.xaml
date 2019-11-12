@@ -21,13 +21,13 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="301" VerticalAlignment="Center" HorizontalAlignment="Left" Width="510">
 
 
-        <RadioButton x:Name="scoreBtn" Margin="10,75,0,0" Content="Score"
+        <RadioButton x:Name="scoreBtn" Margin="10,75,0,0" Content="Score" Command="{Binding ScoreCommand}"
                      VerticalAlignment="Top" FontSize="20" Width="83" Height="36" GroupName="sortScore" />
 
-        <RadioButton x:Name="nameBtn" Margin="10,10,0,0" Content="Name"
+        <RadioButton x:Name="nameBtn" Margin="10,10,0,0" Content="Name"  Command="{Binding NameCommand}"
                      VerticalAlignment="Top" FontSize="20" Height="34" Width="83" IsChecked="True" GroupName="sortScore"/>
 
-        <RadioButton x:Name="levelBtn" Margin="10,144,0,0" Content="Level"
+        <RadioButton x:Name="levelBtn" Margin="10,144,0,0" Content="Level"  Command="{Binding LevelCommand}"
                      VerticalAlignment="Top" FontSize="20"  Height="34" Width="83" GroupName="sortScore" />
         <ListView
             ItemsSource="{Binding Path=Scores, Mode=TwoWay}"
@@ -40,13 +40,9 @@
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
                             </Grid.RowDefinitions>
                             <TextBlock HorizontalAlignment="Stretch" Grid.Row="0" 
-                                       Text="{Binding Name }" />
-                            <TextBlock Grid.Row="1" Text="{Binding Value}" />
-                            <TextBlock Grid.Row="2" Text="{Binding Level}" />
+                                       Text="{Binding FullScore }" />
                         </Grid>
                     </Border>
                 </DataTemplate>
