@@ -4,8 +4,6 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using FroggerStarter.Controller;
-using FroggerStarter.Model;
-using FroggerStarter.View.Sprites;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -75,17 +73,20 @@ namespace FroggerStarter.View
             }
         }
 
+        /// <summary>
+        ///     Views the high score board.
+        /// </summary>
         public void ViewHighScoreBoard()
         {
             Frame.Navigate(typeof(HighScoreBoardPage));
         }
+
         private void onGameOver(object sender, GameOverEventArg e)
         {
             if (e.GameOver)
             {
                 this.gameOverTextBlock.Visibility = Visibility.Visible;
             }
-            
         }
 
         private void onUpdateScore(object sender, UpdateScoreEventArg e)
@@ -121,7 +122,6 @@ namespace FroggerStarter.View
             this.backGroundSquare4.Visibility = Visibility.Visible;
             this.backgroundSquare5.Visibility = Visibility.Visible;
         }
-
 
         #endregion
     }

@@ -10,11 +10,11 @@
     Width="50">
 
     <Canvas Width="50" Height="50" Background="Transparent">
-        <Ellipse Canvas.Top="5" Canvas.Left="15" Fill="WhiteSmoke" Width="30" Height="30"/>
-        <Ellipse Canvas.Top="15" Canvas.Left="10" Fill="WhiteSmoke" Width="25" Height="25"/>
-        <Ellipse Canvas.Top="30" Canvas.Left="25" Fill="WhiteSmoke" Width="20" Height="20"/>
-        <Ellipse Canvas.Top="10" Canvas.Left="30" Fill="Black" Width="5" Height="10"/>
-        <Ellipse Canvas.Top="10" Canvas.Left="20" Fill="Black" Width="5" Height="10"/>
+        <Ellipse Canvas.Top="5" Canvas.Left="15" Fill="WhiteSmoke" Width="30" Height="30" />
+        <Ellipse Canvas.Top="15" Canvas.Left="10" Fill="WhiteSmoke" Width="25" Height="25" />
+        <Ellipse Canvas.Top="30" Canvas.Left="25" Fill="WhiteSmoke" Width="20" Height="20" />
+        <Ellipse Canvas.Top="10" Canvas.Left="30" Fill="Black" Width="5" Height="10" />
+        <Ellipse Canvas.Top="10" Canvas.Left="20" Fill="Black" Width="5" Height="10" />
     </Canvas>
 
 </local:BaseSprite>

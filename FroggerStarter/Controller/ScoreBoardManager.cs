@@ -26,7 +26,6 @@ namespace FroggerStarter.Controller
         public SaveFileWriter SaveFile;
 
         /// <summary>
-        /// 
         /// </summary>
         public ScoreBoardViewModel viewModel;
 
@@ -57,7 +56,7 @@ namespace FroggerStarter.Controller
         ///     Postcondition: score is serialized and saved
         /// </summary>
         /// <param name="score">The score.</param>
-        public async void AddNewScore(Score score)
+        public void AddNewScore(Score score)
         {
             if (score == null)
             {
@@ -67,19 +66,25 @@ namespace FroggerStarter.Controller
             this.ScoreBoard.Add(score);
         }
 
-        /// <summary>Reads the high score.</summary>
-        public async void ReadHighScore()
+        /// <summary>
+        /// Reads the high score.
+        /// </summary>
+        public void ReadHighScore()
         {
-            await this.FileReader.ReadCurrentFileAsync();
+            this.FileReader.ReadCurrentFile();
             this.ScoreBoard = this.FileReader.ScoreBoard;
 
             this.viewModel.scoreBoard = this.ScoreBoard;
             this.viewModel.updateScores();
         }
 
-        public async void SaveNewScore(Score score)
+        /// <summary>
+        /// Saves the new score.
+        /// </summary>
+        /// <param name="score">The score.</param>
+        public void SaveNewScore(Score score)
         {
-            await this.SaveFile.SaveAFileAsync(score);
+            this.SaveFile.SaveAFile(score);
         }
 
         #endregion

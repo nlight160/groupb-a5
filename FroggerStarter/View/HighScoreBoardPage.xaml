@@ -10,7 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
-        <viewModel:ScoreBoardViewModel/>
+        <viewModel:ScoreBoardViewModel />
     </Page.DataContext>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
@@ -20,25 +20,26 @@
                      VerticalAlignment="Top" FontSize="20" Width="83" Height="36" GroupName="sortScore" />
 
         <RadioButton x:Name="nameBtn" Margin="10,10,0,0" Content="Name"
-                     VerticalAlignment="Top" FontSize="20" Height="34" Width="83" IsChecked="True" GroupName="sortScore"/>
+                     VerticalAlignment="Top" FontSize="20" Height="34" Width="83" IsChecked="True"
+                     GroupName="sortScore" />
 
         <RadioButton x:Name="levelBtn" Margin="10,144,0,0" Content="Level"
-                     VerticalAlignment="Top" FontSize="20"  Height="34" Width="83" GroupName="sortScore" />
+                     VerticalAlignment="Top" FontSize="20" Height="34" Width="83" GroupName="sortScore" />
         <ListView
             ItemsSource="{Binding Path=Scores, Mode=TwoWay}"
-            
-            x:Name="scoreListView" HorizontalAlignment="Left" 
-            VerticalAlignment="Top" FontSize="20" Width="500" Height="500" Margin="195,28,0,0"   >
+
+            x:Name="scoreListView" HorizontalAlignment="Left"
+            VerticalAlignment="Top" FontSize="20" Width="500" Height="500" Margin="195,28,0,0">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1">
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
                             </Grid.RowDefinitions>
-                            <TextBlock HorizontalAlignment="Stretch" Grid.Row="0" 
+                            <TextBlock HorizontalAlignment="Stretch" Grid.Row="0"
                                        Text="{Binding Name }" />
                             <TextBlock Grid.Row="1" Text="{Binding Value}" />
                             <TextBlock Grid.Row="2" Text="{Binding Level}" />

@@ -11,15 +11,14 @@
 
     <Canvas Width="50" Height="50" Background="Transparent" RenderTransformOrigin="0.5,0.5">
         <Canvas.RenderTransform>
-            <CompositeTransform Rotation="45"/>
+            <CompositeTransform Rotation="45" />
         </Canvas.RenderTransform>
-        <Rectangle Canvas.Left="9" Canvas.Top="9" Fill="Teal" Height="21" Width="21"/>
+        <Rectangle Canvas.Left="9" Canvas.Top="9" Fill="Teal" Height="21" Width="21" />
         <Rectangle Canvas.Left="15" Canvas.Top="15" Fill="Tan" Height="30" Width="30" RenderTransformOrigin="0.5,0.5">
             <Rectangle.RenderTransform>
-                <CompositeTransform Rotation="-45.498"/>
+                <CompositeTransform Rotation="-45.498" />
             </Rectangle.RenderTransform>
         </Rectangle>
-
 
 
     </Canvas>

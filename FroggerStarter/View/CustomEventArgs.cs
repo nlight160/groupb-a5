@@ -1,5 +1,5 @@
 ﻿using System;
-using Windows.UI.Xaml;
+using Windows.UI.Xaml.Media;
 
 namespace FroggerStarter.View
 {
@@ -101,12 +101,16 @@ namespace FroggerStarter.View
     /// </summary>
     public class UpdateHomeBackgroundEventArgs
     {
+        #region Properties
+
         /// <summary>
-        /// Gets or sets the color.
+        ///     Gets or sets the color.
         /// </summary>
         /// <value>
-        /// The color.
+        ///     The color.
         /// </value>
-        public Windows.UI.Xaml.Media.Brush Color { get; set; }
+        public Brush Color { get; set; }
+
+        #endregion
     }
 }

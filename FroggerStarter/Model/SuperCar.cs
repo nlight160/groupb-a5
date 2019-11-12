@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using FroggerStarter.View.Sprites.Vehicles;
 
 namespace FroggerStarter.Model
 {
     /// <summary>
-    /// Initializes Super car sprite and handles functionality
+    ///     Initializes Super car sprite and handles functionality
     /// </summary>
     /// <seealso cref="FroggerStarter.Model.Vehicle" />
     public class SuperCar : Vehicle
     {
+        #region Constructors
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="SuperCar" /> class.
@@ -28,12 +24,17 @@ namespace FroggerStarter.Model
             this.initializeSuperCarSprite();
         }
 
+        #endregion
+
+        #region Methods
+
         private void initializeSuperCarSprite()
         {
-            Sprite = new SuperCarSprite
-            {
+            Sprite = new SuperCarSprite {
                 Visibility = Visibility.Collapsed
             };
         }
+
+        #endregion
     }
 }

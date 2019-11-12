@@ -7,22 +7,30 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black" FocusVisualPrimaryBrush="#FFF7F4F4">
+    <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black"
+            FocusVisualPrimaryBrush="#FFF7F4F4">
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
 
-        <Rectangle Name="backgroundSquare1" Canvas.Top="60" Canvas.Left="1" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="backgroundSquare2"  Canvas.Top="60" Canvas.Left="150" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="backgroundSquare3" Canvas.Top="60" Canvas.Left="300" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="backGroundSquare4"  Canvas.Top="60" Canvas.Left="450" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="backgroundSquare5" Canvas.Top="60" Canvas.Left="599" Fill="Black" Width="50" Height="45"/>
+        <Rectangle Name="backgroundSquare1" Canvas.Top="60" Canvas.Left="1" Fill="Black" Width="50" Height="45" />
+        <Rectangle Name="backgroundSquare2" Canvas.Top="60" Canvas.Left="150" Fill="Black" Width="50" Height="45" />
+        <Rectangle Name="backgroundSquare3" Canvas.Top="60" Canvas.Left="300" Fill="Black" Width="50" Height="45" />
+        <Rectangle Name="backGroundSquare4" Canvas.Top="60" Canvas.Left="450" Fill="Black" Width="50" Height="45" />
+        <Rectangle Name="backgroundSquare5" Canvas.Top="60" Canvas.Left="599" Fill="Black" Width="50" Height="45" />
 
         <Rectangle Canvas.Top="355" Fill="Gray" Width="{StaticResource AppWidth}" Height="55" />
 
-        <TextBlock Canvas.Left="248" Canvas.Top="10" Text="Frogger" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.459" Height="54" Width="162" Foreground="DarkGreen"  FontFamily="Bauhaus 93" FontSize="36" FontStyle="Normal" TextAlignment="Center"/>
-        <TextBlock x:Name="gameOverTextBlock" Canvas.Left="147" Canvas.Top="140" Text="Game Over" TextWrapping="Wrap" FontFamily="Arial Black" FontSize="72" Height="128" Width="394" Foreground="#FFFBF009" Visibility="Collapsed" Canvas.ZIndex="10"/>
-        <TextBlock x:Name="scoreTextBlock" Canvas.Left="555" Canvas.Top="19" Text="Score: X" TextWrapping="Wrap" Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16"/>
-        <TextBlock x:Name="livesTextBlock" Canvas.Left="475" Canvas.Top="19" Text="Lives: X" TextWrapping="Wrap" Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16"/>
-        <TextBlock x:Name="timerTextBlock" Canvas.Left="5" Canvas.Top="19" Text="Timer: X" TextWrapping="Wrap" Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16"/>
+        <TextBlock Canvas.Left="248" Canvas.Top="10" Text="Frogger" TextWrapping="Wrap"
+                   RenderTransformOrigin="0.5,0.459" Height="54" Width="162" Foreground="DarkGreen"
+                   FontFamily="Bauhaus 93" FontSize="36" FontStyle="Normal" TextAlignment="Center" />
+        <TextBlock x:Name="gameOverTextBlock" Canvas.Left="147" Canvas.Top="140" Text="Game Over" TextWrapping="Wrap"
+                   FontFamily="Arial Black" FontSize="72" Height="128" Width="394" Foreground="#FFFBF009"
+                   Visibility="Collapsed" Canvas.ZIndex="10" />
+        <TextBlock x:Name="scoreTextBlock" Canvas.Left="555" Canvas.Top="19" Text="Score: X" TextWrapping="Wrap"
+                   Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16" />
+        <TextBlock x:Name="livesTextBlock" Canvas.Left="475" Canvas.Top="19" Text="Lives: X" TextWrapping="Wrap"
+                   Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16" />
+        <TextBlock x:Name="timerTextBlock" Canvas.Left="5" Canvas.Top="19" Text="Timer: X" TextWrapping="Wrap"
+                   Height="27" Width="86" Foreground="#FFF7F4F4" TextAlignment="Center" FontSize="16" />
 
 
     </Canvas>

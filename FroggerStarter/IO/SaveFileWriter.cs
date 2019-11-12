@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Xml.Serialization;
@@ -23,13 +22,12 @@ namespace FroggerStarter.IO
         ///     Postcondition: score is serialized and saved
         /// </summary>
         /// <param name="score">The score.</param>
-        public async Task SaveAFileAsync(Score score)
+        public void SaveAFile(Score score)
         {
             if (score == null)
             {
                 throw new ArgumentNullException(nameof(score));
             }
-
 
             var fileName = "HighScoreBoard.xml";
             var projectDirectory = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -38,9 +36,7 @@ namespace FroggerStarter.IO
 
             var board = new ScoreBoard();
 
-           
-            var xmlWriterSettings = new XmlWriterSettings
-            {
+            var xmlWriterSettings = new XmlWriterSettings {
                 Indent = true,
                 NewLineOnAttributes = true
             };
@@ -63,8 +59,6 @@ namespace FroggerStarter.IO
             var xDocument = XDocument.Load(path);
             Debug.Print(xDocument.ToString());
             xDocument.Save(path);
-
-
         }
 
         private async void writeToXml(IStorageFile newFile, Score score)

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Xml.Serialization;
 
 namespace FroggerStarter.Model
@@ -9,14 +8,15 @@ namespace FroggerStarter.Model
     /// <summary>
     ///     Instance of  score board
     /// </summary>
-     [Serializable]
-     [XmlRoot(ElementName = "Score")]
+    [Serializable]
+    [XmlRoot(ElementName = "Score")]
     public class ScoreBoard : IEnumerable<Score>
     {
+        #region Data members
 
         private readonly IList<Score> scoreBoard;
-       
 
+        #endregion
 
         #region Constructors
 
@@ -30,20 +30,9 @@ namespace FroggerStarter.Model
             this.scoreBoard = new List<Score>();
         }
 
-       
+        #endregion
 
-        /// <summary>Adds the score.</summary>
-        /// <param name="score">The score.</param>
-        public void Add(Score score)
-        {
-            if (score != null)
-            {
-                this.scoreBoard.Add(score);
-            }
-        }
-
-       
-
+        #region Methods
 
         /// <summary>
         ///     Returns an enumerator that iterates through the collection.
@@ -63,6 +52,16 @@ namespace FroggerStarter.Model
         IEnumerator IEnumerable.GetEnumerator()
         {
             return this.scoreBoard.GetEnumerator();
+        }
+
+        /// <summary>Adds the score.</summary>
+        /// <param name="score">The score.</param>
+        public void Add(Score score)
+        {
+            if (score != null)
+            {
+                this.scoreBoard.Add(score);
+            }
         }
 
         /// <summary>

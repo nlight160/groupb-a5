@@ -38,17 +38,17 @@ namespace FroggerStarter.IO
         ///     Precondition: none
         ///     Postcondition: file is read
         /// </summary>
-        public async Task ReadCurrentFileAsync()
+        public void ReadCurrentFile()
         {
             var fileName = "HighScoreBoard.xml";
             var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
             var path = Path.Combine(folderPath, fileName);
             var xRoot = new XmlRootAttribute {ElementName = "Score", IsNullable = true};
 
-            XmlSerializer serializer = new XmlSerializer(typeof(ScoreBoard), xRoot);
+            var serializer = new XmlSerializer(typeof(ScoreBoard), xRoot);
 
-            StreamReader reader = new StreamReader(path);
-            this.ScoreBoard = (ScoreBoard)serializer.Deserialize(reader);
+            var reader = new StreamReader(path);
+            this.ScoreBoard = (ScoreBoard) serializer.Deserialize(reader);
             reader.Close();
         }
 

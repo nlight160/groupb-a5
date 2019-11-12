@@ -30,8 +30,7 @@ namespace FroggerStarter.Model
 
         private void initializeCarSprite()
         {
-            Sprite = new CarSprite
-            {
+            Sprite = new CarSprite {
                 Visibility = Visibility.Collapsed
             };
         }

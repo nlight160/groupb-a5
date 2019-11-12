@@ -82,6 +82,9 @@
             }
         }
 
+        /// <summary>
+        ///     Resets the game.
+        /// </summary>
         public void resetGame()
         {
             this.HomesOccupied = 0;

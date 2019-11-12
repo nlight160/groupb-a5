@@ -8,11 +8,11 @@
     mc:Ignorable="d"
     Title="Enter Name"
     PrimaryButtonText="Enter"
-    
+
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
-<TextBox Name="nameBox" TextChanged="NameBox_TextChanged" />
+        <TextBox Name="nameBox" TextChanged="NameBox_TextChanged" />
     </Grid>
 </ContentDialog>

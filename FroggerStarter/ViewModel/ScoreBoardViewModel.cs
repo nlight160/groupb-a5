@@ -16,6 +16,9 @@ namespace FroggerStarter.ViewModel
     {
         #region Data members
 
+        /// <summary>
+        ///     The score board
+        /// </summary>
         public ScoreBoard scoreBoard;
 
         private ObservableCollection<Score> scores;
@@ -33,12 +36,31 @@ namespace FroggerStarter.ViewModel
             {
                 this.scores = value;
                 this.OnPropertyChanged();
-               
             }
         }
 
+        /// <summary>
+        ///     Gets or sets the name command.
+        /// </summary>
+        /// <value>
+        ///     The name command.
+        /// </value>
         public RelayCommand NameCommand { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the score command.
+        /// </summary>
+        /// <value>
+        ///     The score command.
+        /// </value>
         public RelayCommand ScoreCommand { get; set; }
+
+        /// <summary>
+        ///     Gets or sets the level command.
+        /// </summary>
+        /// <value>
+        ///     The level command.
+        /// </value>
         public RelayCommand LevelCommand { get; set; }
 
         #endregion
@@ -54,9 +76,9 @@ namespace FroggerStarter.ViewModel
         {
             this.scoreBoard = new ScoreBoard();
             this.Scores = this.scoreBoard.ToObservableCollection();
-            this.NameCommand = new RelayCommand(this.SortName, this.CanSortName);
-            this.ScoreCommand = new RelayCommand(this.SortScore, this.CanSortScore);
-            this.LevelCommand = new RelayCommand(this.SortLevel, this.CanSortLevel);
+            this.NameCommand = new RelayCommand(this.sortName, this.canSortName);
+            this.ScoreCommand = new RelayCommand(this.sortScore, this.canSortScore);
+            this.LevelCommand = new RelayCommand(this.sortLevel, this.canSortLevel);
             this.NameCommand.OnCanExecuteChanged();
             this.ScoreCommand.OnCanExecuteChanged();
             this.LevelCommand.OnCanExecuteChanged();
@@ -70,41 +92,77 @@ namespace FroggerStarter.ViewModel
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <summary>
+        ///     Updates the scores.
+        /// </summary>
         public void updateScores()
         {
             this.Scores = this.scoreBoard.ToObservableCollection();
         }
 
-        private bool CanSortName(object obj)
+        /// <summary>
+        ///     Determines whether this instance [can sort name] the specified object.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>
+        ///     <c>true</c> if this instance [can sort name] the specified object; otherwise, <c>false</c>.
+        /// </returns>
+        private bool canSortName(object obj)
         {
             return this.Scores != null;
         }
 
-        private void SortName(object obj)
+        /// <summary>
+        ///     Sorts the name.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        private void sortName(object obj)
         {
             var result = this.scoreBoard.Select(x => x).OrderBy(x => x.Name).ThenBy(x => x.Value).ThenBy(x => x.Level)
                              .Take(10);
             this.Scores = result.ToObservableCollection();
         }
 
-        private bool CanSortScore(object obj)
+        /// <summary>
+        ///     Determines whether this instance [can sort score] the specified object.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>
+        ///     <c>true</c> if this instance [can sort score] the specified object; otherwise, <c>false</c>.
+        /// </returns>
+        private bool canSortScore(object obj)
         {
             return this.Scores != null;
         }
 
-        private void SortScore(object obj)
+        /// <summary>
+        ///     Sorts the score.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        private void sortScore(object obj)
         {
             var result = this.scoreBoard.Select(x => x).OrderBy(x => x.Value).ThenBy(x => x.Name).ThenBy(x => x.Level)
                              .Take(10);
             this.Scores = result.ToObservableCollection();
         }
 
-        private bool CanSortLevel(object obj)
+        /// <summary>
+        ///     Determines whether this instance [can sort level] the specified object.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>
+        ///     <c>true</c> if this instance [can sort level] the specified object; otherwise, <c>false</c>.
+        /// </returns>
+        private bool canSortLevel(object obj)
         {
             return this.Scores != null;
         }
 
-        private void SortLevel(object obj)
+        /// <summary>
+        ///     Sorts the level.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        private void sortLevel(object obj)
         {
             var result = this.scoreBoard.Select(x => x).OrderBy(x => x.Level).ThenBy(x => x.Value).ThenBy(x => x.Name)
                              .Take(10);

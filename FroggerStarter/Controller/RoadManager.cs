@@ -80,10 +80,11 @@ namespace FroggerStarter.Controller
 
         /// <summary>Determines whether [is last round].</summary>
         /// <returns>
-        ///   <c>true</c> if [is last round]; otherwise, <c>false</c>.</returns>
+        ///     <c>true</c> if [is last round]; otherwise, <c>false</c>.
+        /// </returns>
         public bool IsLastRound()
         {
-            return RoundCount == LastRound;
+            return this.RoundCount == LastRound;
         }
 
         /// <summary>
