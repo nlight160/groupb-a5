@@ -95,7 +95,7 @@ namespace FroggerStarter.ViewModel
         /// <summary>
         ///     Updates the scores.
         /// </summary>
-        public void updateScores()
+        public void UpdateScores()
         {
             this.Scores = this.ScoreBoard.ToObservableCollection();
         }
