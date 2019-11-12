@@ -73,14 +73,11 @@ namespace FroggerStarter.View
             }
         }
 
-      
-
         private void onGameOver(object sender, GameOverEventArg e)
         {
             if (e.GameOver)
             {
                 this.gameOverTextBlock.Visibility = Visibility.Visible;
-              
             }
         }
 

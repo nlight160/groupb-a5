@@ -24,7 +24,7 @@ namespace FroggerStarter.Model
         /// <value>
         ///     The speed y.
         /// </value>
-        private int SpeedY { get;  set; }
+        private int SpeedY { get; set; }
 
         #endregion
 

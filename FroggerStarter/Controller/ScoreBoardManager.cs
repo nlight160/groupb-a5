@@ -78,7 +78,7 @@ namespace FroggerStarter.Controller
             this.FileReader.ReadCurrentFile();
             this.ScoreBoard = this.FileReader.ScoreBoard;
 
-            this.viewModel.scoreBoard = this.ScoreBoard;
+            this.viewModel.ScoreBoard = this.ScoreBoard;
             this.viewModel.UpdateScores();
         }
 

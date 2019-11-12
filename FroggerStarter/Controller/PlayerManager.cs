@@ -5,6 +5,14 @@
     /// </summary>
     public class PlayerManager
     {
+        #region Data members
+
+        private const int LevelLimit = 4;
+
+        private readonly GameSettings gameSettings;
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -50,7 +58,8 @@
         /// </summary>
         public PlayerManager()
         {
-            this.RemainingLives = 4;
+            this.gameSettings = new GameSettings();
+            this.RemainingLives = this.gameSettings.RemainingLives;
             this.Score = 0;
             this.Level = 1;
         }
@@ -79,7 +88,7 @@
         /// </summary>
         public void NextLevel()
         {
-            if (this.HomesOccupied == 5)
+            if (this.HomesOccupied == this.gameSettings.NumberOfHomes)
             {
                 this.Level++;
                 this.HomesOccupied = 0;
@@ -105,7 +114,7 @@
         /// </returns>
         public bool IsGameOverConditionMet()
         {
-            return this.RemainingLives == 0 || this.Level == 4;
+            return this.RemainingLives == 0 || this.Level == LevelLimit;
         }
 
         /// <summary>
@@ -117,7 +126,7 @@
         /// </returns>
         public bool IsRoundChanging()
         {
-            return this.HomesOccupied == 5;
+            return this.HomesOccupied == this.gameSettings.NumberOfHomes;
         }
 
         /// <summary>

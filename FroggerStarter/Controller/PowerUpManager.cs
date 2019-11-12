@@ -10,12 +10,7 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private const int MinBonusTimeRespawn = 1;
-        private const int MaxBonusTimeRespawn = 21;
-        private const int InvincibilityDuration = 10;
-        private const int MinSpawnY = 150;
         private const int EdgeOfPlayArea = 50;
-        private const int RoadOffset = 5;
         private const int MinSpawnX = 0;
 
         private readonly Random random;
@@ -26,6 +21,8 @@ namespace FroggerStarter.Controller
         private readonly int backgroundHeight;
         private DispatcherTimer invincibilityTimer;
         private readonly SoundManager soundManager;
+
+        private readonly GameSettings gameSettings;
 
         #endregion
 
@@ -61,6 +58,7 @@ namespace FroggerStarter.Controller
         {
             this.backgroundWidth = backgroundWidth;
             this.backgroundHeight = backgroundHeight;
+            this.gameSettings = new GameSettings();
             this.TimePowerUp = new BonusTimePowerUp();
             this.InvincibilityPowerUp = new InvincibilityPowerUp();
 
@@ -97,7 +95,9 @@ namespace FroggerStarter.Controller
 
         private int calculateTimeUntilNextPowerUp()
         {
-            return this.random.Next(this.totalTime + MinBonusTimeRespawn, this.totalTime + MaxBonusTimeRespawn);
+            return this.random.Next(this.totalTime + this.gameSettings.MinBonusTimeRespawn, this.totalTime +
+                                                                                            this.gameSettings
+                                                                                                .MaxBonusTimeRespawn);
         }
 
         /// <summary>
@@ -119,7 +119,8 @@ namespace FroggerStarter.Controller
 
             this.TimePowerUp.Y =
                 this.roundDownToNearestMultipleOfFifty(
-                    this.random.Next(MinSpawnY, this.backgroundHeight - EdgeOfPlayArea)) + RoadOffset;
+                    this.random.Next(this.gameSettings.FrogHomeOffset, this.backgroundHeight - EdgeOfPlayArea)) +
+                this.gameSettings.BottomLaneOffset;
 
             this.TimePowerUp.Sprite.Visibility = Visibility.Visible;
         }
@@ -134,7 +135,7 @@ namespace FroggerStarter.Controller
         {
             this.invincibilityTimer = new DispatcherTimer();
             this.invincibilityTimer.Tick += this.invincibilityTimerTick;
-            this.invincibilityTimer.Interval = new TimeSpan(0, 0, 0, InvincibilityDuration, 0);
+            this.invincibilityTimer.Interval = new TimeSpan(0, 0, 0, this.gameSettings.InvincibilityDuration, 0);
         }
 
         private void invincibilityTimerTick(object sender, object e)

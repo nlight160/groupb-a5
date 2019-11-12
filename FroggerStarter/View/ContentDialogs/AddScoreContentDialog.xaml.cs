@@ -45,7 +45,6 @@ namespace FroggerStarter.View.ContentDialogs
         {
             this.PlayerName = this.nameBox.Text;
             this.IsPrimary = true;
-            
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

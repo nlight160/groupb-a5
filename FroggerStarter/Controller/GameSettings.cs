@@ -55,6 +55,38 @@
         /// </value>
         public int InitialTimeLeft => 20;
 
+        /// <summary>
+        ///     Gets the remaining lives.
+        /// </summary>
+        /// <value>
+        ///     The remaining lives.
+        /// </value>
+        public int RemainingLives => 4;
+
+        /// <summary>
+        ///     Gets the duration of the invincibility.
+        /// </summary>
+        /// <value>
+        ///     The duration of the invincibility.
+        /// </value>
+        public int InvincibilityDuration => 10;
+
+        /// <summary>
+        ///     Gets the minimum bonus time respawn.
+        /// </summary>
+        /// <value>
+        ///     The minimum bonus time respawn.
+        /// </value>
+        public int MinBonusTimeRespawn => 1;
+
+        /// <summary>
+        ///     Gets the maximum bonus time respawn.
+        /// </summary>
+        /// <value>
+        ///     The maximum bonus time respawn.
+        /// </value>
+        public int MaxBonusTimeRespawn => 21;
+
         #endregion
     }
 }

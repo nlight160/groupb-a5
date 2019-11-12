@@ -14,15 +14,14 @@ namespace FroggerStarter.Controller
     {
         #region Data members
 
-        private const int LaneOffsetFromBottom = 55;
         private const int LastRound = 3;
         private const int FirstRound = 1;
         private const int SecondRound = 2;
         private readonly IList<Lane> lanes;
         private readonly int backgroundWidth;
         private readonly int backgroundHeight;
-        private readonly int laneHeight;
         private readonly VehicleFactory vehicleFactory;
+        private readonly GameSettings gameSettings;
 
         #endregion
 
@@ -42,16 +41,17 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Initializes a new instance of the <see cref="RoadManager" /> class.
+        ///     Precondition: none
+        ///     PostCondition: a new roadmanager is created
         /// </summary>
         /// <param name="backgroundWidth">Width of the background.</param>
         /// <param name="backgroundHeight">Height of the background.</param>
-        /// <param name="laneHeight">Height of the lane.</param>
-        public RoadManager(int backgroundWidth, int backgroundHeight, int laneHeight)
+        public RoadManager(int backgroundWidth, int backgroundHeight)
         {
+            this.gameSettings = new GameSettings();
             this.lanes = new List<Lane>();
             this.backgroundWidth = backgroundWidth;
             this.backgroundHeight = backgroundHeight;
-            this.laneHeight = laneHeight;
             this.vehicleFactory = new VehicleFactory();
             this.RoundCount = FirstRound;
         }
@@ -297,7 +297,8 @@ namespace FroggerStarter.Controller
 
         private int calculateLanePosition(int laneNumber)
         {
-            return this.backgroundHeight - this.laneHeight * laneNumber - LaneOffsetFromBottom;
+            return this.backgroundHeight - this.gameSettings.LaneHeight * laneNumber -
+                   (this.gameSettings.LaneHeight + this.gameSettings.BottomLaneOffset);
         }
 
         private void makeFirstVehiclesVisible()

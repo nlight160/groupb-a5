@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -109,8 +108,7 @@ namespace FroggerStarter.Controller
             this.backgroundWidth = backgroundWidth;
             this.soundManager = new SoundManager();
             this.gameSettings = new GameSettings();
-            this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight,
-                this.gameSettings.LaneHeight);
+            this.roadManager = new RoadManager((int) this.backgroundWidth, (int) this.backgroundHeight);
             this.playerManager = new PlayerManager();
             this.scoreBoard = new ScoreBoardManager();
             this.frogHomeManager = new FrogHomeManager(this.gameSettings.FrogHomeOffset);
@@ -183,11 +181,11 @@ namespace FroggerStarter.Controller
 
         private void createAndPlaceFrogHomes()
         {
-            this.addFrogHomesToManager(this.gameSettings.NumberOfHomes);
+            this.addFrogHomesToManagerAndCanvas(this.gameSettings.NumberOfHomes);
             this.frogHomeManager.PlaceFrogHomes();
         }
 
-        private void addFrogHomesToManager(int numberOfHomes)
+        private void addFrogHomesToManagerAndCanvas(int numberOfHomes)
         {
             for (var i = 0; i < numberOfHomes; i++)
             {
@@ -206,23 +204,6 @@ namespace FroggerStarter.Controller
             }
 
             this.makeVehicleVisible();
-        }
-
-        private void deleteCurrentVehicles()
-        {
-            var count = 0;
-            var childrenList = this.gameCanvas.Children.ToArray();
-            foreach (var item in childrenList)
-            {
-                if (item is CarSprite || item is TruckSprite || item is SuperCarSprite)
-                {
-                    this.gameCanvas.Children[count].Visibility = Visibility.Collapsed;
-                    this.gameCanvas.Children.Remove(item);
-                    count = 0;
-                }
-
-                count++;
-            }
         }
 
         private void makeVehicleVisible()
@@ -271,10 +252,15 @@ namespace FroggerStarter.Controller
             {
                 this.setGameOverScreen();
                 this.soundManager.PlayGameOverSound();
-                this.vehicleTimer.Stop();
-                this.lifeTimer.Stop();
-                this.timer.Stop();
+                this.stopTimers();
             }
+        }
+
+        private void stopTimers()
+        {
+            this.vehicleTimer.Stop();
+            this.lifeTimer.Stop();
+            this.timer.Stop();
         }
 
         private void handleLevelChange()
@@ -291,6 +277,23 @@ namespace FroggerStarter.Controller
             this.changeCanvasTheme();
         }
 
+        private void deleteCurrentVehicles()
+        {
+            var count = 0;
+            var childrenList = this.gameCanvas.Children.ToArray();
+            foreach (var child in childrenList)
+            {
+                if (child is CarSprite || child is TruckSprite || child is SuperCarSprite)
+                {
+                    this.gameCanvas.Children[count].Visibility = Visibility.Collapsed;
+                    this.gameCanvas.Children.Remove(child);
+                    count = 0;
+                }
+
+                count++;
+            }
+        }
+
         private async void setGameOverScreen()
         {
             var isGameOver = new GameOverEventArg {GameOver = true};
@@ -300,31 +303,23 @@ namespace FroggerStarter.Controller
             await this.handleAddScoreDialog();
         }
 
-        private void setHomeBackgroundColor(Brush color)
-        {
-            var backgroundColor = new UpdateHomeBackgroundEventArgs {Color = color};
-            this.UpdateHomeBackground?.Invoke(this, backgroundColor);
-        }
-
         private async Task handleAddScoreDialog()
         {
             await this.addScoreContentDialog.ShowAsync();
             if (this.addScoreContentDialog.IsPrimary)
             {
                 var name = this.addScoreContentDialog.PlayerName;
-
                 var score = new Score {
                     Name = name,
                     Value = this.playerManager.Score,
                     Level = this.playerManager.Level
                 };
-
                 this.scoreBoard.AddNewScore(score);
                 this.scoreBoard.SaveNewScore(score);
+                this.scoreBoard.ReadHighScore();
 
                 await this.highScoreContentDialog.ShowAsync();
             }
-            this.scoreBoard.ReadHighScore();
         }
 
         private void lifeTimerTick(object sender, object e)
@@ -394,6 +389,12 @@ namespace FroggerStarter.Controller
             }
         }
 
+        private void setHomeBackgroundColor(Brush color)
+        {
+            var backgroundColor = new UpdateHomeBackgroundEventArgs {Color = color};
+            this.UpdateHomeBackground?.Invoke(this, backgroundColor);
+        }
+
         private void handlePlayerVisibility()
         {
             var x = this.backgroundWidth / 2 - this.player.Width / 2;
@@ -458,8 +459,7 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerAdjacentToLeftBoundary() && !this.playerManager.IsGameOverConditionMet()
                                                        && !this.deathAnimation.IsDeathAnimationRunning())
             {
-                this.player.Sprite.RotateSpriteToFaceLeft();
-                this.playerMovingFrame.Sprite.RotateSpriteToFaceLeft();
+                this.rotateFrogSpritesLeft();
                 this.animatePlayerMovement();
                 this.player.MoveLeft();
             }
@@ -468,6 +468,12 @@ namespace FroggerStarter.Controller
             {
                 this.soundManager.PlayWallCollisionSound();
             }
+        }
+
+        private void rotateFrogSpritesLeft()
+        {
+            this.player.Sprite.RotateSpriteToFaceLeft();
+            this.playerMovingFrame.Sprite.RotateSpriteToFaceLeft();
         }
 
         private bool isPlayerAdjacentToLeftBoundary()
@@ -485,8 +491,7 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerAdjacentToRightBoundary() && !this.playerManager.IsGameOverConditionMet()
                                                         && !this.deathAnimation.IsDeathAnimationRunning())
             {
-                this.player.Sprite.RotateSpriteToFaceRight();
-                this.playerMovingFrame.Sprite.RotateSpriteToFaceRight();
+                this.rotateFrogSpritesRight();
                 this.animatePlayerMovement();
                 this.player.MoveRight();
             }
@@ -495,6 +500,12 @@ namespace FroggerStarter.Controller
             {
                 this.soundManager.PlayWallCollisionSound();
             }
+        }
+
+        private void rotateFrogSpritesRight()
+        {
+            this.player.Sprite.RotateSpriteToFaceRight();
+            this.playerMovingFrame.Sprite.RotateSpriteToFaceRight();
         }
 
         private bool isPlayerAdjacentToRightBoundary()
@@ -512,11 +523,16 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerOnTopBoundary() && !this.playerManager.IsGameOverConditionMet()
                                               && !this.deathAnimation.IsDeathAnimationRunning())
             {
-                this.player.Sprite.RotateSpriteToFaceUp();
-                this.playerMovingFrame.Sprite.RotateSpriteToFaceUp();
+                this.rotateFrogSpritesUp();
                 this.animatePlayerMovement();
                 this.player.MoveUp();
             }
+        }
+
+        private void rotateFrogSpritesUp()
+        {
+            this.player.Sprite.RotateSpriteToFaceUp();
+            this.playerMovingFrame.Sprite.RotateSpriteToFaceUp();
         }
 
         private bool isPlayerOnTopBoundary()
@@ -547,8 +563,7 @@ namespace FroggerStarter.Controller
             if (!this.isPlayerAdjacentToBottomBoundary() && !this.playerManager.IsGameOverConditionMet()
                                                          && !this.deathAnimation.IsDeathAnimationRunning())
             {
-                this.player.Sprite.RotateSpriteToFaceDown();
-                this.playerMovingFrame.Sprite.RotateSpriteToFaceDown();
+                this.rotateFrogSpritesDown();
                 this.animatePlayerMovement();
                 this.player.MoveDown();
             }
@@ -557,6 +572,12 @@ namespace FroggerStarter.Controller
             {
                 this.soundManager.PlayWallCollisionSound();
             }
+        }
+
+        private void rotateFrogSpritesDown()
+        {
+            this.player.Sprite.RotateSpriteToFaceDown();
+            this.playerMovingFrame.Sprite.RotateSpriteToFaceDown();
         }
 
         private bool isPlayerAdjacentToBottomBoundary()
