@@ -10,11 +10,11 @@
     <Canvas x:Name="canvas" Width="{StaticResource AppWidth}" Height="{StaticResource AppHeight}" Background="Black" FocusVisualPrimaryBrush="#FFF7F4F4">
         <Rectangle Canvas.Top="55" Fill="Gray" Width="{StaticResource AppWidth}" Height="50" />
 
-        <Rectangle Name="back1" Canvas.Top="60" Canvas.Left="1" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="back2"  Canvas.Top="60" Canvas.Left="150" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="back3" Canvas.Top="60" Canvas.Left="300" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="back4"  Canvas.Top="60" Canvas.Left="450" Fill="Black" Width="50" Height="45"/>
-        <Rectangle Name="back5" Canvas.Top="60" Canvas.Left="599" Fill="Black" Width="50" Height="45"/>
+        <Rectangle Name="backgroundSquare1" Canvas.Top="60" Canvas.Left="1" Fill="Black" Width="50" Height="45"/>
+        <Rectangle Name="backgroundSquare2"  Canvas.Top="60" Canvas.Left="150" Fill="Black" Width="50" Height="45"/>
+        <Rectangle Name="backgroundSquare3" Canvas.Top="60" Canvas.Left="300" Fill="Black" Width="50" Height="45"/>
+        <Rectangle Name="backGroundSquare4"  Canvas.Top="60" Canvas.Left="450" Fill="Black" Width="50" Height="45"/>
+        <Rectangle Name="backgroundSquare5" Canvas.Top="60" Canvas.Left="599" Fill="Black" Width="50" Height="45"/>
 
         <Rectangle Canvas.Top="355" Fill="Gray" Width="{StaticResource AppWidth}" Height="55" />
 

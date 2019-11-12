@@ -98,16 +98,22 @@ namespace FroggerStarter.View
 
         private void onUpdateHomeBackground(object sender, UpdateHomeBackgroundEventArgs e)
         {
-            this.back1.Fill = e.Color;
-            this.back1.Visibility = Visibility.Visible;
-            this.back2.Fill = e.Color;
-            this.back2.Visibility = Visibility.Visible;
-            this.back3.Fill = e.Color;
-            this.back3.Visibility = Visibility.Visible;
-            this.back4.Fill = e.Color;
-            this.back4.Visibility = Visibility.Visible;
-            this.back5.Fill = e.Color;
-            this.back5.Visibility = Visibility.Visible;
+            this.backgroundSquare1.Fill = e.Color;
+            this.backgroundSquare2.Fill = e.Color;
+            this.backgroundSquare3.Fill = e.Color;
+            this.backGroundSquare4.Fill = e.Color;
+            this.backgroundSquare5.Fill = e.Color;
+            this.changeBackgroundSquareVisibility();
+            
+        }
+
+        private void changeBackgroundSquareVisibility()
+        {
+            this.backgroundSquare1.Visibility = Visibility.Visible;
+            this.backgroundSquare2.Visibility = Visibility.Visible;
+            this.backgroundSquare3.Visibility = Visibility.Visible;
+            this.backGroundSquare4.Visibility = Visibility.Visible;
+            this.backgroundSquare5.Visibility = Visibility.Visible;
         }
 
         #endregion
