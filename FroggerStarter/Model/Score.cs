@@ -25,7 +25,10 @@ namespace FroggerStarter.Model
 
         public  int Level { get;  set; }
 
-       
+        public string FullScore => $"{this.Name} : Score {this.Value} : Level {this.Level}";
+
+
+
 
         public Score()
         {

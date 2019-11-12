@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using FroggerStarter.View.Sprites.Vehicles;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.v
 {
     /// <summary>
     /// Initializes Super car sprite and handles functionality
     /// </summary>
-    /// <seealso cref="FroggerStarter.Model.Vehicle" />
+    /// <seealso cref="Vehicle" />
     public class SuperCar : Vehicle
     {
 

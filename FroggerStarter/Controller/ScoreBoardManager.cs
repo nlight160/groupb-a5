@@ -1,6 +1,6 @@
 using System;
+using FroggerStarter.IO;
 using FroggerStarter.Model;
-using FroggerStarter.View.ContentDialogs;
 using FroggerStarter.ViewModel;
 
 namespace FroggerStarter.Controller
@@ -18,6 +18,16 @@ namespace FroggerStarter.Controller
         /// <summary>
         ///     The file reader
         /// </summary>
+        public FileReader FileReader;
+
+        /// <summary>
+        ///     The save file
+        /// </summary>
+        public SaveFileWriter SaveFile;
+
+        /// <summary>
+        /// 
+        /// </summary>
         public ScoreBoardViewModel viewModel;
 
         #endregion
@@ -32,9 +42,9 @@ namespace FroggerStarter.Controller
         public ScoreBoardManager()
         {
             this.ScoreBoard = new ScoreBoard();
-
+            this.FileReader = new FileReader();
+            this.SaveFile = new SaveFileWriter();
             this.viewModel = new ScoreBoardViewModel();
-
         }
 
         #endregion
@@ -60,19 +70,16 @@ namespace FroggerStarter.Controller
         /// <summary>Reads the high score.</summary>
         public async void ReadHighScore()
         {
-            await this.viewModel.FileReader.ReadCurrentFileAsync();
+            await this.FileReader.ReadCurrentFileAsync();
+            this.ScoreBoard = this.FileReader.ScoreBoard;
 
-            this.viewModel.Scores = await this.viewModel.FileReader.GetListAsync();
-
+            this.viewModel.scoreBoard = this.ScoreBoard;
+            this.viewModel.updateScores();
         }
 
-        /// <summary>Saves the new score.</summary>
-        /// <param name="score">The score.</param>
         public async void SaveNewScore(Score score)
         {
-            await this.viewModel.SaveFile.SaveAFileAsync(score);
-
-            this.viewModel.Scores.Add(score);
+            await this.SaveFile.SaveAFileAsync(score);
         }
 
         #endregion

@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
+using FroggerStarter.Model.v;
 using FroggerStarter.View;
 using FroggerStarter.View.ContentDialogs;
 using FroggerStarter.View.Sprites;
@@ -318,6 +319,7 @@ namespace FroggerStarter.Controller
                 this.scoreBoard.AddNewScore(score);
                 this.scoreBoard.SaveNewScore(score);
                 this.scoreBoard.ReadHighScore();
+
                 await this.highScoreContentDialog.ShowAsync();
             }
 
