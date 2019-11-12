@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.ObjectModel;
 using System.IO;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
-using Windows.Storage;
-using FroggerStarter.Extensions;
 using FroggerStarter.Model;
 
 namespace FroggerStarter.IO
@@ -50,28 +46,6 @@ namespace FroggerStarter.IO
             var reader = new StreamReader(path);
             this.ScoreBoard = (ScoreBoard) serializer.Deserialize(reader);
             reader.Close();
-        }
-
-        private async void readFromXml(IStorageFile file)
-        {
-            var serializer = new XmlSerializer(typeof(ScoreBoard));
-            ScoreBoard result;
-
-            var stream = await file.OpenStreamForReadAsync();
-            {
-                result = (ScoreBoard) serializer.Deserialize(stream);
-            }
-        }
-
-        /// <summary>
-        ///     Gets the list asynchronously.
-        /// </summary>
-        /// <returns>
-        ///     the collection object
-        /// </returns>
-        public Task<ObservableCollection<Score>> GetListAsync()
-        {
-            return Task.Run(() => this.ScoreBoard.ToObservableCollection());
         }
 
         #endregion

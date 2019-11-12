@@ -164,9 +164,6 @@
       <DependentUpon>GamePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="View\HighScoreBoardPage.xaml.cs">
-      <DependentUpon>HighScoreBoardPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\Sprites\BaseSprite.xaml.cs">
       <DependentUpon>BaseSprite.xaml</DependentUpon>
     </Compile>
@@ -248,10 +245,6 @@
     <Page Include="View\GamePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\HighScoreBoardPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Sprites\BaseSprite.xaml">
       <SubType>Designer</SubType>

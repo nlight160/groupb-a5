@@ -19,7 +19,7 @@ namespace FroggerStarter.ViewModel
         /// <summary>
         ///     The score board
         /// </summary>
-        public ScoreBoard scoreBoard;
+        public ScoreBoard ScoreBoard;
 
         private ObservableCollection<Score> scores;
 
@@ -45,7 +45,7 @@ namespace FroggerStarter.ViewModel
         /// <value>
         ///     The name command.
         /// </value>
-        public RelayCommand NameCommand { get; set; }
+        public RelayCommand NameCommand { get; }
 
         /// <summary>
         ///     Gets or sets the score command.
@@ -53,7 +53,7 @@ namespace FroggerStarter.ViewModel
         /// <value>
         ///     The score command.
         /// </value>
-        public RelayCommand ScoreCommand { get; set; }
+        public RelayCommand ScoreCommand { get; }
 
         /// <summary>
         ///     Gets or sets the level command.
@@ -61,7 +61,7 @@ namespace FroggerStarter.ViewModel
         /// <value>
         ///     The level command.
         /// </value>
-        public RelayCommand LevelCommand { get; set; }
+        public RelayCommand LevelCommand { get; }
 
         #endregion
 
@@ -74,8 +74,8 @@ namespace FroggerStarter.ViewModel
         /// </summary>
         public ScoreBoardViewModel()
         {
-            this.scoreBoard = new ScoreBoard();
-            this.Scores = this.scoreBoard.ToObservableCollection();
+            this.ScoreBoard = new ScoreBoard();
+            this.Scores = this.ScoreBoard.ToObservableCollection();
             this.NameCommand = new RelayCommand(this.sortName, this.canSortName);
             this.ScoreCommand = new RelayCommand(this.sortScore, this.canSortScore);
             this.LevelCommand = new RelayCommand(this.sortLevel, this.canSortLevel);
@@ -97,7 +97,7 @@ namespace FroggerStarter.ViewModel
         /// </summary>
         public void UpdateScores()
         {
-            this.Scores = this.scoreBoard.ToObservableCollection();
+            this.Scores = this.ScoreBoard.ToObservableCollection();
         }
 
         /// <summary>
@@ -118,7 +118,7 @@ namespace FroggerStarter.ViewModel
         /// <param name="obj">The object.</param>
         private void sortName(object obj)
         {
-            var result = this.scoreBoard.Select(x => x).OrderBy(x => x.Name).ThenBy(x => x.Value).ThenBy(x => x.Level)
+            var result = this.ScoreBoard.Select(x => x).OrderBy(x => x.Name).ThenBy(x => x.Value).ThenBy(x => x.Level)
                              .Take(10);
             this.Scores = result.ToObservableCollection();
         }
@@ -141,7 +141,7 @@ namespace FroggerStarter.ViewModel
         /// <param name="obj">The object.</param>
         private void sortScore(object obj)
         {
-            var result = this.scoreBoard.Select(x => x).OrderBy(x => x.Value).ThenBy(x => x.Name).ThenBy(x => x.Level)
+            var result = this.ScoreBoard.Select(x => x).OrderBy(x => x.Value).ThenBy(x => x.Name).ThenBy(x => x.Level)
                              .Take(10);
             this.Scores = result.ToObservableCollection();
         }
@@ -164,7 +164,7 @@ namespace FroggerStarter.ViewModel
         /// <param name="obj">The object.</param>
         private void sortLevel(object obj)
         {
-            var result = this.scoreBoard.Select(x => x).OrderBy(x => x.Level).ThenBy(x => x.Value).ThenBy(x => x.Name)
+            var result = this.ScoreBoard.Select(x => x).OrderBy(x => x.Level).ThenBy(x => x.Value).ThenBy(x => x.Name)
                              .Take(10);
             this.Scores = result.ToObservableCollection();
         }
