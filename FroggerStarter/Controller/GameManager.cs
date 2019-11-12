@@ -5,6 +5,7 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Shapes;
 using FroggerStarter.Model;
 using FroggerStarter.View;
 using FroggerStarter.View.ContentDialogs;
@@ -47,6 +48,11 @@ namespace FroggerStarter.Controller
         ///     The update lives
         /// </summary>
         public EventHandler<UpdateLevelEventArg> UpdateLevel;
+
+        /// <summary>
+        /// The update home background
+        /// </summary>
+        public EventHandler<UpdateHomeBackgroundEventArgs> UpdateHomeBackground;
 
         private readonly double backgroundHeight;
         private readonly double backgroundWidth;
@@ -291,6 +297,12 @@ namespace FroggerStarter.Controller
             await this.handleAddScoreDialog();
         }
 
+        private void setHomeBackgroundColor(Windows.UI.Xaml.Media.Brush color)
+        {
+            var backgroundColor = new UpdateHomeBackgroundEventArgs {Color = color };
+            this.UpdateHomeBackground?.Invoke(this, backgroundColor);
+        }
+
         private async Task handleAddScoreDialog()
         {
             await this.addScoreContentDialog.ShowAsync();
@@ -375,11 +387,13 @@ namespace FroggerStarter.Controller
         {
             if (this.roadManager.RoundCount == SecondRound)
             {
-                this.gameCanvas.Background = new SolidColorBrush(Colors.Bisque);
+                this.gameCanvas.Background = new SolidColorBrush(Colors.Tan);
+                this.setHomeBackgroundColor(this.gameCanvas.Background);
             }
             else
             {
-                this.gameCanvas.Background = new SolidColorBrush(Colors.Aqua);
+                this.gameCanvas.Background = new SolidColorBrush(Colors.DarkBlue);
+                this.setHomeBackgroundColor(this.gameCanvas.Background);
             }
         }
 

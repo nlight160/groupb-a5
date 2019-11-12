@@ -47,6 +47,7 @@ namespace FroggerStarter.View
             this.gameManager.UpdateScore += this.onUpdateScore;
             this.gameManager.UpdateTimer += this.onUpdateTimer;
             this.gameManager.UpdateLives += this.onUpdateLives;
+            this.gameManager.UpdateHomeBackground += this.onUpdateHomeBackground;
         }
 
         #endregion
@@ -93,6 +94,20 @@ namespace FroggerStarter.View
         private void onUpdateLives(object sender, UpdateLivesEventArgs e)
         {
             this.livesTextBlock.Text = "Lives: " + e.RemainingLives;
+        }
+
+        private void onUpdateHomeBackground(object sender, UpdateHomeBackgroundEventArgs e)
+        {
+            this.back1.Fill = e.Color;
+            this.back1.Visibility = Visibility.Visible;
+            this.back2.Fill = e.Color;
+            this.back2.Visibility = Visibility.Visible;
+            this.back3.Fill = e.Color;
+            this.back3.Visibility = Visibility.Visible;
+            this.back4.Fill = e.Color;
+            this.back4.Visibility = Visibility.Visible;
+            this.back5.Fill = e.Color;
+            this.back5.Visibility = Visibility.Visible;
         }
 
         #endregion

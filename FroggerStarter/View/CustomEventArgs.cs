@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Xaml;
 
 namespace FroggerStarter.View
 {
@@ -93,5 +94,19 @@ namespace FroggerStarter.View
         public int RemainingLives { get; set; }
 
         #endregion
+    }
+
+    /// <summary>
+    ///     Handles setting fill color and visibility
+    /// </summary>
+    public class UpdateHomeBackgroundEventArgs
+    {
+        /// <summary>
+        /// Gets or sets the color.
+        /// </summary>
+        /// <value>
+        /// The color.
+        /// </value>
+        public Windows.UI.Xaml.Media.Brush Color { get; set; }
     }
 }
