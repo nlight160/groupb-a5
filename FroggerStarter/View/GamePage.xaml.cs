@@ -73,12 +73,17 @@ namespace FroggerStarter.View
             }
         }
 
+        public void ViewHighScoreBoard()
+        {
+            Frame.Navigate(typeof(HighScoreBoardPage));
+        }
         private void onGameOver(object sender, GameOverEventArg e)
         {
             if (e.GameOver)
             {
                 this.gameOverTextBlock.Visibility = Visibility.Visible;
             }
+            
         }
 
         private void onUpdateScore(object sender, UpdateScoreEventArg e)
