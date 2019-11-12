@@ -1,4 +1,4 @@
-﻿namespace FroggerStarter.Model
+﻿namespace FroggerStarter.Model.v
 {
     /// <summary>
     ///     Values used to determine the Direction a vehicle travels
