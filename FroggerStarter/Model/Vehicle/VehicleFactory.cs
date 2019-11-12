@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.v
 {
     /// <summary>
     ///     Handles construction of vehicles

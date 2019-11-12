@@ -1,12 +1,12 @@
 ﻿using Windows.UI.Xaml;
 using FroggerStarter.View.Sprites.Vehicles;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.v
 {
     /// <summary>
     ///     Handles Trucks and their functionality
     /// </summary>
-    /// <seealso cref="FroggerStarter.Model.Vehicle" />
+    /// <seealso cref="Vehicle" />
     public class Truck : Vehicle
     {
         #region Constructors

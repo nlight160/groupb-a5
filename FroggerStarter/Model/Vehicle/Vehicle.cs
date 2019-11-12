@@ -1,7 +1,6 @@
 ﻿using System;
-using Windows.UI.Xaml;
 
-namespace FroggerStarter.Model
+namespace FroggerStarter.Model.v
 {
     /// <summary>
     ///     Generic vehicle class handles basic functionality for all vehicles

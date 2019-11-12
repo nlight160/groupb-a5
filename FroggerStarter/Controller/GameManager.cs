@@ -6,6 +6,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using FroggerStarter.Model;
+using FroggerStarter.Model.v;
 using FroggerStarter.View;
 using FroggerStarter.View.ContentDialogs;
 using FroggerStarter.View.Sprites;

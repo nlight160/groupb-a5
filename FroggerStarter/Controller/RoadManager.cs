@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Windows.UI.Xaml;
 using FroggerStarter.Model;
+using FroggerStarter.Model.v;
 
 namespace FroggerStarter.Controller
 {
