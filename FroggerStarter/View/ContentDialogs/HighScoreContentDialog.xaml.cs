@@ -1,6 +1,7 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Diagnostics;
+using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml.Controls;
-using FroggerStarter.Model;
 
 // The Content Dialog item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -30,13 +31,25 @@ namespace FroggerStarter.View.ContentDialogs
 
         #region Methods
 
-        
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
         }
 
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            this.restartApplicationAsync();
+        }
+
+        private async void restartApplicationAsync()
+        {
+            var result =
+                await CoreApplication.RequestRestartAsync(string.Empty);
+
+            if (result == AppRestartFailureReason.NotInForeground
+                || result == AppRestartFailureReason.Other)
+            {
+                Debug.WriteLine("Restart failed: " + result);
+            }
         }
 
         #endregion

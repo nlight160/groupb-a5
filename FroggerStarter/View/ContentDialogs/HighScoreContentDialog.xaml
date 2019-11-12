@@ -9,6 +9,7 @@
     mc:Ignorable="d"
     Title="High Scores"
     PrimaryButtonText="Exit"
+    SecondaryButtonText="Play Again?"
     
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">

@@ -28,7 +28,7 @@ namespace FroggerStarter.View.ContentDialogs
         /// <summary>
         ///     Initializes a new instance of the <see cref="AddScoreContentDialog" /> class.
         ///     Precondition: none
-        ///     PostCondtion: an add scoe content dialog is created
+        ///     PostCondtion: an add score content dialog is created
         /// </summary>
         public AddScoreContentDialog()
         {
