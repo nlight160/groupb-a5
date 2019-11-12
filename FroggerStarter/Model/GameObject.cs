@@ -16,7 +16,7 @@ namespace FroggerStarter.Model
         /// <value>
         ///     The speed x.
         /// </value>
-        public int SpeedX { get; private set; }
+        private int SpeedX { get; set; }
 
         /// <summary>
         ///     Gets the y speed of the game object.
@@ -24,7 +24,7 @@ namespace FroggerStarter.Model
         /// <value>
         ///     The speed y.
         /// </value>
-        public int SpeedY { get; private set; }
+        private int SpeedY { get;  set; }
 
         #endregion
 

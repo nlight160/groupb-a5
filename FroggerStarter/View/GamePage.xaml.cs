@@ -73,19 +73,14 @@ namespace FroggerStarter.View
             }
         }
 
-        /// <summary>
-        ///     Views the high score board.
-        /// </summary>
-        public void ViewHighScoreBoard()
-        {
-            Frame.Navigate(typeof(HighScoreBoardPage));
-        }
+      
 
         private void onGameOver(object sender, GameOverEventArg e)
         {
             if (e.GameOver)
             {
                 this.gameOverTextBlock.Visibility = Visibility.Visible;
+              
             }
         }
 

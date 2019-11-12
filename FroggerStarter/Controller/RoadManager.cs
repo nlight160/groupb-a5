@@ -118,7 +118,6 @@ namespace FroggerStarter.Controller
             this.makeFirstVehiclesVisible();
         }
 
-        /// <summary>Constructs the road level2.</summary>
         private void constructRoadLevel2()
         {
             this.lanes.Clear();
@@ -130,7 +129,6 @@ namespace FroggerStarter.Controller
             this.makeFirstVehiclesVisible();
         }
 
-        /// <summary>Constructs the road level3.</summary>
         private void constructRoadLevel3()
         {
             this.lanes.Clear();

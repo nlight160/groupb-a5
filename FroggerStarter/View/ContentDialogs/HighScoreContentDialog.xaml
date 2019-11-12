@@ -40,9 +40,6 @@
                 <DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1">
                         <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
                             <TextBlock HorizontalAlignment="Stretch" Grid.Row="0"
                                        Text="{Binding FullScore }" />
                         </Grid>
