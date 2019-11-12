@@ -1,13 +1,13 @@
 using System;
-using System.Diagnostics;
-using System.Linq;
 using FroggerStarter.IO;
 using FroggerStarter.Model;
 using FroggerStarter.ViewModel;
 
 namespace FroggerStarter.Controller
 {
-    /// <summary>Represents a score board</summary>
+    /// <summary>
+    ///     Represents a score board
+    /// </summary>
     public class ScoreBoardManager
     {
         #region Data members
@@ -69,7 +69,9 @@ namespace FroggerStarter.Controller
         }
 
         /// <summary>
-        /// Reads the high score.
+        ///     Reads the high score.
+        ///     Precondition: none
+        ///     PostCondition: Scores are
         /// </summary>
         public void ReadHighScore()
         {
@@ -78,15 +80,22 @@ namespace FroggerStarter.Controller
 
             this.viewModel.scoreBoard = this.ScoreBoard;
             this.viewModel.UpdateScores();
-            Debug.Print("" + this.viewModel.scoreBoard.ElementAt(0));
         }
 
         /// <summary>
-        /// Saves the new score.
+        ///     Saves the new score.
+        ///     Precondition: score != null
+        ///     PostCondition: score is saved to the file
         /// </summary>
         /// <param name="score">The score.</param>
+        /// <exception cref="ArgumentNullException">score</exception>
         public void SaveNewScore(Score score)
         {
+            if (score == null)
+            {
+                throw new ArgumentNullException(nameof(score));
+            }
+
             this.SaveFile.SaveAFile(score);
         }
 

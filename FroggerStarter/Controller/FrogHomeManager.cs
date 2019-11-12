@@ -7,6 +7,7 @@ using FroggerStarter.Model;
 namespace FroggerStarter.Controller
 {
     /// <summary>
+    ///     Manages the frog homes in the game
     /// </summary>
     /// <seealso cref="System.Collections.IEnumerable" />
     public class FrogHomeManager : IEnumerable<FrogHome>

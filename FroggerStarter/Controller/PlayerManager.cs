@@ -31,8 +31,12 @@
         /// </value>
         public int HomesOccupied { get; private set; }
 
-        /// <summary>Gets the level.</summary>
-        /// <value>The level.</value>
+        /// <summary>
+        ///     Gets the level.
+        /// </summary>
+        /// <value>
+        ///     The level.
+        /// </value>
         public int Level { get; private set; }
 
         #endregion
@@ -46,7 +50,7 @@
         /// </summary>
         public PlayerManager()
         {
-            this.RemainingLives = 1;
+            this.RemainingLives = 4;
             this.Score = 0;
             this.Level = 1;
         }
@@ -80,17 +84,6 @@
                 this.Level++;
                 this.HomesOccupied = 0;
             }
-        }
-
-        /// <summary>
-        ///     Resets the game.
-        /// </summary>
-        public void resetGame()
-        {
-            this.HomesOccupied = 0;
-            this.Level = 1;
-            this.RemainingLives = 4;
-            this.Score = 0;
         }
 
         /// <summary>

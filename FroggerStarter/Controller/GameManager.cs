@@ -280,6 +280,7 @@ namespace FroggerStarter.Controller
         private void handleLevelChange()
         {
             this.soundManager.PlayCompleteLevelSound();
+            this.powerUpManager.InvincibilityPowerUp.Sprite.Visibility = Visibility.Visible;
             this.deleteCurrentVehicles();
             this.hideFrogHomes();
             this.setPlayerToCenterOfBottomLane();
@@ -383,7 +384,7 @@ namespace FroggerStarter.Controller
         {
             if (this.roadManager.RoundCount == SecondRound)
             {
-                this.gameCanvas.Background = new SolidColorBrush(Colors.Tan);
+                this.gameCanvas.Background = new SolidColorBrush(Colors.Brown);
                 this.setHomeBackgroundColor(this.gameCanvas.Background);
             }
             else

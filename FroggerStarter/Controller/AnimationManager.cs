@@ -115,7 +115,7 @@ namespace FroggerStarter.Controller
                 this.HideCurrentFrame(this.frameIndex - 1);
             }
 
-            if (this.frameIndex == 4)
+            if (this.frameIndex == this.frames.Count)
             {
                 this.handleStopAnimation();
             }

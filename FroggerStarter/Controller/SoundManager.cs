@@ -5,7 +5,9 @@ using Windows.UI.Xaml.Controls;
 
 namespace FroggerStarter.Controller
 {
-    /// <summary>Defines a Sound Manager Object</summary>
+    /// <summary>
+    ///     Defines a Sound Manager Object
+    /// </summary>
     public class SoundManager
     {
         #region Methods

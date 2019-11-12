@@ -28,8 +28,12 @@ namespace FroggerStarter.Controller
 
         #region Properties
 
-        /// <summary>Gets or sets the round count.</summary>
-        /// <value>The round count.</value>
+        /// <summary>
+        ///     Gets or sets the round count.
+        /// </summary>
+        /// <value>
+        ///     The round count.
+        /// </value>
         public int RoundCount { get; set; }
 
         #endregion
@@ -49,7 +53,7 @@ namespace FroggerStarter.Controller
             this.backgroundHeight = backgroundHeight;
             this.laneHeight = laneHeight;
             this.vehicleFactory = new VehicleFactory();
-            this.RoundCount = 1;
+            this.RoundCount = FirstRound;
         }
 
         #endregion
@@ -78,7 +82,9 @@ namespace FroggerStarter.Controller
             return this.GetEnumerator();
         }
 
-        /// <summary>Determines whether [is last round].</summary>
+        /// <summary>
+        ///     Determines whether [is last round].
+        /// </summary>
         /// <returns>
         ///     <c>true</c> if [is last round]; otherwise, <c>false</c>.
         /// </returns>
@@ -90,7 +96,7 @@ namespace FroggerStarter.Controller
         /// <summary>
         ///     Constructs the road.
         ///     Precondition: none
-        ///     Postcondition: All 5 lanes are placed and constructed
+        ///     Postcondition: All 5 level 1 lanes are placed and constructed
         /// </summary>
         public void ConstructRoad()
         {
@@ -118,7 +124,11 @@ namespace FroggerStarter.Controller
             this.makeFirstVehiclesVisible();
         }
 
-        /// <summary>Constructs the road level2.</summary>
+        /// <summary>
+        ///     Constructs the road level2.
+        ///     Precondition: none
+        ///     Postcondition: All 5 level 2 lanes are placed and constructed
+        /// </summary>
         private void constructRoadLevel2()
         {
             this.lanes.Clear();
@@ -130,7 +140,11 @@ namespace FroggerStarter.Controller
             this.makeFirstVehiclesVisible();
         }
 
-        /// <summary>Constructs the road level3.</summary>
+        /// <summary>
+        ///     Constructs the road level3.
+        ///     Precondition: none
+        ///     Postcondition: All 5 level 3 lanes are placed and constructed
+        /// </summary>
         private void constructRoadLevel3()
         {
             this.lanes.Clear();
@@ -309,6 +323,8 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Wraps the  road.
+        ///     Precondition: none
+        ///     Postcondition: lane wraps back to its beginning
         /// </summary>
         public void WrapRoad()
         {

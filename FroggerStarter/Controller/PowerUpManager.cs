@@ -116,9 +116,11 @@ namespace FroggerStarter.Controller
             this.TimePowerUp.X =
                 this.roundDownToNearestMultipleOfFifty(
                     this.random.Next(MinSpawnX, this.backgroundWidth - EdgeOfPlayArea));
+
             this.TimePowerUp.Y =
                 this.roundDownToNearestMultipleOfFifty(
                     this.random.Next(MinSpawnY, this.backgroundHeight - EdgeOfPlayArea)) + RoadOffset;
+
             this.TimePowerUp.Sprite.Visibility = Visibility.Visible;
         }
 
@@ -143,6 +145,8 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Starts the bonus time power up timer.
+        ///     Precondition: none
+        ///     Postcondition: timer starts
         /// </summary>
         public void StartInvincibilityPowerUpTimer()
         {
@@ -151,6 +155,7 @@ namespace FroggerStarter.Controller
 
         /// <summary>
         ///     Determines whether [is invincibility active].
+        ///     Precondition: none
         /// </summary>
         /// <returns>
         ///     <c>true</c> if [is invincibility active]; otherwise, <c>false</c>.
