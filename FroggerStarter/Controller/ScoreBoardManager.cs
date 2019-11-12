@@ -1,4 +1,6 @@
 using System;
+using System.Diagnostics;
+using System.Linq;
 using FroggerStarter.IO;
 using FroggerStarter.Model;
 using FroggerStarter.ViewModel;
@@ -75,7 +77,8 @@ namespace FroggerStarter.Controller
             this.ScoreBoard = this.FileReader.ScoreBoard;
 
             this.viewModel.scoreBoard = this.ScoreBoard;
-            this.viewModel.updateScores();
+            this.viewModel.UpdateScores();
+            Debug.Print("" + this.viewModel.scoreBoard.ElementAt(0));
         }
 
         /// <summary>

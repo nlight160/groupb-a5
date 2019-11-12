@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -270,6 +271,8 @@ namespace FroggerStarter.Controller
             {
                 this.setGameOverScreen();
                 this.soundManager.PlayGameOverSound();
+                this.vehicleTimer.Stop();
+                this.lifeTimer.Stop();
                 this.timer.Stop();
             }
         }
@@ -317,14 +320,10 @@ namespace FroggerStarter.Controller
 
                 this.scoreBoard.AddNewScore(score);
                 this.scoreBoard.SaveNewScore(score);
-                this.scoreBoard.ReadHighScore();
 
                 await this.highScoreContentDialog.ShowAsync();
             }
-
-            var isGameOver = new GameOverEventArg {GameOver = true};
-            this.soundManager.PlayGameOverSound();
-            this.GameOver?.Invoke(this, isGameOver);
+            this.scoreBoard.ReadHighScore();
         }
 
         private void lifeTimerTick(object sender, object e)

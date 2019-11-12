@@ -33,7 +33,6 @@
                      VerticalAlignment="Top" FontSize="20" Height="34" Width="83" GroupName="sortScore" />
         <ListView
             ItemsSource="{Binding Path=Scores, Mode=TwoWay}"
-
             x:Name="scoreListView" HorizontalAlignment="Left"
             VerticalAlignment="Top" FontSize="20" Width="412" Height="300" Margin="98,0,0,0">
             <ListView.ItemTemplate>
