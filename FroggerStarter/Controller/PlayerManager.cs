@@ -46,7 +46,7 @@
         /// </summary>
         public PlayerManager()
         {
-            this.RemainingLives = 4;
+            this.RemainingLives = 1;
             this.Score = 0;
             this.Level = 1;
         }
@@ -80,6 +80,14 @@
                 this.Level++;
                 this.HomesOccupied = 0;
             }
+        }
+
+        public void resetGame()
+        {
+            this.HomesOccupied = 0;
+            this.Level = 1;
+            this.RemainingLives = 4;
+            this.Score = 0;
         }
 
         /// <summary>

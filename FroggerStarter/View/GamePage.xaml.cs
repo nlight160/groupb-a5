@@ -4,6 +4,8 @@ using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using FroggerStarter.Controller;
+using FroggerStarter.Model;
+using FroggerStarter.View.Sprites;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -109,7 +111,6 @@ namespace FroggerStarter.View
             this.backGroundSquare4.Fill = e.Color;
             this.backgroundSquare5.Fill = e.Color;
             this.changeBackgroundSquareVisibility();
-            
         }
 
         private void changeBackgroundSquareVisibility()
@@ -120,6 +121,7 @@ namespace FroggerStarter.View
             this.backGroundSquare4.Visibility = Visibility.Visible;
             this.backgroundSquare5.Visibility = Visibility.Visible;
         }
+
 
         #endregion
     }

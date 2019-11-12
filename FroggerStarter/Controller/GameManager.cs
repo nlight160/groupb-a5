@@ -5,7 +5,6 @@ using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
 using FroggerStarter.Model;
 using FroggerStarter.View;
 using FroggerStarter.View.ContentDialogs;
@@ -50,7 +49,7 @@ namespace FroggerStarter.Controller
         public EventHandler<UpdateLevelEventArg> UpdateLevel;
 
         /// <summary>
-        /// The update home background
+        ///     The update home background
         /// </summary>
         public EventHandler<UpdateHomeBackgroundEventArgs> UpdateHomeBackground;
 
@@ -297,9 +296,9 @@ namespace FroggerStarter.Controller
             await this.handleAddScoreDialog();
         }
 
-        private void setHomeBackgroundColor(Windows.UI.Xaml.Media.Brush color)
+        private void setHomeBackgroundColor(Brush color)
         {
-            var backgroundColor = new UpdateHomeBackgroundEventArgs {Color = color };
+            var backgroundColor = new UpdateHomeBackgroundEventArgs {Color = color};
             this.UpdateHomeBackground?.Invoke(this, backgroundColor);
         }
 
@@ -322,13 +321,10 @@ namespace FroggerStarter.Controller
 
                 await this.highScoreContentDialog.ShowAsync();
             }
-            
 
             var isGameOver = new GameOverEventArg {GameOver = true};
             this.soundManager.PlayGameOverSound();
             this.GameOver?.Invoke(this, isGameOver);
-            
-
         }
 
         private void lifeTimerTick(object sender, object e)
